@@ -10,6 +10,6 @@ open the VS IDE and ... Have fun :)
 
 [Branching](https://gist.github.com/digitaljhelms/4287848)
 
-For branch **prefix** we use: `feature-`, `fix-`, `chore-`
+For a branch **prefix** we use: `feature-`, `fix-`, `chore-`
 
 [C# Coding Conventions](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/inside-a-program/coding-conventions)
