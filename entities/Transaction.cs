@@ -1,21 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection.Emit;
-using System.Text;
+﻿using CsvHelper.Configuration.Attributes;
+using System;
 
-namespace SmartSaver.models
+namespace SmartSaver.entities
 {
     class Transaction
     {
-        private DateTime Date { get; set; }
-        private decimal Sum { get; set; }
-        private string Purpose { get; set; }
+        [Index(0)]
+        public DateTime Date { get; set; }
+        [Index(1)]
+        public decimal Amount { get; set; }
+        [Index(2)]
+        public string Details { get; set; }
+        [Index(3)]
+        public string CounterParty { get; set; }
 
-        public Transaction(DateTime date, decimal sum, string purpose)
-        {
-            Date = date;
-            Sum = sum;
-            Purpose = purpose;
-        }
+        override
+        public string ToString() => 
+            Date.ToShortDateString() + "; " 
+            + Amount + "; " 
+            + Details + "; " 
+            + CounterParty;
     }
 }
