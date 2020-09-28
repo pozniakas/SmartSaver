@@ -15,7 +15,7 @@ namespace SmartSaver.Models
         {
         }
 
-        public virtual DbSet<Transactions> Transactions { get; set; }
+        public virtual DbSet<Transaction> Transaction { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -28,11 +28,13 @@ namespace SmartSaver.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Transactions>(entity =>
+            modelBuilder.Entity<Transaction>(entity =>
             {
-                entity.ToTable("transactions", "smartsaver");
+                entity.ToTable("transaction", "smartsaver");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasDefaultValueSql("nextval('smartsaver.transactions_id_seq'::regclass)");
 
                 entity.Property(e => e.Amount)
                     .HasColumnName("amount")
