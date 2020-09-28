@@ -1,5 +1,6 @@
 ﻿using CsvHelper;
-using SmartSaver.entities;
+using SmartSaver.Models;
+using SmartSaver.Data;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,11 +14,28 @@ namespace SmartSaver
 {
     public partial class Form1 : Form
     {
-        private List<Transaction> transactions;
-
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            Database db = new Database();
+
+            var random = new Random();
+            var newTransaction = new Transaction();
+            newTransaction.TrTime = new DateTime();
+            newTransaction.Amount = random.Next(-100, 100);
+            newTransaction.Details = "Maxima groceries";
+            newTransaction.CounterParty = "UAB Maxima";
+            db.AddTransaction(newTransaction);
+
+            Debug.WriteLine("Transactions:");
+            foreach (var tr in db.GetTransactions())
+            {
+                Debug.WriteLine("{0} | {1} | {2} | {3}", tr.Id, tr.Amount, tr.Details, tr.CounterParty);
+            }
         }
 
         private void Btn_upload_statment(object sender, EventArgs e)
@@ -42,11 +60,6 @@ namespace SmartSaver
                 /*foreach (Transaction tr in transactions)
                     Debug.WriteLine(tr);*/
             }
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
