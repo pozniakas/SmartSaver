@@ -2,6 +2,12 @@
 Application for a personal budget management
 
 # Initial setup
+
+Install postgreSQL database
+
+[PostgreSQL installer](https://www.enterprisedb.com/postgresql-tutorial-resources-training?cid=437)
+
+
 install Visual studio Community 2019
 
 open the VS IDE and ... Have fun :)
