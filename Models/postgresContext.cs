@@ -15,6 +15,7 @@ namespace SmartSaver.Models
         {
         }
 
+        public virtual DbSet<Goal> Goal { get; set; }
         public virtual DbSet<Transaction> Transaction { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -28,13 +29,38 @@ namespace SmartSaver.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Goal>(entity =>
+            {
+                entity.ToTable("goal", "smartsaver");
+
+                entity.HasIndex(e => new { e.Title, e.GoalDate })
+                    .HasName("uq_smartsaver.goal__title_goal_date")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Amount)
+                    .HasColumnName("amount")
+                    .HasColumnType("numeric");
+
+                entity.Property(e => e.Description)
+                    .HasColumnName("description")
+                    .HasMaxLength(1000);
+
+                entity.Property(e => e.GoalDate)
+                    .HasColumnName("goal_date")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.Title)
+                    .HasColumnName("title")
+                    .HasMaxLength(100);
+            });
+
             modelBuilder.Entity<Transaction>(entity =>
             {
                 entity.ToTable("transaction", "smartsaver");
 
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .HasDefaultValueSql("nextval('smartsaver.transactions_id_seq'::regclass)");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Amount)
                     .HasColumnName("amount")
