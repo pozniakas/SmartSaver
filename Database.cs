@@ -25,5 +25,20 @@ namespace SmartSaver.Data
 
             return transactions;
         }
+        public int AddGoal(Goal goal)
+        {
+            using var db = new postgresContext();
+            db.Goal.Add(goal);
+            return db.SaveChanges();
+        }
+
+        public List<Goal> GetGoals()
+        {
+            using var db = new postgresContext();
+            List<Goal> goal = new List<Goal>();
+            goal.AddRange(db.Goal);
+
+            return goal;
+        }
     }
 }
