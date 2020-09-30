@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using SmartSaver.Desktop;
 
 namespace SmartSaver
 {
@@ -134,6 +135,14 @@ namespace SmartSaver
 
         private void button1_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void addTransactionButton_Click(object sender, EventArgs e)
+        {
+         
+            AddTransactionWindow newTransactionWindow = new AddTransactionWindow();
+            newTransactionWindow.Show();
 
         }
     }

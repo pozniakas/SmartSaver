@@ -11,4 +11,5 @@ namespace SmartSaver.Models
         public string Details { get; set; }
         public string CounterParty { get; set; }
     }
+
 }
