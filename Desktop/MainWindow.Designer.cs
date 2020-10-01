@@ -40,9 +40,9 @@
             this.btnUpload = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.label3 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel7.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -81,6 +81,7 @@
             this.addGoal.TabIndex = 0;
             this.addGoal.Text = "Add Goal";
             this.addGoal.UseVisualStyleBackColor = true;
+            this.addGoal.Click += new System.EventHandler(this.addGoal_Click);
             // 
             // panel6
             // 
@@ -107,7 +108,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(6, 13);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(230, 21);
+            this.label2.Size = new System.Drawing.Size(190, 20);
             this.label2.TabIndex = 0;
             this.label2.Text = "Export transaction history";
             this.label2.Click += new System.EventHandler(this.label2_Click);
@@ -154,7 +155,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(6, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(207, 21);
+            this.label1.Size = new System.Drawing.Size(171, 20);
             this.label1.TabIndex = 0;
             this.label1.Text = "Upload bank statment";
             this.label1.Click += new System.EventHandler(this.label1_Click);
@@ -167,6 +168,15 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(750, 106);
             this.panel2.TabIndex = 1;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(13, 13);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(130, 20);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Current balance";
             // 
             // panel5
             // 
@@ -192,15 +202,6 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(750, 125);
             this.tableLayoutPanel1.TabIndex = 0;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(13, 13);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(155, 21);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Current balance";
             // 
             // MainWindow
             // 

@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using SmartSaver.Desktop;
 
 namespace SmartSaver
 {
@@ -135,6 +136,12 @@ namespace SmartSaver
         private void button1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void addGoal_Click(object sender, EventArgs e)
+        {
+            AddGoalWindow newGoalWindow = new AddGoalWindow();
+            newGoalWindow.Show();
         }
     }
 }
