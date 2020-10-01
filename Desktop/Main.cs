@@ -8,8 +8,8 @@ namespace SmartSaver.Desktop
 {
     public partial class Main : Form
     {
-        Database db = new Database();
-        List<Transaction> ProductList; 
+        private readonly Database db = new Database();
+        private List<Transaction> ProductList; 
 
         public Main()
         {
@@ -24,13 +24,13 @@ namespace SmartSaver.Desktop
 
         private void PrepareTransactionListView()
         {
-            listTransactions.View = View.Details;
-            listTransactions.GridLines = true;
+            listTransactionsView.View = View.Details;
+            listTransactionsView.GridLines = true;
 
-            listTransactions.Columns.Add("Date", 150);
-            listTransactions.Columns.Add("Amount", 75);
-            listTransactions.Columns.Add("Details", 300);
-            listTransactions.Columns.Add("Counter Party", 200);
+            listTransactionsView.Columns.Add("Date", 150);
+            listTransactionsView.Columns.Add("Amount", 75);
+            listTransactionsView.Columns.Add("Details", 300);
+            listTransactionsView.Columns.Add("Counter Party", 200);
         }
 
         public void UpdateTransactionList()
@@ -41,7 +41,7 @@ namespace SmartSaver.Desktop
 
         private void PopulateTransactionListView()
         {
-            listTransactions.Items.Clear();
+            listTransactionsView.Items.Clear();
 
             foreach (var transaction in ProductList)
             {
@@ -52,8 +52,28 @@ namespace SmartSaver.Desktop
                     transaction.CounterParty
                 });
 
-                listTransactions.Items.Add(item);
+                listTransactionsView.Items.Add(item);
             }
+        }
+
+        private void buttonSetGoal_Click(object sender, EventArgs e)
+        {
+            // GoalSetter.SetGoal();
+        }
+
+        private void buttonAddTransaction_Click(object sender, EventArgs e)
+        {
+            // TO-DO
+        }
+
+        private void buttonUpload_Click(object sender, EventArgs e)
+        {
+            // (FileUploader or FileManager).upload
+        }
+
+        private void buttonExport_Click(object sender, EventArgs e)
+        {
+            // (FileExporter or FileManager).export
         }
     }
 }
