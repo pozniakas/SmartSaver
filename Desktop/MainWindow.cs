@@ -32,6 +32,7 @@ namespace SmartSaver
             newTransaction.CounterParty = "UAB Maxima";
             db.AddTransaction(newTransaction);
 
+         
             Debug.WriteLine("Transactions:");
             foreach (var tr in db.GetTransactions())
             {
@@ -141,7 +142,7 @@ namespace SmartSaver
         private void addTransactionButton_Click(object sender, EventArgs e)
         {
          
-            AddTransactionWindow newTransactionWindow = new AddTransactionWindow();
+            AddTransactionWindow newTransactionWindow = new AddTransactionWindow(this);
             newTransactionWindow.Show();
 
         }

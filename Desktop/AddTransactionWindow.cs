@@ -13,8 +13,10 @@ namespace SmartSaver.Desktop
 {
     public partial class AddTransactionWindow : Form
     {
-        public AddTransactionWindow()
+        private MainWindow mainWindow;
+        public AddTransactionWindow(MainWindow mw)
         {
+            mainWindow = mw;
             InitializeComponent();
         }
 
@@ -33,15 +35,8 @@ namespace SmartSaver.Desktop
             }
         }
 
-        private void addNewTransactionButton_Click(object sender, EventArgs e)
+        public void ValidateFields(string amount, string details)
         {
-            DateTime date = transactionDate.Value;
-            string amount = transactionAmount.Text;
-            string details = transactionDetailsReasons.Text;
-            string counterParty = transactionCategory.Text;
-
-           
-
             if (String.IsNullOrWhiteSpace(amount))
             {
                 transactionAmount.BackColor = Color.Red;
@@ -50,26 +45,36 @@ namespace SmartSaver.Desktop
             {
                 transactionDetailsReasons.BackColor = Color.Red;
             }
+        }
+
+        private void addNewTransactionButton_Click(object sender, EventArgs e)
+        {
+            DateTime date = transactionDate.Value;
+            string amount = transactionAmount.Text;
+            string details = transactionDetailsReasons.Text;
+            string counterParty = transactionCategory.Text;
+
+            ValidateFields(amount, details);
 
             if (!String.IsNullOrWhiteSpace(amount) && !String.IsNullOrWhiteSpace(details))
             {
                 decimal amountInDecimal = decimal.Parse(amount);
 
                 Database db = new Database();
-                Transaction newTransaction = new Transaction();
-          
-                newTransaction.TrTime = date;
-                newTransaction.Amount = amountInDecimal;
-                newTransaction.Details = details;
-                newTransaction.CounterParty = counterParty;
 
+                // Transaction newTransaction = new Transaction(date, amountInDecimal, details, counterParty); 
+                Transaction newTransaction = new Transaction { 
+                    TrTime = date,
+                    Amount = amountInDecimal,
+                    Details = details
+                };
+
+                
                 db.AddTransaction(newTransaction);
 
-                MainWindow mw = new MainWindow();
-                mw.DrawTable(db.GetTransactions());
-
+                mainWindow.DrawTable(db.GetTransactions());                
             }
-          
+            this.Close();
         }
     }
 }
