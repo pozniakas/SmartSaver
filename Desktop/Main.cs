@@ -9,7 +9,7 @@ namespace SmartSaver.Desktop
     public partial class Main : Form
     {
         private readonly Database db = new Database();
-        private List<Transaction> ProductList; 
+        private List<Transaction> TransactionList;
 
         public Main()
         {
@@ -27,7 +27,7 @@ namespace SmartSaver.Desktop
             listTransactionsView.View = View.Details;
             listTransactionsView.GridLines = true;
 
-            listTransactionsView.Columns.Add("Date", 150);
+            listTransactionsView.Columns.Add("Datetime", 150);
             listTransactionsView.Columns.Add("Amount", 75);
             listTransactionsView.Columns.Add("Details", 300);
             listTransactionsView.Columns.Add("Counter Party", 200);
@@ -35,7 +35,8 @@ namespace SmartSaver.Desktop
 
         public void UpdateTransactionList()
         {
-            ProductList = db.GetTransactions();
+            TransactionList = db.GetTransactions();
+            TransactionList.Reverse();
             PopulateTransactionListView();
         }
 
@@ -43,7 +44,7 @@ namespace SmartSaver.Desktop
         {
             listTransactionsView.Items.Clear();
 
-            foreach (var transaction in ProductList)
+            foreach (var transaction in TransactionList)
             {
                 var item = new ListViewItem(new string[] { 
                     ((DateTime) transaction.TrTime).ToString("yyyy-MM-dd HH:mm"),
