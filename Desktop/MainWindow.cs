@@ -32,6 +32,7 @@ namespace SmartSaver
             newTransaction.CounterParty = "UAB Maxima";
             db.AddTransaction(newTransaction);
 
+         
             Debug.WriteLine("Transactions:");
             foreach (var tr in db.GetTransactions())
             {
@@ -106,7 +107,7 @@ namespace SmartSaver
             //    // For now ignoring header
             //    reader.ReadLine();
             //    using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
-
+            
             //    csv.Configuration.Delimiter = ";";
             //    csv.Configuration.HasHeaderRecord = false;
             //    //csv.Configuration.MissingFieldFound = null;
@@ -138,10 +139,20 @@ namespace SmartSaver
 
         }
 
+
         private void addGoal_Click(object sender, EventArgs e)
         {
             AddGoalWindow newGoalWindow = new AddGoalWindow();
             newGoalWindow.Show();
+
+
+        private void addTransactionButton_Click(object sender, EventArgs e)
+        {
+         
+            AddTransactionWindow newTransactionWindow = new AddTransactionWindow(this);
+            newTransactionWindow.Show();
+
+
         }
     }
 }

@@ -35,7 +35,7 @@
             this.btnExport = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.addTransaction = new System.Windows.Forms.Button();
+            this.addTransactionButton = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnUpload = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -115,21 +115,22 @@
             // 
             // panel4
             // 
-            this.panel4.Controls.Add(this.addTransaction);
+            this.panel4.Controls.Add(this.addTransactionButton);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel4.Location = new System.Drawing.Point(0, 422);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(343, 92);
             this.panel4.TabIndex = 1;
             // 
-            // addTransaction
+            // addTransactionButton
             // 
-            this.addTransaction.Location = new System.Drawing.Point(54, 25);
-            this.addTransaction.Name = "addTransaction";
-            this.addTransaction.Size = new System.Drawing.Size(236, 55);
-            this.addTransaction.TabIndex = 0;
-            this.addTransaction.Text = "Add transaction";
-            this.addTransaction.UseVisualStyleBackColor = true;
+            this.addTransactionButton.Location = new System.Drawing.Point(54, 25);
+            this.addTransactionButton.Name = "addTransactionButton";
+            this.addTransactionButton.Size = new System.Drawing.Size(236, 55);
+            this.addTransactionButton.TabIndex = 0;
+            this.addTransactionButton.Text = "Add transaction";
+            this.addTransactionButton.UseVisualStyleBackColor = true;
+            this.addTransactionButton.Click += new System.EventHandler(this.addTransactionButton_Click);
             // 
             // panel3
             // 
@@ -237,7 +238,7 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnUpload;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Button addTransaction;
+        private System.Windows.Forms.Button addTransactionButton;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panel6;
