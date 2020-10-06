@@ -16,7 +16,9 @@ namespace SmartSaver.Models
         }
 
         public virtual DbSet<Goal> Goal { get; set; }
+        public virtual DbSet<Tag> Tag { get; set; }
         public virtual DbSet<Transaction> Transaction { get; set; }
+        public virtual DbSet<TransactionTag> TransactionTag { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -56,6 +58,17 @@ namespace SmartSaver.Models
                     .HasMaxLength(100);
             });
 
+            modelBuilder.Entity<Tag>(entity =>
+            {
+                entity.ToTable("tag", "smartsaver");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Title)
+                    .HasColumnName("title")
+                    .HasMaxLength(100);
+            });
+
             modelBuilder.Entity<Transaction>(entity =>
             {
                 entity.ToTable("transaction", "smartsaver");
@@ -75,6 +88,29 @@ namespace SmartSaver.Models
                     .HasMaxLength(1000);
 
                 entity.Property(e => e.TrTime).HasColumnName("tr_time");
+            });
+
+            modelBuilder.Entity<TransactionTag>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("transaction_tag", "smartsaver");
+
+                entity.Property(e => e.TagId).HasColumnName("tag_id");
+
+                entity.Property(e => e.TransactionId).HasColumnName("transaction_id");
+
+                entity.HasOne(d => d.Tag)
+                    .WithMany()
+                    .HasForeignKey(d => d.TagId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_smartsaver.transaction_tag__tag_id");
+
+                entity.HasOne(d => d.Transaction)
+                    .WithMany()
+                    .HasForeignKey(d => d.TransactionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_smartsaver.transaction_tag__transaction_id");
             });
 
             OnModelCreatingPartial(modelBuilder);
