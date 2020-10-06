@@ -76,5 +76,14 @@ namespace SmartSaver.Desktop
         {
             // (FileExporter or FileManager).export
         }
+
+        private void tipButton_Click(object sender, EventArgs e)
+        {
+            TipWindow tipWindow = new TipWindow();
+            tipWindow.Show();
+
+            tipWindow.Location = this.Location;
+
+        }
     }
 }

@@ -35,8 +35,9 @@
             this.buttonAddTransaction = new System.Windows.Forms.Button();
             this.buttonUpload = new System.Windows.Forms.Button();
             this.panelRightSidebar = new System.Windows.Forms.Panel();
-            this.buttonExport = new System.Windows.Forms.Button();
             this.buttonSetGoal = new System.Windows.Forms.Button();
+            this.buttonExport = new System.Windows.Forms.Button();
+            this.tipButton = new System.Windows.Forms.Button();
             this.panelMain.SuspendLayout();
             this.panelRightSidebar.SuspendLayout();
             this.SuspendLayout();
@@ -44,26 +45,29 @@
             // panelBottomSidebar
             // 
             this.panelBottomSidebar.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelBottomSidebar.Location = new System.Drawing.Point(0, 521);
+            this.panelBottomSidebar.Location = new System.Drawing.Point(0, 391);
+            this.panelBottomSidebar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panelBottomSidebar.Name = "panelBottomSidebar";
-            this.panelBottomSidebar.Size = new System.Drawing.Size(901, 41);
+            this.panelBottomSidebar.Size = new System.Drawing.Size(788, 31);
             this.panelBottomSidebar.TabIndex = 1;
             // 
             // panelTopSidebar
             // 
             this.panelTopSidebar.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTopSidebar.Location = new System.Drawing.Point(0, 0);
+            this.panelTopSidebar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panelTopSidebar.Name = "panelTopSidebar";
-            this.panelTopSidebar.Size = new System.Drawing.Size(901, 87);
+            this.panelTopSidebar.Size = new System.Drawing.Size(788, 65);
             this.panelTopSidebar.TabIndex = 2;
             // 
             // panelMain
             // 
             this.panelMain.Controls.Add(this.listTransactionsView);
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMain.Location = new System.Drawing.Point(0, 87);
+            this.panelMain.Location = new System.Drawing.Point(0, 65);
+            this.panelMain.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(901, 434);
+            this.panelMain.Size = new System.Drawing.Size(788, 326);
             this.panelMain.TabIndex = 3;
             // 
             // listTransactionsView
@@ -71,17 +75,19 @@
             this.listTransactionsView.Dock = System.Windows.Forms.DockStyle.Left;
             this.listTransactionsView.HideSelection = false;
             this.listTransactionsView.Location = new System.Drawing.Point(0, 0);
+            this.listTransactionsView.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listTransactionsView.Name = "listTransactionsView";
-            this.listTransactionsView.Size = new System.Drawing.Size(874, 434);
+            this.listTransactionsView.Size = new System.Drawing.Size(765, 326);
             this.listTransactionsView.TabIndex = 0;
             this.listTransactionsView.UseCompatibleStateImageBehavior = false;
             // 
             // buttonAddTransaction
             // 
             this.buttonAddTransaction.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAddTransaction.Location = new System.Drawing.Point(61, 484);
+            this.buttonAddTransaction.Location = new System.Drawing.Point(53, 363);
+            this.buttonAddTransaction.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonAddTransaction.Name = "buttonAddTransaction";
-            this.buttonAddTransaction.Size = new System.Drawing.Size(182, 29);
+            this.buttonAddTransaction.Size = new System.Drawing.Size(159, 22);
             this.buttonAddTransaction.TabIndex = 0;
             this.buttonAddTransaction.Text = "Add Transaction";
             this.buttonAddTransaction.UseVisualStyleBackColor = true;
@@ -90,9 +96,10 @@
             // buttonUpload
             // 
             this.buttonUpload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonUpload.Location = new System.Drawing.Point(7, 12);
+            this.buttonUpload.Location = new System.Drawing.Point(6, 9);
+            this.buttonUpload.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonUpload.Name = "buttonUpload";
-            this.buttonUpload.Size = new System.Drawing.Size(272, 29);
+            this.buttonUpload.Size = new System.Drawing.Size(238, 22);
             this.buttonUpload.TabIndex = 1;
             this.buttonUpload.Text = "Upload bank statment";
             this.buttonUpload.UseVisualStyleBackColor = true;
@@ -100,47 +107,62 @@
             // 
             // panelRightSidebar
             // 
+            this.panelRightSidebar.Controls.Add(this.tipButton);
             this.panelRightSidebar.Controls.Add(this.buttonSetGoal);
             this.panelRightSidebar.Controls.Add(this.buttonExport);
             this.panelRightSidebar.Controls.Add(this.buttonUpload);
             this.panelRightSidebar.Controls.Add(this.buttonAddTransaction);
             this.panelRightSidebar.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelRightSidebar.Location = new System.Drawing.Point(901, 0);
+            this.panelRightSidebar.Location = new System.Drawing.Point(788, 0);
+            this.panelRightSidebar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panelRightSidebar.Name = "panelRightSidebar";
-            this.panelRightSidebar.Size = new System.Drawing.Size(291, 562);
+            this.panelRightSidebar.Size = new System.Drawing.Size(255, 422);
             this.panelRightSidebar.TabIndex = 0;
-            // 
-            // buttonExport
-            // 
-            this.buttonExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonExport.Location = new System.Drawing.Point(7, 47);
-            this.buttonExport.Name = "buttonExport";
-            this.buttonExport.Size = new System.Drawing.Size(272, 29);
-            this.buttonExport.TabIndex = 1;
-            this.buttonExport.Text = "Export transactions";
-            this.buttonExport.UseVisualStyleBackColor = true;
-            this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
             // 
             // buttonSetGoal
             // 
             this.buttonSetGoal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSetGoal.Location = new System.Drawing.Point(61, 416);
+            this.buttonSetGoal.Location = new System.Drawing.Point(53, 312);
+            this.buttonSetGoal.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonSetGoal.Name = "buttonSetGoal";
-            this.buttonSetGoal.Size = new System.Drawing.Size(182, 29);
+            this.buttonSetGoal.Size = new System.Drawing.Size(159, 22);
             this.buttonSetGoal.TabIndex = 0;
             this.buttonSetGoal.Text = "Set Goal";
             this.buttonSetGoal.UseVisualStyleBackColor = true;
             this.buttonSetGoal.Click += new System.EventHandler(this.buttonSetGoal_Click);
             // 
+            // buttonExport
+            // 
+            this.buttonExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonExport.Location = new System.Drawing.Point(6, 35);
+            this.buttonExport.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonExport.Name = "buttonExport";
+            this.buttonExport.Size = new System.Drawing.Size(238, 22);
+            this.buttonExport.TabIndex = 1;
+            this.buttonExport.Text = "Export transactions";
+            this.buttonExport.UseVisualStyleBackColor = true;
+            this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
+            // 
+            // tipButton
+            // 
+            this.tipButton.Location = new System.Drawing.Point(221, 399);
+            this.tipButton.Name = "tipButton";
+            this.tipButton.Size = new System.Drawing.Size(34, 23);
+            this.tipButton.TabIndex = 4;
+            this.tipButton.Text = "Tip";
+            this.tipButton.UseVisualStyleBackColor = true;
+            this.tipButton.Click += new System.EventHandler(this.tipButton_Click);
+            // 
             // Main
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1192, 562);
+            this.ClientSize = new System.Drawing.Size(1043, 422);
             this.Controls.Add(this.panelMain);
             this.Controls.Add(this.panelTopSidebar);
             this.Controls.Add(this.panelBottomSidebar);
             this.Controls.Add(this.panelRightSidebar);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Smart Saver";
@@ -161,5 +183,6 @@
         private System.Windows.Forms.Panel panelRightSidebar;
         private System.Windows.Forms.Button buttonSetGoal;
         private System.Windows.Forms.Button buttonExport;
+        private System.Windows.Forms.Button tipButton;
     }
 }
