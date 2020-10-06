@@ -6,3 +6,5 @@ dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
 dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL.Design
 
 dotnet restore
+
+pause
