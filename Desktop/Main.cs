@@ -59,6 +59,8 @@ namespace SmartSaver.Desktop
 
         private void buttonSetGoal_Click(object sender, EventArgs e)
         {
+            AddGoalWindow newGoalWindow = new AddGoalWindow();
+            newGoalWindow.Show();
             // GoalSetter.SetGoal();
         }
 

@@ -145,7 +145,7 @@ namespace SmartSaver
             AddGoalWindow newGoalWindow = new AddGoalWindow();
             newGoalWindow.Show();
 
-
+        }
         private void addTransactionButton_Click(object sender, EventArgs e)
         {
          
