@@ -35,7 +35,7 @@
             this.btnExport = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.addTransaction = new System.Windows.Forms.Button();
+            this.addTransactionButton = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnUpload = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -107,28 +107,29 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(6, 13);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(230, 21);
+            this.label2.Size = new System.Drawing.Size(190, 20);
             this.label2.TabIndex = 0;
             this.label2.Text = "Export transaction history";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // panel4
             // 
-            this.panel4.Controls.Add(this.addTransaction);
+            this.panel4.Controls.Add(this.addTransactionButton);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel4.Location = new System.Drawing.Point(0, 422);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(343, 92);
             this.panel4.TabIndex = 1;
             // 
-            // addTransaction
+            // addTransactionButton
             // 
-            this.addTransaction.Location = new System.Drawing.Point(54, 25);
-            this.addTransaction.Name = "addTransaction";
-            this.addTransaction.Size = new System.Drawing.Size(236, 55);
-            this.addTransaction.TabIndex = 0;
-            this.addTransaction.Text = "Add transaction";
-            this.addTransaction.UseVisualStyleBackColor = true;
+            this.addTransactionButton.Location = new System.Drawing.Point(54, 25);
+            this.addTransactionButton.Name = "addTransactionButton";
+            this.addTransactionButton.Size = new System.Drawing.Size(236, 55);
+            this.addTransactionButton.TabIndex = 0;
+            this.addTransactionButton.Text = "Add transaction";
+            this.addTransactionButton.UseVisualStyleBackColor = true;
+            this.addTransactionButton.Click += new System.EventHandler(this.addTransactionButton_Click);
             // 
             // panel3
             // 
@@ -148,14 +149,13 @@
             this.btnUpload.TabIndex = 1;
             this.btnUpload.Text = "Choose file";
             this.btnUpload.UseVisualStyleBackColor = true;
-            this.btnUpload.Click += new System.EventHandler(this.btnUpload_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(6, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(207, 21);
+            this.label1.Size = new System.Drawing.Size(171, 20);
             this.label1.TabIndex = 0;
             this.label1.Text = "Upload bank statment";
             this.label1.Click += new System.EventHandler(this.label1_Click);
@@ -174,7 +174,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(13, 13);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(155, 21);
+            this.label3.Size = new System.Drawing.Size(130, 20);
             this.label3.TabIndex = 0;
             this.label3.Text = "Current balance";
             // 
@@ -237,7 +237,7 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnUpload;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Button addTransaction;
+        private System.Windows.Forms.Button addTransactionButton;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panel6;

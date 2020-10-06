@@ -10,5 +10,16 @@ namespace SmartSaver.Models
         public decimal Amount { get; set; }
         public string Details { get; set; }
         public string CounterParty { get; set; }
+
+       /* public Transaction(DateTime aDate, decimal aAmount, string aDetails, string aCounterParty)
+        {
+            this.TrTime = aDate;
+            this.Amount = aAmount;
+            this.Details = aDetails;
+            this.CounterParty = aCounterParty;
+        }
+
+        public Transaction() { }*/
     }
+
 }

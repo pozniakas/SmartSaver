@@ -9,7 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.Runtime.CompilerServices;
+using SmartSaver.Desktop;
 
 namespace SmartSaver
 {
@@ -32,6 +32,7 @@ namespace SmartSaver
             newTransaction.CounterParty = "UAB Maxima";
             db.AddTransaction(newTransaction);
 
+         
             Debug.WriteLine("Transactions:");
             foreach (var tr in db.GetTransactions())
             {
@@ -135,77 +136,15 @@ namespace SmartSaver
 
         private void button1_Click(object sender, EventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            string filter = "CSV file (*.csv)|*.csv| All Files (*.*)|*.*";
-            saveFileDialog.Filter = filter;
-            const string header = "Id,Date,Counter Party,Details,Amount";
-            StreamWriter writer = null;
 
-            Database db = new Database();
-            List<Transaction> transactions = db.GetTransactions();
-
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                writer = new StreamWriter(saveFileDialog.FileName);
-
-                writer.WriteLine(header);
-                foreach(Transaction transaction in transactions)
-                {
-                    writer.WriteLine(transaction.Id.ToString()+","+transaction.TrTime + "," + transaction.CounterParty + "," + 
-                        transaction.Details + "," + transaction.Amount);
-                }
-
-                writer.Close();
-            }
         }
 
-        private void btnUpload_Click(object sender, EventArgs e)
+        private void addTransactionButton_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            string filter = "CSV file (*.csv)|*.csv";
-            openFileDialog.Filter = filter;
-            StreamReader reader = null;
-            string line = "";
-            Database db = new Database();
-            
-
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                reader = new StreamReader(openFileDialog.FileName);
-                reader.ReadLine();
-                reader.ReadLine();
-                while(line != null)
-                {
-                    Transaction newTransaction = new Transaction();
-                    line = reader.ReadLine();
-                    if (line != null)
-                    {
-                        string pattern = @"""\s*,\s*""";
-
-                        // input.Substring(1, input.Length - 2) removes the first and last " from the string
-                        string[] tokens = System.Text.RegularExpressions.Regex.Split(
-                            line.Substring(1, line.Length - 2), pattern);
-
-                        if (tokens[5] != "Apyvarta")
-                        {
-                            newTransaction.TrTime = DateTime.Parse(tokens[2]);
-                            decimal d = decimal.Parse(tokens[6]);
-                            if (tokens[8] == "D")
-                                d = d * -1;
-                            newTransaction.Amount = d;
-                            newTransaction.Details = tokens[5];
-                            newTransaction.CounterParty = tokens[3];
-
-                            db.AddTransaction(newTransaction);
-                        }
-                        else break;
-                    }
-                }
-                reader.Close();
-                DrawTable(db.GetTransactions());
-            }
+         
+            AddTransactionWindow newTransactionWindow = new AddTransactionWindow(this);
+            newTransactionWindow.Show();
 
         }
-
     }
 }
