@@ -29,7 +29,8 @@ create table smartsaver.goal (
 	description varchar(1000),
 
 	constraint "pk_smartsaver.goal" primary key(id),
-	constraint "uq_smartsaver.goal__title_goal_date" unique(title, goal_date)
+	constraint "uq_smartsaver.goal__title_goal_date" unique(title, goal_date),
+	CONSTRAINT "uq_smartsaver.goal__amount_positive" CHECK (amount > 0)
 );
 
 
