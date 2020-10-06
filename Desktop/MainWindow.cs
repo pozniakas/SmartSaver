@@ -142,9 +142,6 @@ namespace SmartSaver
         private void addTransactionButton_Click(object sender, EventArgs e)
         {
          
-            AddTransactionWindow newTransactionWindow = new AddTransactionWindow(this);
-            newTransactionWindow.Show();
-
         }
     }
 }

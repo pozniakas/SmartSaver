@@ -64,7 +64,8 @@ namespace SmartSaver.Desktop
 
         private void buttonAddTransaction_Click(object sender, EventArgs e)
         {
-            // TO-DO
+            AddTransactionWindow newTransactionWindow = new AddTransactionWindow(this);
+            newTransactionWindow.Show();
         }
 
         private void buttonUpload_Click(object sender, EventArgs e)
