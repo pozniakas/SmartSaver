@@ -2,6 +2,7 @@
 using SmartSaver.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace SmartSaver.Desktop
@@ -42,9 +43,14 @@ namespace SmartSaver.Desktop
 
         private void PopulateTransactionListView()
         {
+            PopulateTransactionListView(TransactionList);
+        }
+
+        private void PopulateTransactionListView(IEnumerable<Transaction> transactionList)
+        {
             listTransactionsView.Items.Clear();
 
-            foreach (var transaction in TransactionList)
+            foreach (var transaction in transactionList)
             {
                 var item = new ListViewItem(new string[] { 
                     ((DateTime) transaction.TrTime).ToString("yyyy-MM-dd HH:mm"),
@@ -76,6 +82,19 @@ namespace SmartSaver.Desktop
         private void buttonExport_Click(object sender, EventArgs e)
         {
             // (FileExporter or FileManager).export
+        }
+
+        private void buttonFilter_Click(object sender, EventArgs e)
+        {
+            IEnumerable<Transaction> filteredTransactions = TransactionList.Where(transaction =>
+                transaction.TrTime >= dateFilterFrom.Value && transaction.TrTime <= dateFilterTo.Value
+            );
+            PopulateTransactionListView(filteredTransactions);
+        }
+
+        private void buttonResetFilter_Click(object sender, EventArgs e)
+        {
+            UpdateTransactionList();
         }
     }
 }
