@@ -81,6 +81,7 @@
             this.addGoal.TabIndex = 0;
             this.addGoal.Text = "Add Goal";
             this.addGoal.UseVisualStyleBackColor = true;
+            this.addGoal.Click += new System.EventHandler(this.addGoal_Click);
             // 
             // panel6
             // 

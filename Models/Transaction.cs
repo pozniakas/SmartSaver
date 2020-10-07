@@ -11,7 +11,6 @@ namespace SmartSaver.Models
         public string Details { get; set; }
         public string CounterParty { get; set; }
         public long? CategoryId { get; set; }
-
         public virtual Category Category { get; set; }
     }
 }
