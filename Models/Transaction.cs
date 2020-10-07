@@ -10,7 +10,7 @@ namespace SmartSaver.Models
         public decimal Amount { get; set; }
         public string Details { get; set; }
         public string CounterParty { get; set; }
-
+        public long? CategoryId { get; set; }
+        public virtual Category Category { get; set; }
     }
-
 }
