@@ -76,12 +76,15 @@ namespace SmartSaver.Desktop
 
         private void buttonUpload_Click(object sender, EventArgs e)
         {
-            // (FileUploader or FileManager).upload
+            FileManager fileManager = new FileManager();
+            fileManager.Import();
+            UpdateTransactionList();
         }
 
         private void buttonExport_Click(object sender, EventArgs e)
         {
-            // (FileExporter or FileManager).export
+            FileManager fileManager = new FileManager();
+            fileManager.Export();
         }
 
         private void buttonFilter_Click(object sender, EventArgs e)
