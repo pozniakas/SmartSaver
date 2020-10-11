@@ -62,7 +62,7 @@ namespace SmartSaver.Desktop
 
                 Database db = new Database();
 
-                // Transaction newTransaction = new Transaction(date, amountInDecimal, details, counterParty); 
+               
                 Transaction newTransaction = new Transaction { 
                     TrTime = date,
                     Amount = amountInDecimal,
