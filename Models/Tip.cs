@@ -6,9 +6,8 @@ namespace SmartSaver.Models
 {
     public class Tip
     {
-
-        private string tipName;
-        private string tipLink;
+        public string tipName { get; set; }
+        public string tipLink { get; set; }
 
         public Tip()
         {
@@ -18,18 +17,6 @@ namespace SmartSaver.Models
         {
             tipName = aTipName;
             tipLink = atipLink;
-        }
-
-        public string TipName
-        {
-            get { return tipName; }
-            set { tipName = value; }
-        }
-
-        public string TipLink
-        {
-            get { return tipLink; }
-            set { tipLink = value; }
         }
 
     }
