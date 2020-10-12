@@ -13,8 +13,8 @@ namespace SmartSaver.Desktop
 {
     public partial class AddTransactionWindow : Form
     {
-        private MainWindow mainWindow;
-        public AddTransactionWindow(MainWindow mw)
+        private Main mainWindow;
+        public AddTransactionWindow(Main mw)
         {
             mainWindow = mw;
             InitializeComponent();
@@ -62,7 +62,6 @@ namespace SmartSaver.Desktop
 
                 Database db = new Database();
 
-               
                 Transaction newTransaction = new Transaction { 
                     TrTime = date,
                     Amount = amountInDecimal,
@@ -72,7 +71,7 @@ namespace SmartSaver.Desktop
                 
                 db.AddTransaction(newTransaction);
 
-                mainWindow.DrawTable(db.GetTransactions());                
+                mainWindow.UpdateTransactionList();
             }
             this.Close();
         }

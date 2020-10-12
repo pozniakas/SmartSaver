@@ -30,14 +30,22 @@
         {
             this.panelBottomSidebar = new System.Windows.Forms.Panel();
             this.panelTopSidebar = new System.Windows.Forms.Panel();
+            this.buttonResetFilter = new System.Windows.Forms.Button();
+            this.buttonFilter = new System.Windows.Forms.Button();
+            this.labelTo = new System.Windows.Forms.Label();
+            this.labelFrom = new System.Windows.Forms.Label();
+            this.dateFilterTo = new System.Windows.Forms.DateTimePicker();
+            this.dateFilterFrom = new System.Windows.Forms.DateTimePicker();
+            this.labelFilter = new System.Windows.Forms.Label();
             this.panelMain = new System.Windows.Forms.Panel();
             this.listTransactionsView = new System.Windows.Forms.ListView();
             this.buttonAddTransaction = new System.Windows.Forms.Button();
             this.buttonUpload = new System.Windows.Forms.Button();
             this.panelRightSidebar = new System.Windows.Forms.Panel();
+            this.tipButton = new System.Windows.Forms.Button();
             this.buttonSetGoal = new System.Windows.Forms.Button();
             this.buttonExport = new System.Windows.Forms.Button();
-            this.tipButton = new System.Windows.Forms.Button();
+            this.panelTopSidebar.SuspendLayout();
             this.panelMain.SuspendLayout();
             this.panelRightSidebar.SuspendLayout();
             this.SuspendLayout();
@@ -53,12 +61,88 @@
             // 
             // panelTopSidebar
             // 
+            this.panelTopSidebar.Controls.Add(this.buttonResetFilter);
+            this.panelTopSidebar.Controls.Add(this.buttonFilter);
+            this.panelTopSidebar.Controls.Add(this.labelTo);
+            this.panelTopSidebar.Controls.Add(this.labelFrom);
+            this.panelTopSidebar.Controls.Add(this.dateFilterTo);
+            this.panelTopSidebar.Controls.Add(this.dateFilterFrom);
+            this.panelTopSidebar.Controls.Add(this.labelFilter);
             this.panelTopSidebar.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTopSidebar.Location = new System.Drawing.Point(0, 0);
             this.panelTopSidebar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panelTopSidebar.Name = "panelTopSidebar";
             this.panelTopSidebar.Size = new System.Drawing.Size(788, 65);
             this.panelTopSidebar.TabIndex = 2;
+            // 
+            // buttonResetFilter
+            // 
+            this.buttonResetFilter.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonResetFilter.Location = new System.Drawing.Point(657, 37);
+            this.buttonResetFilter.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonResetFilter.Name = "buttonResetFilter";
+            this.buttonResetFilter.Size = new System.Drawing.Size(95, 20);
+            this.buttonResetFilter.TabIndex = 4;
+            this.buttonResetFilter.Text = "Reset filter";
+            this.buttonResetFilter.UseVisualStyleBackColor = true;
+            this.buttonResetFilter.Click += new System.EventHandler(this.buttonResetFilter_Click);
+            // 
+            // buttonFilter
+            // 
+            this.buttonFilter.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonFilter.Location = new System.Drawing.Point(556, 37);
+            this.buttonFilter.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonFilter.Name = "buttonFilter";
+            this.buttonFilter.Size = new System.Drawing.Size(95, 20);
+            this.buttonFilter.TabIndex = 4;
+            this.buttonFilter.Text = "Filter";
+            this.buttonFilter.UseVisualStyleBackColor = true;
+            this.buttonFilter.Click += new System.EventHandler(this.buttonFilter_Click);
+            // 
+            // labelTo
+            // 
+            this.labelTo.AutoSize = true;
+            this.labelTo.Location = new System.Drawing.Point(379, 40);
+            this.labelTo.Name = "labelTo";
+            this.labelTo.Size = new System.Drawing.Size(19, 15);
+            this.labelTo.TabIndex = 3;
+            this.labelTo.Text = "To";
+            // 
+            // labelFrom
+            // 
+            this.labelFrom.AutoSize = true;
+            this.labelFrom.Location = new System.Drawing.Point(184, 42);
+            this.labelFrom.Name = "labelFrom";
+            this.labelFrom.Size = new System.Drawing.Size(35, 15);
+            this.labelFrom.TabIndex = 3;
+            this.labelFrom.Text = "From";
+            // 
+            // dateFilterTo
+            // 
+            this.dateFilterTo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateFilterTo.Location = new System.Drawing.Point(406, 37);
+            this.dateFilterTo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.dateFilterTo.Name = "dateFilterTo";
+            this.dateFilterTo.Size = new System.Drawing.Size(115, 23);
+            this.dateFilterTo.TabIndex = 2;
+            // 
+            // dateFilterFrom
+            // 
+            this.dateFilterFrom.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateFilterFrom.Location = new System.Drawing.Point(227, 37);
+            this.dateFilterFrom.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.dateFilterFrom.Name = "dateFilterFrom";
+            this.dateFilterFrom.Size = new System.Drawing.Size(115, 23);
+            this.dateFilterFrom.TabIndex = 1;
+            // 
+            // labelFilter
+            // 
+            this.labelFilter.AutoSize = true;
+            this.labelFilter.Location = new System.Drawing.Point(10, 42);
+            this.labelFilter.Name = "labelFilter";
+            this.labelFilter.Size = new System.Drawing.Size(107, 15);
+            this.labelFilter.TabIndex = 0;
+            this.labelFilter.Text = "Filter transction list";
             // 
             // panelMain
             // 
@@ -77,7 +161,7 @@
             this.listTransactionsView.Location = new System.Drawing.Point(0, 0);
             this.listTransactionsView.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listTransactionsView.Name = "listTransactionsView";
-            this.listTransactionsView.Size = new System.Drawing.Size(765, 326);
+            this.listTransactionsView.Size = new System.Drawing.Size(789, 326);
             this.listTransactionsView.TabIndex = 0;
             this.listTransactionsView.UseCompatibleStateImageBehavior = false;
             // 
@@ -119,6 +203,17 @@
             this.panelRightSidebar.Size = new System.Drawing.Size(255, 422);
             this.panelRightSidebar.TabIndex = 0;
             // 
+            // tipButton
+            // 
+            this.tipButton.Location = new System.Drawing.Point(213, 393);
+            this.tipButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tipButton.Name = "tipButton";
+            this.tipButton.Size = new System.Drawing.Size(40, 27);
+            this.tipButton.TabIndex = 4;
+            this.tipButton.Text = "Tip";
+            this.tipButton.UseVisualStyleBackColor = true;
+            this.tipButton.Click += new System.EventHandler(this.tipButton_Click);
+            // 
             // buttonSetGoal
             // 
             this.buttonSetGoal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -143,16 +238,6 @@
             this.buttonExport.UseVisualStyleBackColor = true;
             this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
             // 
-            // tipButton
-            // 
-            this.tipButton.Location = new System.Drawing.Point(221, 399);
-            this.tipButton.Name = "tipButton";
-            this.tipButton.Size = new System.Drawing.Size(34, 23);
-            this.tipButton.TabIndex = 4;
-            this.tipButton.Text = "Tip";
-            this.tipButton.UseVisualStyleBackColor = true;
-            this.tipButton.Click += new System.EventHandler(this.tipButton_Click);
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -167,6 +252,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Smart Saver";
             this.Load += new System.EventHandler(this.Main_Load);
+            this.panelTopSidebar.ResumeLayout(false);
+            this.panelTopSidebar.PerformLayout();
             this.panelMain.ResumeLayout(false);
             this.panelRightSidebar.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -184,5 +271,12 @@
         private System.Windows.Forms.Button buttonSetGoal;
         private System.Windows.Forms.Button buttonExport;
         private System.Windows.Forms.Button tipButton;
+        private System.Windows.Forms.Button buttonResetFilter;
+        private System.Windows.Forms.Button buttonFilter;
+        private System.Windows.Forms.Label labelTo;
+        private System.Windows.Forms.Label labelFrom;
+        private System.Windows.Forms.DateTimePicker dateFilterTo;
+        private System.Windows.Forms.DateTimePicker dateFilterFrom;
+        private System.Windows.Forms.Label labelFilter;
     }
 }
