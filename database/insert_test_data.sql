@@ -6,7 +6,7 @@ truncate smartsaver.goal restart identity cascade;
 truncate smartsaver.tag restart identity cascade;
 truncate smartsaver.transaction_tag restart identity cascade;
 
--- SET CLIENT_ENCODING TO 'UTF8';
+SET CLIENT_ENCODING TO 'UTF8';
 
 insert into smartsaver.category
 (title)
