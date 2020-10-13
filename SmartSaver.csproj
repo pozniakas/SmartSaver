@@ -16,10 +16,32 @@
     <PackageReference Include="Microsoft.NETCore.App" Version="2.2.8" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.4" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.1" />
+    <PackageReference Include="Tesseract" Version="3.3.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="assets\" />
+    <Folder Include="assets\tessdata\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="assets\receipt1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="assets\receipt2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="assets\tessdata\best\lit.traineddata">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="assets\tessdata\eng.traineddata">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="assets\tessdata\enm.traineddata">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="assets\tessdata\lit.traineddata">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
