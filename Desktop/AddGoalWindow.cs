@@ -10,15 +10,63 @@ using SmartSaver.Models;
 
 namespace SmartSaver.Desktop
 {
-  
+
     public partial class AddGoalWindow : Form
     {
+        private readonly Database db = new Database();
+        private List<Goal> GoalList;
         public AddGoalWindow()
         {
             InitializeComponent();
         }
 
 
+        private void AddGoalWindow_Load(object sender, EventArgs e)
+        {
+            PrepareGoalListView();
+            UpdateGoalList();
+        }
+
+        private void PrepareGoalListView()
+        {
+            listView1.View = View.Details;
+            listView1.GridLines = true;
+
+            listView1.Columns.Add("Title", 100);
+            listView1.Columns.Add("Datetime", 70);
+            listView1.Columns.Add("Amount", 100);
+            listView1.Columns.Add("Details", 246);
+
+        }
+
+        public void UpdateGoalList()
+        {
+            GoalList = db.GetGoals();
+            GoalList.Reverse();
+            PopulateGoalListView();
+        }
+
+        private void PopulateGoalListView()
+        {
+            PopulateGoalListView(GoalList);
+        }
+
+        private void PopulateGoalListView(IEnumerable<Goal> GoalList)
+        {
+            listView1.Items.Clear();
+
+            foreach (var goal in GoalList)
+            {
+                var item = new ListViewItem(new string[] {
+                    goal.Title,
+                    ((DateTime) goal.GoalDate).ToString("yyyy-MM-dd"),
+                    goal.Amount.ToString(),
+                    goal.Description,
+                });
+
+                listView1.Items.Add(item);
+            }
+        }
         private void goalAmount_KeyPress(object sender, KeyPressEventArgs e)
         {
             char ch = e.KeyChar;
@@ -45,12 +93,12 @@ namespace SmartSaver.Desktop
                 goalMoney.BackColor = Color.Red;
             }
         }
-
         private void button1_Click(object sender, EventArgs e)
-        { 
+        {
             DateTime date = goalDate.Value;
             string amount = goalMoney.Text;
             string name = goalNameBox.Text;
+            string description = descriptionBox.Text;
 
             ValidateFields(amount, name);
 
@@ -64,27 +112,17 @@ namespace SmartSaver.Desktop
                 {
                     GoalDate = date,
                     Amount = amountInDecimal,
-                    Title = name
+                    Title = name,
+                    Description = description
                 };
-               db.AddGoal(newGoal);
+                db.AddGoal(newGoal);
+                UpdateGoalList();
             }
 
+        }
+        private void backButton_Click(object sender, EventArgs e)
+        {
             this.Close();
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void goalDate_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void AddGoalWindow_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
