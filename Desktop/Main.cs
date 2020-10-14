@@ -100,5 +100,14 @@ namespace SmartSaver.Desktop
         {
             UpdateTransactionList();
         }
+
+        private void tipButton_Click(object sender, EventArgs e)
+        {
+            TipWindow tipWindow = new TipWindow();
+            tipWindow.Show();
+
+            tipWindow.Location = this.Location;
+
+        }
     }
 }

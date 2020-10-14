@@ -60,6 +60,7 @@
             // 
             // transactionDate
             // 
+            this.transactionDate.Format= System.Windows.Forms.DateTimePickerFormat.Short;
             this.transactionDate.Location = new System.Drawing.Point(12, 58);
             this.transactionDate.Name = "transactionDate";
             this.transactionDate.Size = new System.Drawing.Size(200, 23);
