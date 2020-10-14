@@ -40,5 +40,21 @@ namespace SmartSaver.Data
 
             return goal;
         }
+
+        public int AddCategory(Category category)
+        {
+            using var db = new postgresContext();
+            db.Category.Add(category);
+            return db.SaveChanges();
+        }
+
+        public List<Category> GetCategories()
+        {
+            using var db = new postgresContext();
+            List<Category> categories = new List<Category>();
+            categories.AddRange(db.Category);
+
+            return categories;
+        }
     }
 }

@@ -109,5 +109,11 @@ namespace SmartSaver.Desktop
             tipWindow.Location = this.Location;
 
         }
+
+        private void buttonMyBudget_Click(object sender, EventArgs e)
+        {
+            MyBudgetWindow myBudgetWindow = new MyBudgetWindow();
+            myBudgetWindow.Show();
+        }
     }
 }
