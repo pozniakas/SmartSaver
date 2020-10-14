@@ -75,5 +75,20 @@ namespace SmartSaver.Desktop
             }
             this.Close();
         }
+
+        private void transactionDate_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void transactionAmount_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void transactionDetailsReasons_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
