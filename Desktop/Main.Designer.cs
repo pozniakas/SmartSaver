@@ -42,6 +42,7 @@
             this.buttonAddTransaction = new System.Windows.Forms.Button();
             this.buttonUpload = new System.Windows.Forms.Button();
             this.panelRightSidebar = new System.Windows.Forms.Panel();
+            this.tipButton = new System.Windows.Forms.Button();
             this.buttonSetGoal = new System.Windows.Forms.Button();
             this.buttonExport = new System.Windows.Forms.Button();
             this.panelTopSidebar.SuspendLayout();
@@ -52,9 +53,10 @@
             // panelBottomSidebar
             // 
             this.panelBottomSidebar.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelBottomSidebar.Location = new System.Drawing.Point(0, 521);
+            this.panelBottomSidebar.Location = new System.Drawing.Point(0, 391);
+            this.panelBottomSidebar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panelBottomSidebar.Name = "panelBottomSidebar";
-            this.panelBottomSidebar.Size = new System.Drawing.Size(901, 41);
+            this.panelBottomSidebar.Size = new System.Drawing.Size(788, 31);
             this.panelBottomSidebar.TabIndex = 1;
             // 
             // panelTopSidebar
@@ -68,16 +70,18 @@
             this.panelTopSidebar.Controls.Add(this.labelFilter);
             this.panelTopSidebar.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTopSidebar.Location = new System.Drawing.Point(0, 0);
+            this.panelTopSidebar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panelTopSidebar.Name = "panelTopSidebar";
-            this.panelTopSidebar.Size = new System.Drawing.Size(901, 87);
+            this.panelTopSidebar.Size = new System.Drawing.Size(788, 65);
             this.panelTopSidebar.TabIndex = 2;
             // 
             // buttonResetFilter
             // 
             this.buttonResetFilter.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonResetFilter.Location = new System.Drawing.Point(751, 49);
+            this.buttonResetFilter.Location = new System.Drawing.Point(657, 37);
+            this.buttonResetFilter.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonResetFilter.Name = "buttonResetFilter";
-            this.buttonResetFilter.Size = new System.Drawing.Size(109, 27);
+            this.buttonResetFilter.Size = new System.Drawing.Size(95, 20);
             this.buttonResetFilter.TabIndex = 4;
             this.buttonResetFilter.Text = "Reset filter";
             this.buttonResetFilter.UseVisualStyleBackColor = true;
@@ -86,9 +90,10 @@
             // buttonFilter
             // 
             this.buttonFilter.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonFilter.Location = new System.Drawing.Point(636, 49);
+            this.buttonFilter.Location = new System.Drawing.Point(556, 37);
+            this.buttonFilter.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonFilter.Name = "buttonFilter";
-            this.buttonFilter.Size = new System.Drawing.Size(109, 27);
+            this.buttonFilter.Size = new System.Drawing.Size(95, 20);
             this.buttonFilter.TabIndex = 4;
             this.buttonFilter.Text = "Filter";
             this.buttonFilter.UseVisualStyleBackColor = true;
@@ -97,43 +102,45 @@
             // labelTo
             // 
             this.labelTo.AutoSize = true;
-            this.labelTo.Location = new System.Drawing.Point(433, 54);
+            this.labelTo.Location = new System.Drawing.Point(379, 40);
             this.labelTo.Name = "labelTo";
-            this.labelTo.Size = new System.Drawing.Size(25, 20);
+            this.labelTo.Size = new System.Drawing.Size(19, 15);
             this.labelTo.TabIndex = 3;
             this.labelTo.Text = "To";
             // 
             // labelFrom
             // 
             this.labelFrom.AutoSize = true;
-            this.labelFrom.Location = new System.Drawing.Point(210, 56);
+            this.labelFrom.Location = new System.Drawing.Point(184, 42);
             this.labelFrom.Name = "labelFrom";
-            this.labelFrom.Size = new System.Drawing.Size(43, 20);
+            this.labelFrom.Size = new System.Drawing.Size(35, 15);
             this.labelFrom.TabIndex = 3;
             this.labelFrom.Text = "From";
             // 
             // dateFilterTo
             // 
             this.dateFilterTo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateFilterTo.Location = new System.Drawing.Point(464, 49);
+            this.dateFilterTo.Location = new System.Drawing.Point(406, 37);
+            this.dateFilterTo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dateFilterTo.Name = "dateFilterTo";
-            this.dateFilterTo.Size = new System.Drawing.Size(131, 27);
+            this.dateFilterTo.Size = new System.Drawing.Size(115, 23);
             this.dateFilterTo.TabIndex = 2;
             // 
             // dateFilterFrom
             // 
             this.dateFilterFrom.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateFilterFrom.Location = new System.Drawing.Point(259, 49);
+            this.dateFilterFrom.Location = new System.Drawing.Point(227, 37);
+            this.dateFilterFrom.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dateFilterFrom.Name = "dateFilterFrom";
-            this.dateFilterFrom.Size = new System.Drawing.Size(131, 27);
+            this.dateFilterFrom.Size = new System.Drawing.Size(115, 23);
             this.dateFilterFrom.TabIndex = 1;
             // 
             // labelFilter
             // 
             this.labelFilter.AutoSize = true;
-            this.labelFilter.Location = new System.Drawing.Point(12, 56);
+            this.labelFilter.Location = new System.Drawing.Point(10, 42);
             this.labelFilter.Name = "labelFilter";
-            this.labelFilter.Size = new System.Drawing.Size(134, 20);
+            this.labelFilter.Size = new System.Drawing.Size(107, 15);
             this.labelFilter.TabIndex = 0;
             this.labelFilter.Text = "Filter transction list";
             // 
@@ -141,9 +148,10 @@
             // 
             this.panelMain.Controls.Add(this.listTransactionsView);
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMain.Location = new System.Drawing.Point(0, 87);
+            this.panelMain.Location = new System.Drawing.Point(0, 65);
+            this.panelMain.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(901, 434);
+            this.panelMain.Size = new System.Drawing.Size(788, 326);
             this.panelMain.TabIndex = 3;
             // 
             // listTransactionsView
@@ -151,17 +159,19 @@
             this.listTransactionsView.Dock = System.Windows.Forms.DockStyle.Left;
             this.listTransactionsView.HideSelection = false;
             this.listTransactionsView.Location = new System.Drawing.Point(0, 0);
+            this.listTransactionsView.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listTransactionsView.Name = "listTransactionsView";
-            this.listTransactionsView.Size = new System.Drawing.Size(901, 434);
+            this.listTransactionsView.Size = new System.Drawing.Size(789, 326);
             this.listTransactionsView.TabIndex = 0;
             this.listTransactionsView.UseCompatibleStateImageBehavior = false;
             // 
             // buttonAddTransaction
             // 
             this.buttonAddTransaction.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAddTransaction.Location = new System.Drawing.Point(61, 484);
+            this.buttonAddTransaction.Location = new System.Drawing.Point(53, 363);
+            this.buttonAddTransaction.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonAddTransaction.Name = "buttonAddTransaction";
-            this.buttonAddTransaction.Size = new System.Drawing.Size(182, 29);
+            this.buttonAddTransaction.Size = new System.Drawing.Size(159, 22);
             this.buttonAddTransaction.TabIndex = 0;
             this.buttonAddTransaction.Text = "Add Transaction";
             this.buttonAddTransaction.UseVisualStyleBackColor = true;
@@ -170,9 +180,10 @@
             // buttonUpload
             // 
             this.buttonUpload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonUpload.Location = new System.Drawing.Point(7, 12);
+            this.buttonUpload.Location = new System.Drawing.Point(6, 9);
+            this.buttonUpload.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonUpload.Name = "buttonUpload";
-            this.buttonUpload.Size = new System.Drawing.Size(272, 29);
+            this.buttonUpload.Size = new System.Drawing.Size(238, 22);
             this.buttonUpload.TabIndex = 1;
             this.buttonUpload.Text = "Upload bank statment";
             this.buttonUpload.UseVisualStyleBackColor = true;
@@ -180,22 +191,36 @@
             // 
             // panelRightSidebar
             // 
+            this.panelRightSidebar.Controls.Add(this.tipButton);
             this.panelRightSidebar.Controls.Add(this.buttonSetGoal);
             this.panelRightSidebar.Controls.Add(this.buttonExport);
             this.panelRightSidebar.Controls.Add(this.buttonUpload);
             this.panelRightSidebar.Controls.Add(this.buttonAddTransaction);
             this.panelRightSidebar.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelRightSidebar.Location = new System.Drawing.Point(901, 0);
+            this.panelRightSidebar.Location = new System.Drawing.Point(788, 0);
+            this.panelRightSidebar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panelRightSidebar.Name = "panelRightSidebar";
-            this.panelRightSidebar.Size = new System.Drawing.Size(291, 562);
+            this.panelRightSidebar.Size = new System.Drawing.Size(255, 422);
             this.panelRightSidebar.TabIndex = 0;
+            // 
+            // tipButton
+            // 
+            this.tipButton.Location = new System.Drawing.Point(213, 393);
+            this.tipButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tipButton.Name = "tipButton";
+            this.tipButton.Size = new System.Drawing.Size(40, 27);
+            this.tipButton.TabIndex = 4;
+            this.tipButton.Text = "Tip";
+            this.tipButton.UseVisualStyleBackColor = true;
+            this.tipButton.Click += new System.EventHandler(this.tipButton_Click);
             // 
             // buttonSetGoal
             // 
             this.buttonSetGoal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSetGoal.Location = new System.Drawing.Point(61, 416);
+            this.buttonSetGoal.Location = new System.Drawing.Point(53, 312);
+            this.buttonSetGoal.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonSetGoal.Name = "buttonSetGoal";
-            this.buttonSetGoal.Size = new System.Drawing.Size(182, 29);
+            this.buttonSetGoal.Size = new System.Drawing.Size(159, 22);
             this.buttonSetGoal.TabIndex = 0;
             this.buttonSetGoal.Text = "Set Goal";
             this.buttonSetGoal.UseVisualStyleBackColor = true;
@@ -204,9 +229,10 @@
             // buttonExport
             // 
             this.buttonExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonExport.Location = new System.Drawing.Point(7, 47);
+            this.buttonExport.Location = new System.Drawing.Point(6, 35);
+            this.buttonExport.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonExport.Name = "buttonExport";
-            this.buttonExport.Size = new System.Drawing.Size(272, 29);
+            this.buttonExport.Size = new System.Drawing.Size(238, 22);
             this.buttonExport.TabIndex = 1;
             this.buttonExport.Text = "Export transactions";
             this.buttonExport.UseVisualStyleBackColor = true;
@@ -214,13 +240,14 @@
             // 
             // Main
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1192, 562);
+            this.ClientSize = new System.Drawing.Size(1043, 422);
             this.Controls.Add(this.panelMain);
             this.Controls.Add(this.panelTopSidebar);
             this.Controls.Add(this.panelBottomSidebar);
             this.Controls.Add(this.panelRightSidebar);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Smart Saver";
@@ -243,6 +270,7 @@
         private System.Windows.Forms.Panel panelRightSidebar;
         private System.Windows.Forms.Button buttonSetGoal;
         private System.Windows.Forms.Button buttonExport;
+        private System.Windows.Forms.Button tipButton;
         private System.Windows.Forms.Button buttonResetFilter;
         private System.Windows.Forms.Button buttonFilter;
         private System.Windows.Forms.Label labelTo;

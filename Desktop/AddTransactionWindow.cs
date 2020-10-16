@@ -72,8 +72,24 @@ namespace SmartSaver.Desktop
                 db.AddTransaction(newTransaction);
 
                 mainWindow.UpdateTransactionList();
+                MessageBox.Show("Transaction added");
             }
             this.Close();
+        }
+
+        private void transactionDate_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void transactionAmount_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void transactionDetailsReasons_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

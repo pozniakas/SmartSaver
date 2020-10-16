@@ -65,7 +65,8 @@ namespace SmartSaver.Desktop
 
         private void buttonSetGoal_Click(object sender, EventArgs e)
         {
-            // GoalSetter.SetGoal();
+            AddGoalWindow newGoalWindow = new AddGoalWindow();
+            newGoalWindow.Show();
         }
 
         private void buttonAddTransaction_Click(object sender, EventArgs e)
@@ -98,6 +99,15 @@ namespace SmartSaver.Desktop
         private void buttonResetFilter_Click(object sender, EventArgs e)
         {
             UpdateTransactionList();
+        }
+
+        private void tipButton_Click(object sender, EventArgs e)
+        {
+            TipWindow tipWindow = new TipWindow();
+            tipWindow.Show();
+
+            tipWindow.Location = this.Location;
+
         }
     }
 }
