@@ -63,7 +63,7 @@ namespace SmartSaver.Desktop
                 this.tipLinkLabel.LinkVisited = true;
                 Process.Start(psi);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Unable to open link that was clicked.");
             }
