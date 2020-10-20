@@ -57,7 +57,7 @@ namespace SmartSaver.Desktop
             StreamWriter writer = null;
 
             Database db = new Database();
-            List<Transaction> transactions = db.GetTransactions();
+            List<Transaction> transactions = (List<Transaction>) db.GetTransactions();
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {

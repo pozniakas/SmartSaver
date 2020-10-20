@@ -41,7 +41,7 @@ namespace SmartSaver.Desktop
 
         public void UpdateGoalList()
         {
-            GoalList = db.GetGoals();
+            GoalList = (List<Goal>) db.GetGoals();
             GoalList.Reverse();
             PopulateGoalListView();
         }
