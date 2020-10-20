@@ -36,7 +36,7 @@ namespace SmartSaver.Desktop
 
         public void UpdateTransactionList()
         {
-            TransactionList = db.GetTransactions();
+            TransactionList = (List<Transaction>) db.GetTransactions();
             TransactionList.Reverse();
             PopulateTransactionListView();
         }

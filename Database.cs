@@ -1,5 +1,6 @@
 ﻿using SmartSaver.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SmartSaver.Data
 {
@@ -15,12 +16,15 @@ namespace SmartSaver.Data
             return db.SaveChanges();
         }
 
-        public IEnumerable<Transaction> GetTransactions()
+        public IList<Transaction> GetTransactions()
         {
             using var db = new postgresContext();
-            return db.Transaction;
+            return db.Transaction.ToList();
         }
 
+        /// <returns>
+        ///     The number of state entries written to the database.
+        /// </returns>
         public int AddGoal(Goal goal)
         {
             using var db = new postgresContext();
@@ -31,7 +35,7 @@ namespace SmartSaver.Data
         public IEnumerable<Goal> GetGoals()
         {
             using var db = new postgresContext();
-            return db.Goal;
+            return db.Goal.ToList();
         }
     }
 }
