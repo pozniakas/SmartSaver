@@ -35,7 +35,8 @@ namespace SmartSaver.Desktop
             listView1.Columns.Add("Title", 100);
             listView1.Columns.Add("Datetime", 70);
             listView1.Columns.Add("Amount", 100);
-            listView1.Columns.Add("Details", 246);
+            listView1.Columns.Add("Details", 146);
+            listView1.Columns.Add("To save a week", 246);
 
         }
 
@@ -57,11 +58,13 @@ namespace SmartSaver.Desktop
 
             foreach (var goal in GoalList)
             {
+                int money = (Decimal.ToInt32(goal.Amount)) / ((((DateTime)goal.GoalDate).Subtract(DateTime.UtcNow) / 7).Days);
                 var item = new ListViewItem(new string[] {
                     goal.Title,
                     ((DateTime) goal.GoalDate).ToString("yyyy-MM-dd"),
                     goal.Amount.ToString(),
                     goal.Description,
+                    money.ToString()
                 });
 
                 listView1.Items.Add(item);
@@ -113,7 +116,7 @@ namespace SmartSaver.Desktop
                     GoalDate = date,
                     Amount = amountInDecimal,
                     Title = name,
-                    Description = description
+                    Description = description,
                 };
                 db.AddGoal(newGoal);
                 UpdateGoalList();
