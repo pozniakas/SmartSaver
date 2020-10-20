@@ -32,7 +32,7 @@ namespace SmartSaver.Data
             return db.SaveChanges();
         }
 
-        public IEnumerable<Goal> GetGoals()
+        public IList<Goal> GetGoals()
         {
             using var db = new postgresContext();
             return db.Goal.ToList();
