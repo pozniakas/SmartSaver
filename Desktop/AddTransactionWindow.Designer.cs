@@ -163,7 +163,6 @@
         private System.Windows.Forms.DateTimePicker transactionDate;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox transactionCategory;
-        private System.Windows.Forms.Label transactionDetails;
         private System.Windows.Forms.Label label;
         private System.Windows.Forms.TextBox transactionDetailsReasons;
         private System.Windows.Forms.Label label4;

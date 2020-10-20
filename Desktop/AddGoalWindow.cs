@@ -59,7 +59,7 @@ namespace SmartSaver.Desktop
             {
                 var item = new ListViewItem(new string[] {
                     goal.Title,
-                    ((DateTime) goal.GoalDate).ToString("yyyy-MM-dd"),
+                    ((DateTime) goal.Deadlinedate).ToString("yyyy-MM-dd"),
                     goal.Amount.ToString(),
                     goal.Description,
                 });
@@ -110,7 +110,7 @@ namespace SmartSaver.Desktop
 
                 Goal newGoal = new Goal
                 {
-                    GoalDate = date,
+                    Deadlinedate = date,
                     Amount = amountInDecimal,
                     Title = name,
                     Description = description
