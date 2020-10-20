@@ -37,5 +37,21 @@ namespace SmartSaver.Data
             using var db = new postgresContext();
             return db.Goal.ToList();
         }
+
+        /// <returns>
+        ///     The number of state entries written to the database.
+        /// </returns>
+        public int AddCategory(Category category)
+        {
+            using var db = new postgresContext();
+            db.Category.Add(category);
+            return db.SaveChanges();
+        }
+
+        public IList<Category> GetCategories()
+        {
+            using var db = new postgresContext();
+            return db.Category.ToList();
+        }
     }
 }
