@@ -18,7 +18,7 @@ namespace SmartSaver.Controllers
             const string header = "\"Id\",\"Date\",\"Counter Party\",\"Details\",\"Amount\",";
 
             Database db = new Database();
-            List<Transaction> transactions = db.GetTransactions();
+            IList<Transaction> transactions = db.GetTransactions();
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {

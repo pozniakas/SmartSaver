@@ -5,6 +5,7 @@ using System.Text;
 using SmartSaver.Data;
 using SmartSaver.Models;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace SmartSaver.Controllers
 {
@@ -31,6 +32,7 @@ namespace SmartSaver.Controllers
                         ReadSwed(reader);
                         break;
                     case "\"SĄSKAITOS  ":
+                    case "SĄSKAITOS  (":
                     case "ACCOUNT  (LT":
                         bool quotes = false;
                         if (line[0] == '\"')
@@ -112,7 +114,7 @@ namespace SmartSaver.Controllers
                     string[] tokens = System.Text.RegularExpressions.Regex.Split(
                         line, pattern);
 
-                    decimal d = decimal.Parse(tokens[3]);
+                    decimal d = decimal.Parse(tokens[3].Replace(',', '.'));
                     if (quotes)
                     {
                         if (tokens[14] == "\"D\"")
@@ -120,7 +122,7 @@ namespace SmartSaver.Controllers
                         string details = tokens[9].Substring(1, tokens[9].Length - 2);
                         string counterParty = tokens[4].Substring(1, tokens[4].Length - 2);
 
-                        AddTransaction(DateTime.Parse(tokens[1]), d / 100, counterParty, details);
+                        AddTransaction(DateTime.Parse(tokens[1]), d, counterParty, details);
                     }
                     else
                     {
@@ -129,7 +131,7 @@ namespace SmartSaver.Controllers
                         string details = tokens[9];
                         string counterParty = tokens[4];
 
-                        AddTransaction(DateTime.Parse(tokens[1]), d / 100, counterParty, details);
+                        AddTransaction(DateTime.Parse(tokens[1]), d, counterParty, details);
                     }
 
                 }

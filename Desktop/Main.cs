@@ -102,19 +102,6 @@ namespace SmartSaver.Desktop
             UpdateTransactionList();
         }
 
-        private void buttonFilter_Click(object sender, EventArgs e)
-        {
-            IEnumerable<Transaction> filteredTransactions = TransactionList.Where(transaction =>
-                transaction.TrTime >= dateFilterFrom.Value && transaction.TrTime <= dateFilterTo.Value
-            );
-            PopulateTransactionListView(filteredTransactions);
-        }
-
-        private void buttonResetFilter_Click(object sender, EventArgs e)
-        {
-            UpdateTransactionList();
-        }
-
         private void tipButton_Click(object sender, EventArgs e)
         {
             TipWindow tipWindow = new TipWindow();
