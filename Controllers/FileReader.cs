@@ -16,13 +16,11 @@ namespace SmartSaver.Controllers
             OpenFileDialog openFileDialog = new OpenFileDialog();
             string filter = "CSV file (*.csv)|*.csv";
             openFileDialog.Filter = filter;
-            StreamReader reader = null;
-            string line = "";
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                reader = new StreamReader(openFileDialog.FileName);
-                line = reader.ReadLine();
+                StreamReader reader = new StreamReader(openFileDialog.FileName);
+                string line = reader.ReadLine();
                 switch (line.Substring(0, 12))
                 {
                     case "\"Id\",\"Date\",":
