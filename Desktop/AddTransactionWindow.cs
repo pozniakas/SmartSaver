@@ -53,9 +53,9 @@ namespace SmartSaver.Desktop
             string amount = transactionAmount.Text;
             string details = transactionDetailsReasons.Text;
             string counterParty = transactionCategory.Text;
-
+            //transactionCategory.Items.
             ValidateFields(amount, details);
-
+            
             if (!String.IsNullOrWhiteSpace(amount) && !String.IsNullOrWhiteSpace(details))
             {
                 decimal amountInDecimal = decimal.Parse(amount);
@@ -73,23 +73,10 @@ namespace SmartSaver.Desktop
 
                 mainWindow.UpdateTransactionList();
                 MessageBox.Show("Transaction added");
+                this.Close();
             }
-            this.Close();
+            
         }
 
-        private void transactionDate_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void transactionAmount_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void transactionDetailsReasons_TextChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }
