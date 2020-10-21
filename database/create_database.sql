@@ -7,8 +7,8 @@ create schema smartsaver;
 
 create table smartsaver.category (
 	id bigserial not null,
-	title varchar(100),
-	description varchar(1000),
+	title varchar(100) not null,
+	dedicated_amount decimal,
 	
 	constraint "pk_smartsaver.category" primary key(id),
 	constraint "uq_smartsaver.category__title" unique(title)
@@ -50,13 +50,14 @@ create table smartsaver.transaction_tag (
 
 create table smartsaver.goal (
 	id bigserial not null,
-	goal_date date,
-	amount decimal not null,
 	title varchar(100),
 	description varchar(1000),
+	amount decimal not null,
+	deadlineDate date,
+	creationDate date not null,
 
 	constraint "pk_smartsaver.goal" primary key(id),
-	constraint "uq_smartsaver.goal__title_goal_date" unique(title, goal_date),
+	constraint "uq_smartsaver.goal__title_description" unique(title, description),
 	CONSTRAINT "uq_smartsaver.goal__amount_positive" CHECK (amount > 0)
 );
 

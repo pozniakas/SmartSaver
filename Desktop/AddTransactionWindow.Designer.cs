@@ -60,10 +60,12 @@
             // 
             // transactionDate
             // 
+            this.transactionDate.Format= System.Windows.Forms.DateTimePickerFormat.Short;
             this.transactionDate.Location = new System.Drawing.Point(12, 58);
             this.transactionDate.Name = "transactionDate";
             this.transactionDate.Size = new System.Drawing.Size(200, 23);
             this.transactionDate.TabIndex = 2;
+            this.transactionDate.ValueChanged += new System.EventHandler(this.transactionDate_ValueChanged);
             // 
             // label3
             // 
@@ -102,6 +104,7 @@
             this.transactionDetailsReasons.Name = "transactionDetailsReasons";
             this.transactionDetailsReasons.Size = new System.Drawing.Size(200, 23);
             this.transactionDetailsReasons.TabIndex = 6;
+            this.transactionDetailsReasons.TextChanged += new System.EventHandler(this.transactionDetailsReasons_TextChanged);
             // 
             // label4
             // 
@@ -118,6 +121,7 @@
             this.transactionAmount.Name = "transactionAmount";
             this.transactionAmount.Size = new System.Drawing.Size(121, 23);
             this.transactionAmount.TabIndex = 8;
+            this.transactionAmount.TextChanged += new System.EventHandler(this.transactionAmount_TextChanged);
             this.transactionAmount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.transactionAmount_KeyPress);
             // 
             // addNewTransactionButton
@@ -159,7 +163,6 @@
         private System.Windows.Forms.DateTimePicker transactionDate;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox transactionCategory;
-        private System.Windows.Forms.Label transactionDetails;
         private System.Windows.Forms.Label label;
         private System.Windows.Forms.TextBox transactionDetailsReasons;
         private System.Windows.Forms.Label label4;
