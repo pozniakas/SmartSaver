@@ -60,7 +60,7 @@
             // 
             // transactionDate
             // 
-            this.transactionDate.Format= System.Windows.Forms.DateTimePickerFormat.Short;
+            this.transactionDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.transactionDate.Location = new System.Drawing.Point(12, 58);
             this.transactionDate.Name = "transactionDate";
             this.transactionDate.Size = new System.Drawing.Size(200, 23);
@@ -78,11 +78,6 @@
             // transactionCategory
             // 
             this.transactionCategory.FormattingEnabled = true;
-            this.transactionCategory.Items.AddRange(new object[] {
-            "Category 1",
-            "Category 2",
-            "Category 3",
-            "Category 4"});
             this.transactionCategory.Location = new System.Drawing.Point(302, 58);
             this.transactionCategory.Name = "transactionCategory";
             this.transactionCategory.Size = new System.Drawing.Size(121, 23);
@@ -148,6 +143,7 @@
             this.Controls.Add(this.label1);
             this.Name = "AddTransactionWindow";
             this.Text = "AddTransactionWindow";
+            this.Load += new System.EventHandler(this.AddTransactionWindow_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

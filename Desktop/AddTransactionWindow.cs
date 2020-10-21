@@ -14,6 +14,8 @@ namespace SmartSaver.Desktop
     public partial class AddTransactionWindow : Form
     {
         private Main mainWindow;
+        private List<Category> CategoryList;
+        private Database db = new Database();
         public AddTransactionWindow(Main mw)
         {
             mainWindow = mw;
@@ -53,13 +55,12 @@ namespace SmartSaver.Desktop
             string amount = transactionAmount.Text;
             string details = transactionDetailsReasons.Text;
             string counterParty = transactionCategory.Text;
-            //transactionCategory.Items.
+
             ValidateFields(amount, details);
             
             if (!String.IsNullOrWhiteSpace(amount) && !String.IsNullOrWhiteSpace(details))
             {
                 decimal amountInDecimal = decimal.Parse(amount);
-
                 Database db = new Database();
 
                 Transaction newTransaction = new Transaction { 
@@ -68,15 +69,25 @@ namespace SmartSaver.Desktop
                     Details = details
                 };
 
-                
                 db.AddTransaction(newTransaction);
-
                 mainWindow.UpdateTransactionList();
                 MessageBox.Show("Transaction added");
                 this.Close();
             }
             
         }
+        private void PopulateComboBox (IEnumerable<Category> CategoryList)
+        {
+            foreach (var category in CategoryList)
+            {
+                transactionCategory.Items.Add(category.Title);
+            }
+        }
 
+        private void AddTransactionWindow_Load(object sender, EventArgs e)
+        {
+            CategoryList = (List<Category>)db.GetCategories();
+            PopulateComboBox(CategoryList);
+        }
     }
 }

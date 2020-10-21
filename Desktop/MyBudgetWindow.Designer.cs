@@ -64,6 +64,7 @@
             this.txtCategoryId.HeaderText = "ID";
             this.txtCategoryId.Name = "txtCategoryId";
             this.txtCategoryId.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.txtCategoryId.Visible = false;
             // 
             // txtCategory
             // 
