@@ -55,7 +55,6 @@ namespace SmartSaver.Controllers
         {
             while (line != null)
             {
-                Transaction newTransaction = new Transaction();
                 line = reader.ReadLine();
                 if (line != null)
                 {
@@ -140,7 +139,6 @@ namespace SmartSaver.Controllers
             string line = reader.ReadLine();
             while (line != null)
             {
-                Transaction newTransaction = new Transaction();
                 line = reader.ReadLine();
                 if (line != null)
                 {
