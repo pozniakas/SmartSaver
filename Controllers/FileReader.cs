@@ -166,11 +166,13 @@ namespace SmartSaver.Controllers
         private void AddTransaction(DateTime time, decimal amount, string counterParty, string details)
         {
             Database db = new Database();
-            Transaction newTransaction = new Transaction();
-            newTransaction.TrTime = time;
-            newTransaction.Amount = amount;
-            newTransaction.CounterParty = counterParty;
-            newTransaction.Details = details;
+            Transaction newTransaction = new Transaction
+            {
+                TrTime = time,
+                Amount = amount,
+                CounterParty = counterParty,
+                Details = details,
+            };
             db.AddTransaction(newTransaction);
         }
     }
