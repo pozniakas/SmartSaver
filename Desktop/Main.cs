@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using SmartSaver.Controllers;
 
 namespace SmartSaver.Desktop
 {
@@ -77,15 +78,15 @@ namespace SmartSaver.Desktop
 
         private void buttonUpload_Click(object sender, EventArgs e)
         {
-            FileManager fileManager = new FileManager();
-            fileManager.Import();
+            FileReader reader = new FileReader();
+            reader.Import();
             UpdateTransactionList();
         }
 
         private void buttonExport_Click(object sender, EventArgs e)
         {
-            FileManager fileManager = new FileManager();
-            fileManager.Export();
+            FileWriter writer = new FileWriter();
+            writer.Export();
         }
 
         private void buttonFilter_Click(object sender, EventArgs e)
