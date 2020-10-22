@@ -1,6 +1,9 @@
-﻿namespace SmartSaver.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace SmartSaver.Models
 {
-    public class TransactionTag
+    public partial class TransactionTag
     {
         public long TransactionId { get; set; }
         public long TagId { get; set; }

@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SmartSaver.Models
 {
-    public class Goal
+    public partial class Goal
     {
         public long Id { get; set; }
         public string Title { get; set; }
