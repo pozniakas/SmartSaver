@@ -55,7 +55,7 @@ namespace SmartSaver.Desktop
             foreach (var goal in GoalList)
             {
                 var money = Decimal.ToInt32(goal.Amount) /
-                            (((DateTime)goal.Creationdate).Subtract(DateTime.UtcNow) / 7).Days;
+                            (goal.Creationdate.Subtract(DateTime.UtcNow) / 7).Days;
                 var item = new ListViewItem(new[]
                 {
                     goal.Title, ((DateTime)goal.Deadlinedate).ToString("yyyy-MM-dd"), goal.Amount.ToString(),

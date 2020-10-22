@@ -9,8 +9,8 @@ namespace SmartSaver.Desktop
 {
     public partial class MyBudgetWindow : Form
     {
-        private List<Category> CategoryList;
         private readonly Database db = new Database();
+        private List<Category> CategoryList;
 
         private int selectedId;
 

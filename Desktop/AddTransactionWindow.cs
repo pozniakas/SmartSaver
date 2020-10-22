@@ -9,9 +9,9 @@ namespace SmartSaver.Desktop
 {
     public partial class AddTransactionWindow : Form
     {
-        private List<Category> CategoryList;
         private readonly Database db = new Database();
         private readonly Main mainWindow;
+        private List<Category> CategoryList;
 
         public AddTransactionWindow(Main mw)
         {
