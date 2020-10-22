@@ -42,11 +42,12 @@ namespace SmartSaver.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Description)
-                    .HasColumnName("description")
-                    .HasMaxLength(1000);
+                entity.Property(e => e.DedicatedAmount)
+                    .HasColumnName("dedicated_amount")
+                    .HasColumnType("numeric");
 
                 entity.Property(e => e.Title)
+                    .IsRequired()
                     .HasColumnName("title")
                     .HasMaxLength(100);
             });
@@ -55,8 +56,8 @@ namespace SmartSaver.Models
             {
                 entity.ToTable("goal", "smartsaver");
 
-                entity.HasIndex(e => new { e.Title, e.GoalDate })
-                    .HasName("uq_smartsaver.goal__title_goal_date")
+                entity.HasIndex(e => new { e.Title, e.Description })
+                    .HasName("uq_smartsaver.goal__title_description")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -65,13 +66,17 @@ namespace SmartSaver.Models
                     .HasColumnName("amount")
                     .HasColumnType("numeric");
 
+                entity.Property(e => e.Creationdate)
+                    .HasColumnName("creationdate")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.Deadlinedate)
+                    .HasColumnName("deadlinedate")
+                    .HasColumnType("date");
+
                 entity.Property(e => e.Description)
                     .HasColumnName("description")
                     .HasMaxLength(1000);
-
-                entity.Property(e => e.GoalDate)
-                    .HasColumnName("goal_date")
-                    .HasColumnType("date");
 
                 entity.Property(e => e.Title)
                     .HasColumnName("title")

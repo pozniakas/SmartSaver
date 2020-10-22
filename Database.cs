@@ -1,15 +1,14 @@
-﻿using SmartSaver.Models;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.Linq;
+using SmartSaver.Models;
 
 namespace SmartSaver.Data
 {
     public class Database
     {
-        // Returns:
-        //     The number of state entries written to the database.
+        /// <returns>
+        ///     The number of state entries written to the database.
+        /// </returns>
         public int AddTransaction(Transaction transaction)
         {
             using var db = new postgresContext();
@@ -17,14 +16,15 @@ namespace SmartSaver.Data
             return db.SaveChanges();
         }
 
-        public List<Transaction> GetTransactions()
+        public IList<Transaction> GetTransactions()
         {
             using var db = new postgresContext();
-            List<Transaction> transactions = new List<Transaction>();
-            transactions.AddRange(db.Transaction);
-
-            return transactions;
+            return db.Transaction.ToList();
         }
+
+        /// <returns>
+        ///     The number of state entries written to the database.
+        /// </returns>
         public int AddGoal(Goal goal)
         {
             using var db = new postgresContext();
@@ -32,13 +32,40 @@ namespace SmartSaver.Data
             return db.SaveChanges();
         }
 
-        public List<Goal> GetGoals()
+        public IList<Goal> GetGoals()
         {
             using var db = new postgresContext();
-            List<Goal> goal = new List<Goal>();
-            goal.AddRange(db.Goal);
+            return db.Goal.ToList();
+        }
 
-            return goal;
+        /// <returns>
+        ///     The number of state entries written to the database.
+        /// </returns>
+        public int AddCategory(Category category)
+        {
+            using var db = new postgresContext();
+            db.Category.Add(category);
+            return db.SaveChanges();
+        }
+
+        public IList<Category> GetCategories()
+        {
+            using var db = new postgresContext();
+            return db.Category.ToList();
+        }
+
+        public int RemoveCategory(string selectedTitle)
+        {
+            using var db = new postgresContext();
+            var itemToRemove = db.Category.SingleOrDefault(x => x.Title == selectedTitle);
+
+            if (itemToRemove != null)
+            {
+                db.Category.Remove(itemToRemove);
+                //return db.SaveChanges();
+            }
+
+            return db.SaveChanges();
         }
     }
 }
