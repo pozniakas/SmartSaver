@@ -33,7 +33,8 @@ namespace SmartSaver.Desktop
             listView1.Columns.Add("Datetime", 70);
             listView1.Columns.Add("Amount", 100);
             listView1.Columns.Add("Details", 146);
-            listView1.Columns.Add("To save a week", 246);
+            listView1.Columns.Add("To save in a week", 120);
+            listView1.Columns.Add("Possibility", 100);
         }
 
         public void UpdateGoalList()
@@ -48,18 +49,45 @@ namespace SmartSaver.Desktop
             PopulateGoalListView(GoalList);
         }
 
+        public string GoalPossibility(int profit, double worth)
+        {
+            string Possibility;
+            double profitAWeek = profit / 4;
+            if(worth/profitAWeek <= 0.5)
+            {
+                return Possibility = "Huge";
+            }
+            else if (worth / profitAWeek <= 0.8)
+            {
+                return Possibility = "Real";
+            }
+            else if (worth / profitAWeek <= 1)
+            {
+                return Possibility = "Small";
+            }
+            else
+            {
+                return Possibility = "Not real";
+            }
+            
+        }
+
         private void PopulateGoalListView(IEnumerable<Goal> GoalList)
         {
             listView1.Items.Clear();
 
             foreach (var goal in GoalList)
             {
-                var money = Decimal.ToInt32(goal.Amount) /
-                            (goal.Creationdate.Subtract(DateTime.UtcNow) / 7).Days;
-                var item = new ListViewItem(new[]
-                {
-                    goal.Title, ((DateTime)goal.Deadlinedate).ToString("yyyy-MM-dd"), goal.Amount.ToString(),
-                    goal.Description, money.ToString()
+                int money = (Decimal.ToInt32(goal.Amount)) / ((((DateTime)goal.GoalDate).Subtract(DateTime.UtcNow) / 7).Days);
+                int profit = 200;
+                string possibility = GoalPossibility(profit, money);
+                var item = new ListViewItem(new string[] {
+                    goal.Title,
+                    ((DateTime) goal.GoalDate).ToString("yyyy-MM-dd"),
+                    goal.Amount.ToString(),
+                    goal.Description,
+                    money.ToString(),
+                    possibility
                 });
 
                 listView1.Items.Add(item);
@@ -122,6 +150,11 @@ namespace SmartSaver.Desktop
         private void backButton_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
