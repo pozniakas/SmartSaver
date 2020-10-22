@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SmartSaver.Models
+﻿namespace SmartSaver.Models
 {
     public class Tip
     {
-        public string tipName { get; set; }
-        public string tipLink { get; set; }
-
         public Tip()
         {
         }
@@ -19,5 +12,7 @@ namespace SmartSaver.Models
             tipLink = atipLink;
         }
 
+        public string tipName { get; set; }
+        public string tipLink { get; set; }
     }
 }

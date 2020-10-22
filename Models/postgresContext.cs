@@ -1,10 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace SmartSaver.Models
 {
-    public partial class postgresContext : DbContext
+    public class postgresContext : DbContext
     {
         public postgresContext()
         {
@@ -25,7 +24,7 @@ namespace SmartSaver.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http: //go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseNpgsql("Host=localhost;Database=postgres;Username=postgres;Password=postgres");
             }
         }
@@ -56,7 +55,7 @@ namespace SmartSaver.Models
             {
                 entity.ToTable("goal", "smartsaver");
 
-                entity.HasIndex(e => new { e.Title, e.Description })
+                entity.HasIndex(e => new {e.Title, e.Description})
                     .HasName("uq_smartsaver.goal__title_description")
                     .IsUnique();
 
@@ -132,7 +131,7 @@ namespace SmartSaver.Models
 
                 entity.ToTable("transaction_tag", "smartsaver");
 
-                entity.HasIndex(e => new { e.TransactionId, e.TagId })
+                entity.HasIndex(e => new {e.TransactionId, e.TagId})
                     .HasName("uq_smartsaver.transaction_tag__transaction_id_tag_id")
                     .IsUnique();
 
@@ -156,6 +155,9 @@ namespace SmartSaver.Models
             OnModelCreatingPartial(modelBuilder);
         }
 
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+        private void OnModelCreatingPartial(ModelBuilder modelBuilder)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,8 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SmartSaver.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
+using SmartSaver.Models;
 
 namespace SmartSaver.Data
 {
@@ -59,15 +57,15 @@ namespace SmartSaver.Data
         public int RemoveCategory(string selectedTitle)
         {
             using var db = new postgresContext();
-            var itemToRemove = db.Category.SingleOrDefault(x => x.Title == selectedTitle); 
+            var itemToRemove = db.Category.SingleOrDefault(x => x.Title == selectedTitle);
 
             if (itemToRemove != null)
             {
                 db.Category.Remove(itemToRemove);
-               //return db.SaveChanges();
+                //return db.SaveChanges();
             }
+
             return db.SaveChanges();
         }
-
     }
 }

@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
 using Tesseract;
 
 namespace SmartSaver.Controllers
@@ -19,7 +17,7 @@ namespace SmartSaver.Controllers
         {
             try
             {
-                DirectoryInfo dir = new DirectoryInfo(@"..\..\..\assets\Receipts");
+                var dir = new DirectoryInfo(@"..\..\..\assets\Receipts");
                 foreach (var imgPath in dir.GetFiles("*.jpg"))
                 {
                     var res = Recognize(imgPath);
@@ -43,7 +41,7 @@ namespace SmartSaver.Controllers
 
             // Original Image
             using var originalImage = Image.FromFile(imagePath.FullName);
-            double scaleIndex = (double) originalImage.Width / originalImage.Height;
+            var scaleIndex = (double)originalImage.Width / originalImage.Height;
 
             // Auto crop Image
 
@@ -124,7 +122,7 @@ namespace SmartSaver.Controllers
 
         private byte[] ImageToByte(Image img)
         {
-            ImageConverter converter = new ImageConverter();
+            var converter = new ImageConverter();
             return (byte[])converter.ConvertTo(img, typeof(byte[]));
         }
     }

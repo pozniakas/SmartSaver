@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace SmartSaver.Models
 {
-    public partial class Transaction
+    public class Transaction
     {
         public long Id { get; set; }
         public DateTime? TrTime { get; set; }

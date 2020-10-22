@@ -1,21 +1,18 @@
-﻿using SmartSaver.Data;
-using SmartSaver.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
+using SmartSaver.Data;
+using SmartSaver.Models;
 
 namespace SmartSaver.Desktop
 {
     public partial class AddTransactionWindow : Form
     {
-        private Main mainWindow;
         private List<Category> CategoryList;
-        private Database db = new Database();
+        private readonly Database db = new Database();
+        private readonly Main mainWindow;
+
         public AddTransactionWindow(Main mw)
         {
             mainWindow = mw;
@@ -24,13 +21,14 @@ namespace SmartSaver.Desktop
 
         private void transactionAmount_KeyPress(object sender, KeyPressEventArgs e)
         {
-            char ch = e.KeyChar;
+            var ch = e.KeyChar;
 
             if (ch == 46 && transactionAmount.Text.IndexOf('.') != -1)
             {
                 e.Handled = true;
                 return;
             }
+
             if (!Char.IsDigit(ch) && ch != 8 && ch != 46)
             {
                 e.Handled = true;
@@ -43,6 +41,7 @@ namespace SmartSaver.Desktop
             {
                 transactionAmount.BackColor = Color.Red;
             }
+
             if (String.IsNullOrWhiteSpace(details))
             {
                 transactionDetailsReasons.BackColor = Color.Red;
@@ -51,32 +50,28 @@ namespace SmartSaver.Desktop
 
         private void addNewTransactionButton_Click(object sender, EventArgs e)
         {
-            DateTime date = transactionDate.Value;
-            string amount = transactionAmount.Text;
-            string details = transactionDetailsReasons.Text;
-            string counterParty = transactionCategory.Text;
+            var date = transactionDate.Value;
+            var amount = transactionAmount.Text;
+            var details = transactionDetailsReasons.Text;
+            var counterParty = transactionCategory.Text;
 
             ValidateFields(amount, details);
-            
+
             if (!String.IsNullOrWhiteSpace(amount) && !String.IsNullOrWhiteSpace(details))
             {
-                decimal amountInDecimal = decimal.Parse(amount);
-                Database db = new Database();
+                var amountInDecimal = decimal.Parse(amount);
+                var db = new Database();
 
-                Transaction newTransaction = new Transaction { 
-                    TrTime = date,
-                    Amount = amountInDecimal,
-                    Details = details
-                };
+                var newTransaction = new Transaction {TrTime = date, Amount = amountInDecimal, Details = details};
 
                 db.AddTransaction(newTransaction);
                 mainWindow.UpdateTransactionList();
                 MessageBox.Show("Transaction added");
-                this.Close();
+                Close();
             }
-            
         }
-        private void PopulateComboBox (IEnumerable<Category> CategoryList)
+
+        private void PopulateComboBox(IEnumerable<Category> CategoryList)
         {
             foreach (var category in CategoryList)
             {

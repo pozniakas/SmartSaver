@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace SmartSaver.Models
 {
-    public partial class Category
+    public class Category
     {
         public Category()
         {
