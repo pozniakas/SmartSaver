@@ -53,23 +53,22 @@ namespace SmartSaver.Desktop
         {
             string Possibility;
             double profitAWeek = profit / 4;
-            if(worth/profitAWeek <= 0.5)
+            if (worth / profitAWeek <= 0.5)
             {
                 return Possibility = "Huge";
             }
-            else if (worth / profitAWeek <= 0.8)
+
+            if (worth / profitAWeek <= 0.8)
             {
                 return Possibility = "Real";
             }
-            else if (worth / profitAWeek <= 1)
+
+            if (worth / profitAWeek <= 1)
             {
                 return Possibility = "Small";
             }
-            else
-            {
-                return Possibility = "Not real";
-            }
-            
+
+            return Possibility = "Not real";
         }
 
         private void PopulateGoalListView(IEnumerable<Goal> GoalList)
@@ -78,16 +77,14 @@ namespace SmartSaver.Desktop
 
             foreach (var goal in GoalList)
             {
-                int money = (Decimal.ToInt32(goal.Amount)) / ((((DateTime)goal.GoalDate).Subtract(DateTime.UtcNow) / 7).Days);
-                int profit = 200;
-                string possibility = GoalPossibility(profit, money);
-                var item = new ListViewItem(new string[] {
-                    goal.Title,
-                    ((DateTime) goal.GoalDate).ToString("yyyy-MM-dd"),
-                    goal.Amount.ToString(),
-                    goal.Description,
-                    money.ToString(),
-                    possibility
+                var money = Decimal.ToInt32(goal.Amount) /
+                            (((DateTime)goal.Deadlinedate).Subtract(DateTime.UtcNow) / 7).Days;
+                var profit = 200;
+                var possibility = GoalPossibility(profit, money);
+                var item = new ListViewItem(new[]
+                {
+                    goal.Title, ((DateTime)goal.Deadlinedate).ToString("yyyy-MM-dd"), goal.Amount.ToString(),
+                    goal.Description, money.ToString(), possibility
                 });
 
                 listView1.Items.Add(item);
@@ -154,7 +151,6 @@ namespace SmartSaver.Desktop
 
         private void DeleteButton_Click(object sender, EventArgs e)
         {
-
         }
     }
 }
