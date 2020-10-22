@@ -17,15 +17,23 @@ namespace SmartSaver.Controllers
 
         public void RecognizeTestImages()
         {
-            DirectoryInfo dir = new DirectoryInfo(@"..\..\..\assets\Receipts");
-            foreach (var imgPath in dir.GetFiles("*.jpg"))
+            try
             {
-                var res = Recognize(imgPath);
+                DirectoryInfo dir = new DirectoryInfo(@"..\..\..\assets\Receipts");
+                foreach (var imgPath in dir.GetFiles("*.jpg"))
+                {
+                    var res = Recognize(imgPath);
 
-                var destPath = imgPath.Directory.Parent.FullName + @"\receiptsTxt\" + imgPath.Name + ".txt";
-                Debug.WriteLine(destPath);
+                    var destPath = imgPath.Directory.Parent.FullName + @"\receiptsTxt\" + imgPath.Name + ".txt";
+                    Debug.WriteLine(destPath);
 
-                File.WriteAllText(destPath, res);
+                    File.WriteAllText(destPath, res);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                throw;
             }
         }
 
