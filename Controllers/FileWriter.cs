@@ -24,10 +24,13 @@ namespace SmartSaver.Controllers
                 writer.WriteLine(header);
                 foreach (var transaction in transactions)
                 {
-                    var d = (DateTime)transaction.TrTime;
-                    writer.WriteLine("\"" + transaction.Id + "\",\"" + d.ToString("yyyy-MM-dd") + "\",\"" +
-                                     transaction.CounterParty + "\",\"" +
-                                     transaction.Details + "\",\"" + transaction.Amount + "\",");
+                    if (transaction.TrTime != null)
+                    {
+                        var d = (DateTime)transaction.TrTime;
+                        writer.WriteLine("\"" + transaction.Id + "\",\"" + d.ToString("yyyy-MM-dd") + "\",\"" +
+                                         transaction.CounterParty + "\",\"" +
+                                         transaction.Details + "\",\"" + transaction.Amount + "\",");
+                    }
                 }
 
                 writer.Close();

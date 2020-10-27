@@ -17,34 +17,38 @@ namespace SmartSaver.Controllers
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
+                
                 var reader = new StreamReader(openFileDialog.FileName);
                 var line = reader.ReadLine();
-                switch (line.Substring(0, 12))
+                if (line != null && !line.Equals(""))
                 {
-                    case "\"Id\",\"Date\",":
-                        ReadExport(reader, line);
-                        break;
-                    case "\"Sąskaitos N":
-                        ReadSwed(reader);
-                        break;
-                    case "\"SĄSKAITOS  ":
-                    case "SĄSKAITOS  (":
-                    case "ACCOUNT  (LT":
-                        var quotes = false;
-                        if (line[0] == '\"')
-                        {
-                            quotes = true;
-                        }
+                    switch (line.Substring(0, 12))
+                    {
+                        case "\"Id\",\"Date\",":
+                            ReadExport(reader, line);
+                            break;
+                        case "\"Sąskaitos N":
+                            ReadSwed(reader);
+                            break;
+                        case "\"SĄSKAITOS  ":
+                        case "SĄSKAITOS  (":
+                        case "ACCOUNT  (LT":
+                            var quotes = false;
+                            if (line[0] == '\"')
+                            {
+                                quotes = true;
+                            }
 
-                        ReadSEB(reader, quotes);
-                        break;
-                    case "Operacijos/B":
-                    case "Transaction ":
-                        ReadLum(reader);
-                        break;
-                    default:
-                        MessageBox.Show("Wrong file type");
-                        break;
+                            ReadSEB(reader, quotes);
+                            break;
+                        case "Operacijos/B":
+                        case "Transaction ":
+                            ReadLum(reader);
+                            break;
+                        default:
+                            MessageBox.Show(@"Wrong file type");
+                            break;
+                    }
                 }
 
                 reader.Close();
