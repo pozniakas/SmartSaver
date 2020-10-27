@@ -138,7 +138,7 @@ namespace SmartSaver.Desktop
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void addGoal_Click(object sender, EventArgs e)
         {
             var date = goalDate.Value;
             var amount = goalMoney.Text;
@@ -182,9 +182,6 @@ namespace SmartSaver.Desktop
             UpdateGoalList();
         }
 
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
 
-        }
     }
 }

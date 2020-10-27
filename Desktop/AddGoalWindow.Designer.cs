@@ -99,7 +99,7 @@
             this.NextButton.TabIndex = 2;
             this.NextButton.Text = "ADD GOAL";
             this.NextButton.UseVisualStyleBackColor = true;
-            this.NextButton.Click += new System.EventHandler(this.button1_Click);
+            this.NextButton.Click += new System.EventHandler(this.addGoal_Click);
             // 
             // descriptionBox
             // 
