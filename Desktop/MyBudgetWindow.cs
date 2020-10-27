@@ -15,6 +15,8 @@ namespace SmartSaver.Desktop
     {
         private Database db = new Database();
         private List<Category> CategoryList;
+        private List<Transaction> TransactionList;
+
         public MyBudgetWindow()
         {
             InitializeComponent();
@@ -28,7 +30,9 @@ namespace SmartSaver.Desktop
         public void UpdateCategoriesList()
         {
             CategoryList = (List<Category>) db.GetCategories();
+            TransactionList = (List<Transaction>) db.GetTransactions();
             PopulateCategoryListView();
+            Calculation(CategoryList, TransactionList);
         }
 
         private void PopulateCategoryListView()
@@ -36,23 +40,67 @@ namespace SmartSaver.Desktop
             PopulateCategoryListView(CategoryList);
         }
 
-        private void PopulateCategoryListView(IEnumerable<Category> CategoryList)
+        public void Calculation (IEnumerable<Category> CategoryList, IEnumerable<Transaction> TransactionList)
         {
-            //this.budgetAndCategoriesView.Rows.Add("1", "Shopping", "30", "30", "0");
+            decimal calc = 0;
+            int index = 0;
+           
             foreach (var category in CategoryList)
             {
-                this.budgetAndCategoriesView.Rows.Add(category.Id, category.Title, " ", " ");
+                foreach (var transaction in TransactionList)
+                {
+                    if (category.Id == transaction.CategoryId)
+                    {
+                        calc += transaction.Amount;
+                    }
+                }
+                this.budgetAndCategoriesView.Rows[index].Cells[3].Value = System.Math.Abs(calc);
+                this.budgetAndCategoriesView.Rows[index].Cells[4].Value = category.DedicatedAmount - System.Math.Abs(calc);
+                if (category.DedicatedAmount - calc < 0)
+                {
+                    this.budgetAndCategoriesView.Rows[index].Cells[4].Style.BackColor = Color.Red;
+                }
+                else if (category.DedicatedAmount >= 0)
+                {
+                    this.budgetAndCategoriesView.Rows[index].Cells[4].Style.BackColor = Color.Green;
+                }
+                else if (category.DedicatedAmount == null) 
+                { 
+                    this.budgetAndCategoriesView.Rows[index].Cells[4].Style.BackColor = Color.Orange;
+                }
+               
+                calc = 0;
+                index++;
+            }
+        }
+
+        private void PopulateCategoryListView(IEnumerable<Category> CategoryList)
+        {
+            foreach (var category in CategoryList)
+            {
+                this.budgetAndCategoriesView.Rows.Add(category.Id, category.Title, category.DedicatedAmount);
             }
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             string title = budgetAndCategoriesView.Rows[budgetAndCategoriesView.RowCount - 2].Cells[1].Value.ToString();
+            decimal dedicatedAmount = 0;
+            var dedicated = budgetAndCategoriesView
+                    .Rows[budgetAndCategoriesView.RowCount - 2]
+                    .Cells[2].Value;
+            
+             if (dedicated != null)
+             {
+                dedicatedAmount = decimal.Parse(dedicated.ToString());
+             }
+
             Database db = new Database();
 
             Category newCategory = new Category
             {
-                Title = title
+                Title = title,
+                DedicatedAmount = dedicatedAmount
             };
 
             try
@@ -87,5 +135,6 @@ namespace SmartSaver.Desktop
         {
             selectedId = e.RowIndex;
         }
+
     }
 }

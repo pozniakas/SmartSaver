@@ -75,19 +75,19 @@
             // 
             // txtBudgeted
             // 
-            this.txtBudgeted.HeaderText = "BUDGETED";
+            this.txtBudgeted.HeaderText = "BUDGETED (€ PER MONTH)";
             this.txtBudgeted.Name = "txtBudgeted";
             this.txtBudgeted.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // txtActivity
             // 
-            this.txtActivity.HeaderText = "ACTIVITY";
+            this.txtActivity.HeaderText = "ACTIVITY (€ PER MONTH)";
             this.txtActivity.Name = "txtActivity";
             this.txtActivity.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // txtAvailable
             // 
-            this.txtAvailable.HeaderText = "AVAILABLE";
+            this.txtAvailable.HeaderText = "AVAILABLE (€)";
             this.txtAvailable.Name = "txtAvailable";
             this.txtAvailable.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
