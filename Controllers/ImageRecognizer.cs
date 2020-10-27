@@ -7,13 +7,17 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using Emgu.CV;
+using Emgu.CV.CvEnum;
+using Emgu.CV.Structure;
+using Emgu.CV.Util;
 using Tesseract;
 
 namespace SmartSaver.Controllers
 {
     public class ImageRecognizer
     {
-        private readonly string TessDataPath = @".\assets\tessdata\best";
+        private const string TessDataPath = @".\assets\tessdata\best";
 
         public void RecognizeTestImages()
         {
@@ -22,6 +26,7 @@ namespace SmartSaver.Controllers
                 DirectoryInfo dir = new DirectoryInfo(@"..\..\..\assets\Receipts");
                 foreach (var imgPath in dir.GetFiles("*.jpg"))
                 {
+                    //AutoCrop(imgPath.FullName);
                     var res = Recognize(imgPath);
 
                     var destPath = imgPath.Directory.Parent.FullName + @"\receiptsTxt\" + imgPath.Name + ".txt";
@@ -41,9 +46,10 @@ namespace SmartSaver.Controllers
         {
             Debug.WriteLine(imagePath);
 
-            // Original Image
+            #region Original Image
             using var originalImage = Image.FromFile(imagePath.FullName);
             double scaleIndex = (double) originalImage.Width / originalImage.Height;
+            #endregion
 
             // Auto crop Image
 
@@ -54,6 +60,39 @@ namespace SmartSaver.Controllers
 
             // Split Image
             // SplitImage(resizedImage);
+        }
+
+        private void AutoCrop(string path)
+        {
+            using var image = new Image<Bgr, byte>(path);
+            // Grayscale
+            var grayScaleImage = image.Convert<Gray, byte>();
+
+            // Applying GaussianBlur
+            var blurredImage = grayScaleImage.SmoothGaussian(5, 5, 0, 0);
+            // OR
+            CvInvoke.GaussianBlur(grayScaleImage, blurredImage, new Size(5, 5), 0);
+
+            // Applying Canny algorithm
+            var cannyImage = new UMat();
+            CvInvoke.Canny(blurredImage, cannyImage, 50, 150);
+
+            // Finding largest contours
+            var contours = new VectorOfVectorOfPointF();
+            CvInvoke.FindContours(cannyImage, contours, null, RetrType.Tree, ChainApproxMethod.ChainApproxSimple);
+
+            for (int i = 0; i < contours.Size; i++)
+            {
+                var contourVector = contours[i];
+                using var contour = new VectorOfPoint();
+                var peri = CvInvoke.ArcLength(contourVector, true);
+                CvInvoke.ApproxPolyDP(contourVector, contour, 0.1 * peri, true);
+                if (contour != null && contour.ToArray().Length == 4 && CvInvoke.IsContourConvex(contour))
+                {
+                    Debug.WriteLine(contour.ToString());
+                    // return contour;
+                }
+            }
         }
 
         /// <summary>
@@ -70,18 +109,16 @@ namespace SmartSaver.Controllers
 
             destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
 
-            using (var graphics = Graphics.FromImage(destImage))
-            {
-                graphics.CompositingMode = CompositingMode.SourceCopy;
-                graphics.CompositingQuality = CompositingQuality.HighQuality;
-                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                graphics.SmoothingMode = SmoothingMode.HighQuality;
-                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            using var graphics = Graphics.FromImage(destImage);
+            graphics.CompositingMode = CompositingMode.SourceCopy;
+            graphics.CompositingQuality = CompositingQuality.HighQuality;
+            graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            graphics.SmoothingMode = SmoothingMode.HighQuality;
+            graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-                using var wrapMode = new ImageAttributes();
-                wrapMode.SetWrapMode(WrapMode.TileFlipXY);
-                graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
-            }
+            using var wrapMode = new ImageAttributes();
+            wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+            graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
 
             return destImage;
         }
