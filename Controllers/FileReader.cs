@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -70,7 +71,7 @@ namespace SmartSaver.Controllers
 
                     tokens[4] = tokens[4].Substring(0, tokens[4].Length - 1);
 
-                    AddTransaction(DateTime.Parse(tokens[1]), decimal.Parse(tokens[4]), tokens[2], tokens[3]);
+                    AddTransaction(DateTime.Parse(tokens[1]), decimal.Parse(tokens[4], CultureInfo.InvariantCulture), tokens[2], tokens[3]);
                 }
             }
         }
@@ -91,7 +92,7 @@ namespace SmartSaver.Controllers
 
                     if (tokens[5] != "Apyvarta")
                     {
-                        var d = decimal.Parse(tokens[6]);
+                        var d = decimal.Parse(tokens[6], CultureInfo.InvariantCulture);
                         if (tokens[8] == "D")
                         {
                             d = d * -1;
@@ -119,8 +120,7 @@ namespace SmartSaver.Controllers
 
                     var tokens = Regex.Split(
                         line, pattern);
-
-                    var d = decimal.Parse(tokens[3].Replace(',', '.'));
+                    var d = decimal.Parse(tokens[3].Replace(',','.'), CultureInfo.InvariantCulture);
                     if (quotes)
                     {
                         if (tokens[14] == "\"D\"")
@@ -169,7 +169,7 @@ namespace SmartSaver.Controllers
                     var min = Int32.Parse(tokens[2].Substring(2, 2));
                     var s = Int32.Parse(tokens[2].Substring(4, 2));
 
-                    var d = decimal.Parse(tokens[3]);
+                    var d = decimal.Parse(tokens[3], CultureInfo.InvariantCulture);
                     if (tokens[5] == "D")
                     {
                         d = d * -1;
