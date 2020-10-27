@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using SmartSaver.Data;
 using SmartSaver.Models;
@@ -13,9 +10,10 @@ namespace SmartSaver.Desktop
 {
     public partial class MyBudgetWindow : Form
     {
-        private Database db = new Database();
-        private List<Category> CategoryList;
-        private List<Transaction> TransactionList;
+        private readonly Database _db = new Database();
+        private List<Category> _categoryList;
+        private List<Transaction> _transactionList;
+        private int _selectedId;
 
         public MyBudgetWindow()
         {
@@ -29,33 +27,43 @@ namespace SmartSaver.Desktop
 
         public void UpdateCategoriesList()
         {
-            CategoryList = (List<Category>) db.GetCategories();
-            TransactionList = (List<Transaction>) db.GetTransactions();
+            _categoryList = (List<Category>) _db.GetCategories();
+            _transactionList = (List<Transaction>) _db.GetTransactions();
             PopulateCategoryListView();
-            Calculation(CategoryList, TransactionList);
+            Calculation(_categoryList, _transactionList);
         }
 
         private void PopulateCategoryListView()
         {
-            PopulateCategoryListView(CategoryList);
+            PopulateCategoryListView(_categoryList);
         }
 
-        public void Calculation (IEnumerable<Category> CategoryList, IEnumerable<Transaction> TransactionList)
+        public void Calculation (IEnumerable<Category> categoryList, IEnumerable<Transaction> transactionList)
         {
+            if (categoryList == null)
+            {
+                throw new ArgumentNullException(nameof(categoryList));
+            }
+
+            if (transactionList == null)
+            {
+                throw new ArgumentNullException(nameof(transactionList));
+            }
+
             decimal calc = 0;
             int index = 0;
            
-            foreach (var category in CategoryList)
+            foreach (var category in categoryList)
             {
-                foreach (var transaction in TransactionList)
+                foreach (var transaction in transactionList)
                 {
                     if (category.Id == transaction.CategoryId)
                     {
                         calc += transaction.Amount;
                     }
                 }
-                this.budgetAndCategoriesView.Rows[index].Cells[3].Value = System.Math.Abs(calc);
-                this.budgetAndCategoriesView.Rows[index].Cells[4].Value = category.DedicatedAmount - System.Math.Abs(calc);
+                this.budgetAndCategoriesView.Rows[index].Cells[3].Value = Math.Abs(calc);
+                this.budgetAndCategoriesView.Rows[index].Cells[4].Value = category.DedicatedAmount - Math.Abs(calc);
                 if (category.DedicatedAmount - calc < 0)
                 {
                     this.budgetAndCategoriesView.Rows[index].Cells[4].Style.BackColor = Color.Red;
@@ -74,9 +82,9 @@ namespace SmartSaver.Desktop
             }
         }
 
-        private void PopulateCategoryListView(IEnumerable<Category> CategoryList)
+        private void PopulateCategoryListView(IEnumerable<Category> categoryList)
         {
-            foreach (var category in CategoryList)
+            foreach (var category in categoryList)
             {
                 this.budgetAndCategoriesView.Rows.Add(category.Id, category.Title, category.DedicatedAmount);
             }
@@ -89,10 +97,10 @@ namespace SmartSaver.Desktop
             var dedicated = budgetAndCategoriesView
                     .Rows[budgetAndCategoriesView.RowCount - 2]
                     .Cells[2].Value;
-            
+
              if (dedicated != null)
              {
-                dedicatedAmount = decimal.Parse(dedicated.ToString());
+                dedicatedAmount = decimal.Parse(dedicated.ToString()!);
              }
 
             Database db = new Database();
@@ -106,11 +114,11 @@ namespace SmartSaver.Desktop
             try
             {
                 db.AddCategory(newCategory); 
-                MessageBox.Show("New category added successfully");
+                MessageBox.Show(@"New category added successfully");
             }
             catch (Exception)
             {
-                MessageBox.Show("Category dublicate");
+                MessageBox.Show(@"Category duplicate");
                 budgetAndCategoriesView.Rows[budgetAndCategoriesView.RowCount - 2].Cells[0].Value = null;
                 budgetAndCategoriesView.Rows[budgetAndCategoriesView.RowCount - 2].Cells[1].Value = null;
                 budgetAndCategoriesView.Rows[budgetAndCategoriesView.RowCount - 2].Cells[2].Value = null;
@@ -121,19 +129,18 @@ namespace SmartSaver.Desktop
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            string selectedTitle = budgetAndCategoriesView.Rows[selectedId].Cells[1].Value.ToString();
+            string selectedTitle = budgetAndCategoriesView.Rows[_selectedId].Cells[1].Value.ToString();
             Database db = new Database();
            
             db.RemoveCategory(selectedTitle);
-            Debug.WriteLine(selectedId);
-            budgetAndCategoriesView.Rows.RemoveAt(selectedId);
-            MessageBox.Show("Row deleted");
+            Debug.WriteLine(_selectedId);
+            budgetAndCategoriesView.Rows.RemoveAt(_selectedId);
+            MessageBox.Show(@"Row deleted");
         }
 
-        int selectedId = 0;
         private void budgetAndCategoriesView_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
-            selectedId = e.RowIndex;
+            _selectedId = e.RowIndex;
         }
 
     }
