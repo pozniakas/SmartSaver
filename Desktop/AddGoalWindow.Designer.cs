@@ -37,10 +37,11 @@
             this.descriptionBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.goalDate = new System.Windows.Forms.DateTimePicker();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.goalWindowListView = new System.Windows.Forms.ListView();
             this.backButton = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.DeleteButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -77,6 +78,7 @@
             this.goalMoney.Name = "goalMoney";
             this.goalMoney.Size = new System.Drawing.Size(330, 31);
             this.goalMoney.TabIndex = 1;
+            this.goalMoney.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.goalMoney_KeyPress);
             // 
             // label3
             // 
@@ -122,14 +124,14 @@
             this.goalDate.Size = new System.Drawing.Size(200, 23);
             this.goalDate.TabIndex = 2;
             // 
-            // listView1
+            // goalWindowListView
             // 
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(2, 24);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(520, 414);
-            this.listView1.TabIndex = 3;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.goalWindowListView.HideSelection = false;
+            this.goalWindowListView.Location = new System.Drawing.Point(2, 24);
+            this.goalWindowListView.Name = "goalWindowListView";
+            this.goalWindowListView.Size = new System.Drawing.Size(520, 414);
+            this.goalWindowListView.TabIndex = 3;
+            this.goalWindowListView.UseCompatibleStateImageBehavior = false;
             // 
             // backButton
             // 
@@ -165,15 +167,26 @@
             this.label6.TabIndex = 0;
             this.label6.Text = "Description";
             // 
+            // DeleteButton
+            // 
+            this.DeleteButton.Location = new System.Drawing.Point(528, 400);
+            this.DeleteButton.Name = "DeleteButton";
+            this.DeleteButton.Size = new System.Drawing.Size(75, 23);
+            this.DeleteButton.TabIndex = 7;
+            this.DeleteButton.Text = "Delete";
+            this.DeleteButton.UseVisualStyleBackColor = true;
+            this.DeleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
+            // 
             // AddGoalWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(870, 450);
+            this.Controls.Add(this.DeleteButton);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.backButton);
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.goalWindowListView);
             this.Controls.Add(this.goalDate);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.descriptionBox);
@@ -202,9 +215,10 @@
         private System.Windows.Forms.TextBox descriptionBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DateTimePicker goalDate;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView goalWindowListView;
         private System.Windows.Forms.Button backButton;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button DeleteButton;
     }
 }

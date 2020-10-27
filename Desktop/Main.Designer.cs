@@ -45,6 +45,7 @@
             this.tipButton = new System.Windows.Forms.Button();
             this.buttonSetGoal = new System.Windows.Forms.Button();
             this.buttonExport = new System.Windows.Forms.Button();
+            this.buttonMyBudget = new System.Windows.Forms.Button();
             this.panelTopSidebar.SuspendLayout();
             this.panelMain.SuspendLayout();
             this.panelRightSidebar.SuspendLayout();
@@ -191,6 +192,7 @@
             // 
             // panelRightSidebar
             // 
+            this.panelRightSidebar.Controls.Add(this.buttonMyBudget);
             this.panelRightSidebar.Controls.Add(this.tipButton);
             this.panelRightSidebar.Controls.Add(this.buttonSetGoal);
             this.panelRightSidebar.Controls.Add(this.buttonExport);
@@ -238,6 +240,16 @@
             this.buttonExport.UseVisualStyleBackColor = true;
             this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
             // 
+            // buttonMyBudget
+            // 
+            this.buttonMyBudget.Location = new System.Drawing.Point(53, 274);
+            this.buttonMyBudget.Name = "buttonMyBudget";
+            this.buttonMyBudget.Size = new System.Drawing.Size(159, 23);
+            this.buttonMyBudget.TabIndex = 4;
+            this.buttonMyBudget.Text = "My Budget";
+            this.buttonMyBudget.UseVisualStyleBackColor = true;
+            this.buttonMyBudget.Click += new System.EventHandler(this.buttonMyBudget_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -278,5 +290,6 @@
         private System.Windows.Forms.DateTimePicker dateFilterTo;
         private System.Windows.Forms.DateTimePicker dateFilterFrom;
         private System.Windows.Forms.Label labelFilter;
+        private System.Windows.Forms.Button buttonMyBudget;
     }
 }
