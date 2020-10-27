@@ -83,11 +83,14 @@ namespace SmartSaver.Desktop
             {
                 int money;
                 if (((DateTime)goal.Deadlinedate).Subtract(DateTime.UtcNow).Days > 7)
-
-                    money = (Decimal.ToInt32(goal.Amount)) / ((((DateTime)goal.Deadlinedate).Subtract(DateTime.UtcNow) / 7).Days);
-
+                {
+                    money = (Decimal.ToInt32(goal.Amount)) /
+                            ((((DateTime)goal.Deadlinedate).Subtract(DateTime.UtcNow) / 7).Days);
+                }
                 else
+                {
                     money = (Decimal.ToInt32(goal.Amount));
+                }
 
                 int profit = 200;
                 string possibility = GoalPossibility(profit, money);
