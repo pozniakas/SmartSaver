@@ -9,9 +9,10 @@ namespace SmartSaver.Controllers
     {
         public void Export()
         {
-            var saveFileDialog = new SaveFileDialog();
-            var filter = "CSV file (*.csv)|*.csv| All Files (*.*)|*.*";
-            saveFileDialog.Filter = filter;
+            var saveFileDialog = new SaveFileDialog
+            {
+                Filter = @"CSV file (*.csv)|*.csv| All Files (*.*)|*.*"
+            };
             const string header = "\"Id\",\"Date\",\"Counter Party\",\"Details\",\"Amount\",";
 
             var db = new Database();
@@ -20,7 +21,6 @@ namespace SmartSaver.Controllers
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 var writer = new StreamWriter(saveFileDialog.FileName);
-
                 writer.WriteLine(header);
                 foreach (var transaction in transactions)
                 {
@@ -28,8 +28,8 @@ namespace SmartSaver.Controllers
                     {
                         var d = (DateTime)transaction.TrTime;
                         writer.WriteLine("\"" + transaction.Id + "\",\"" + d.ToString("yyyy-MM-dd") + "\",\"" +
-                                         transaction.CounterParty + "\",\"" +
-                                         transaction.Details + "\",\"" + transaction.Amount + "\",");
+                                                transaction.CounterParty + "\",\"" +
+                                                transaction.Details + "\",\"" + transaction.Amount + "\",");
                     }
                 }
 

@@ -18,10 +18,9 @@ namespace SmartSaver.Controllers
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                
                 var reader = new StreamReader(openFileDialog.FileName);
                 var line = reader.ReadLine();
-                if (line != null && !line.Equals(""))
+                if (line != null && line.Length>12)
                 {
                     switch (line.Substring(0, 12))
                     {
@@ -34,12 +33,7 @@ namespace SmartSaver.Controllers
                         case "\"SĄSKAITOS  ":
                         case "SĄSKAITOS  (":
                         case "ACCOUNT  (LT":
-                            var quotes = false;
-                            if (line[0] == '\"')
-                            {
-                                quotes = true;
-                            }
-
+                            bool quotes = line[0] == '\"';
                             ReadSEB(reader, quotes);
                             break;
                         case "Operacijos/B":
@@ -51,7 +45,7 @@ namespace SmartSaver.Controllers
                             break;
                     }
                 }
-
+                else MessageBox.Show(@"Wrong file type");
                 reader.Close();
             }
         }
@@ -64,14 +58,13 @@ namespace SmartSaver.Controllers
                 if (line != null)
                 {
                     var pattern = @"""\s*,\s*""";
-
-                    // input.Substring(1, input.Length - 2) removes the first and last " from the string
                     var tokens = Regex.Split(
                         line.Substring(1, line.Length - 2), pattern);
 
                     tokens[4] = tokens[4].Substring(0, tokens[4].Length - 1);
 
-                    AddTransaction(DateTime.Parse(tokens[1]), decimal.Parse(tokens[4], CultureInfo.InvariantCulture), tokens[2], tokens[3]);
+                    AddTransaction(DateTime.Parse(tokens[1]), decimal.Parse(tokens[4], CultureInfo.InvariantCulture),
+                        tokens[2], tokens[3]);
                 }
             }
         }
@@ -85,18 +78,13 @@ namespace SmartSaver.Controllers
                 if (line != null)
                 {
                     var pattern = @"""\s*,\s*""";
-
-                    // input.Substring(1, input.Length - 2) removes the first and last " from the string
                     var tokens = Regex.Split(
                         line.Substring(1, line.Length - 2), pattern);
 
                     if (tokens[5] != "Apyvarta")
                     {
                         var d = decimal.Parse(tokens[6], CultureInfo.InvariantCulture);
-                        if (tokens[8] == "D")
-                        {
-                            d = d * -1;
-                        }
+                        d = CheckIfDebit(tokens[8], d);
 
                         AddTransaction(DateTime.Parse(tokens[2]), d, tokens[3], tokens[5]);
                     }
@@ -116,35 +104,28 @@ namespace SmartSaver.Controllers
                 line = reader.ReadLine();
                 if (line != null)
                 {
-                    var pattern = @"\s*;\s*";
+                    string details;
+                    string counterParty;
 
-                    var tokens = Regex.Split(
-                        line, pattern);
+                    var pattern = @"\s*;\s*";
+                    var tokens = Regex.Split(line, pattern);
+
                     var d = decimal.Parse(tokens[3].Replace(',','.'), CultureInfo.InvariantCulture);
                     if (quotes)
                     {
-                        if (tokens[14] == "\"D\"")
-                        {
-                            d = d * -1;
-                        }
-
-                        var details = tokens[9].Substring(1, tokens[9].Length - 2);
-                        var counterParty = tokens[4].Substring(1, tokens[4].Length - 2);
-
-                        AddTransaction(DateTime.Parse(tokens[1]), d, counterParty, details);
+                        d = CheckIfDebit(tokens[14].Substring(1, tokens[14].Length - 2), d);
+                        
+                        details = tokens[9].Substring(1, tokens[9].Length - 2);
+                        counterParty = tokens[4].Substring(1, tokens[4].Length - 2);
                     }
                     else
                     {
-                        if (tokens[14] == "D")
-                        {
-                            d = d * -1;
-                        }
+                        d = CheckIfDebit(tokens[14], d);
 
-                        var details = tokens[9];
-                        var counterParty = tokens[4];
-
-                        AddTransaction(DateTime.Parse(tokens[1]), d, counterParty, details);
+                        details = tokens[9];
+                        counterParty = tokens[4];
                     }
+                    AddTransaction(DateTime.Parse(tokens[1]), d, counterParty, details);
                 }
             }
         }
@@ -158,7 +139,6 @@ namespace SmartSaver.Controllers
                 if (line != null)
                 {
                     var pattern = @"\s*;\s*";
-
                     var tokens = Regex.Split(
                         line, pattern);
 
@@ -170,14 +150,21 @@ namespace SmartSaver.Controllers
                     var s = Int32.Parse(tokens[2].Substring(4, 2));
 
                     var d = decimal.Parse(tokens[3], CultureInfo.InvariantCulture);
-                    if (tokens[5] == "D")
-                    {
-                        d = d * -1;
-                    }
+                    d = CheckIfDebit(tokens[5], d);
 
-                    AddTransaction(new DateTime(y, m, day, h, min, s), d, tokens[12], tokens[16]);
+                    AddTransaction(new DateTime(y, m, day, h, min, s),
+                        d, tokens[12], tokens[16]);
                 }
             }
+        }
+
+        private decimal CheckIfDebit(string type, decimal d)
+        {
+            if (type == "D")
+            {
+                return d *= -1;
+            }
+            return d;
         }
 
         private void AddTransaction(DateTime time, decimal amount, string counterParty, string details)
