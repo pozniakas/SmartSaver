@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using SmartSaver.Data;
 using SmartSaver.Models;
@@ -55,13 +56,9 @@ namespace SmartSaver.Desktop
 
             foreach (var category in categoryList)
             {
-                foreach (var transaction in transactionList)
-                {
-                    if (category.Id == transaction.CategoryId)
-                    {
-                        calc += transaction.Amount;
-                    }
-                }
+                calc += transactionList.Where(transaction => category.Id == transaction.CategoryId)
+                    .Sum(transaction => transaction.Amount);
+
                 budgetAndCategoriesView.Rows[index].Cells[3].Value = Math.Abs(calc);
                 budgetAndCategoriesView.Rows[index].Cells[4].Value = category.DedicatedAmount - Math.Abs(calc);
                 if (category.DedicatedAmount - calc < 0)
