@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using SmartSaver.Data;
@@ -58,43 +59,44 @@ namespace SmartSaver.Desktop
             var date = transactionDate.Value;
             var amount = transactionAmount.Text;
             var details = transactionDetailsReasons.Text;
+            var category = (Category) transactionCategory.SelectedItem;
 
-            if (ValidateFields(amount, details))
-            {
-                try
-                {
-                    if (!String.IsNullOrWhiteSpace(amount) && !String.IsNullOrWhiteSpace(details))
-                    {
-                        var amountInDecimal = decimal.Parse(amount);
-                        var db = new Database();
-
-                        var newTransaction =
-                            new Transaction { TrTime = date, Amount = amountInDecimal, Details = details };
-
-                        db.AddTransaction(newTransaction);
-                        _mainWindow.UpdateTransactionList();
-                        MessageBox.Show(@"Transaction added");
-                        Close();
-                    }
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show(@"Invalid values");
-                }
-            }
-            else
+            if (!ValidateFields(amount, details))
             {
                 MessageBox.Show(@"Invalid Values");
+                return;
+            }
+
+            try
+            {
+                var amountInDecimal = decimal.Parse(amount);
+                var db = new Database();
+
+                var newTransaction = new Transaction
+                {
+                    TrTime = date,
+                    Amount = amountInDecimal,
+                    Details = details,
+                    CategoryId = category.Id
+                };
+
+                db.AddTransaction(newTransaction);
+                _mainWindow.UpdateTransactionList();
+                MessageBox.Show(@"Transaction added");
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(@"Invalid values");
+                Debug.WriteLine(ex);
             }
 
         }
 
         private void PopulateComboBox(IEnumerable<Category> categoryList)
         {
-            foreach (var category in categoryList)
-            {
-                transactionCategory.Items.Add(category.Title);
-            }
+            transactionCategory.DataSource = categoryList;
+            transactionCategory.DisplayMember = nameof(Category.Title);
         }
 
         private void AddTransactionWindow_Load(object sender, EventArgs e)

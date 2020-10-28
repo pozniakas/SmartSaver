@@ -55,10 +55,19 @@ namespace SmartSaver.Desktop
             int index = 0;
 
             foreach (var category in categoryList)
-            {
-                calc += transactionList.Where(transaction => category.Id == transaction.CategoryId)
-                    .Sum(transaction => transaction.Amount);
-
+            {   
+                Debug.WriteLine("CATEGORY: " + category.Id + " " + category.Title);
+                Debug.WriteLine("COUNT: " + category.Transaction.Count);
+                foreach (var transaction in transactionList)
+                {
+                    if (category.Id == transaction.CategoryId)
+                    {
+                        calc += transaction.Amount;
+                    }
+                    Debug.WriteLine("TRANSACTION: " + transaction.CategoryId +" " + transaction.Amount);
+                }
+               
+                Debug.WriteLine(category.Title + " " + calc);
                 budgetAndCategoriesView.Rows[index].Cells[3].Value = Math.Abs(calc);
                 budgetAndCategoriesView.Rows[index].Cells[4].Value = category.DedicatedAmount - Math.Abs(calc);
                 if (category.DedicatedAmount - calc < 0)
