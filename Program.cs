@@ -15,6 +15,7 @@ namespace SmartSaver
         [STAThread]
         static void Main()
         {
+            new ImageRecognizer().IsLoaded();
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

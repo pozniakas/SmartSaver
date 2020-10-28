@@ -17,6 +17,21 @@ namespace SmartSaver.Controllers
     {
         private const string TessDataPath = @".\assets\tessdata\best";
 
+        public bool IsLoaded()
+        {
+            try
+            {
+                var isLoaded = CvInvoke.CheckLibraryLoaded();
+                Debug.WriteLine("Image recognizer is loaded");
+                return isLoaded;
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return false;
+            }
+        }
+
         public void RecognizeTestImages()
         {
             try
