@@ -21,8 +21,6 @@ namespace SmartSaver.Desktop
         private readonly Database _db = new Database();
         private List<Goal> _goalList;
 
-        private int selectedId;
-
         public AddGoalWindow()
         {
             InitializeComponent();
@@ -75,9 +73,10 @@ namespace SmartSaver.Desktop
         {
             double profitAWeek = profit / 4.0;
             double possibilityRate = worth / profitAWeek;
-            if (possibilityRate.IsGreaterThen(0.5))
+
+            if (possibilityRate.IsGreaterThen(1))
             {
-                return "Huge";
+                return "Small";
             }
 
             if (possibilityRate.IsGreaterThen(0.8))
@@ -85,9 +84,9 @@ namespace SmartSaver.Desktop
                 return "Real";
             }
 
-            if (possibilityRate.IsGreaterThen(1))
+            if (possibilityRate.IsGreaterThen(0.5))
             {
-                return "Small";
+                return "Huge";
             }
 
             return "Not real";
@@ -214,10 +213,16 @@ namespace SmartSaver.Desktop
 
         private void DeleteButton_Click(object sender, EventArgs e)
         {
+            if (goalWindowListView.SelectedItems.Count < 0)
+            {
+                return;
+            }
+
+            var selectedTitle = goalWindowListView.SelectedItems[0].Text;
+            goalWindowListView.Items.RemoveAt(goalWindowListView.SelectedItems[0].Index);
+
             try
             {
-                var selectedTitle = goalWindowListView.SelectedItems[0].Text;
-                goalWindowListView.Items.RemoveAt(selectedId);
                 _db.RemoveGoal(selectedTitle);
                 UpdateGoalList();
             }
