@@ -29,16 +29,16 @@ namespace SmartSaver.Desktop
 
         private void PrepareGoalListView()
         {
-            listView1.View = View.Details;
-            listView1.FullRowSelect = true;
-            listView1.GridLines = true;
+            goalWindowListView.View = View.Details;
+            goalWindowListView.FullRowSelect = true;
+            goalWindowListView.GridLines = true;
 
-            listView1.Columns.Add("Title", 150);
-            listView1.Columns.Add("Datetime", 70);
-            listView1.Columns.Add("Amount", 100);
-            listView1.Columns.Add("Details", 158);
-            listView1.Columns.Add("To save in a week", 120);
-            listView1.Columns.Add("Possibility", 100);
+            goalWindowListView.Columns.Add("Title", 150);
+            goalWindowListView.Columns.Add("Datetime", 70);
+            goalWindowListView.Columns.Add("Amount", 100);
+            goalWindowListView.Columns.Add("Details", 158);
+            goalWindowListView.Columns.Add("To save in a week", 120);
+            goalWindowListView.Columns.Add("Possibility", 100);
         }
 
         public void UpdateGoalList()
@@ -77,10 +77,11 @@ namespace SmartSaver.Desktop
 
         private void PopulateGoalListView(IEnumerable<Goal> GoalList)
         {
-            listView1.Items.Clear();
+            goalWindowListView.Items.Clear();
 
             foreach (var goal in GoalList)
             {
+
                 int money;
                 if (((DateTime)goal.Deadlinedate).Subtract(DateTime.UtcNow).Days > 7)
                 {
@@ -103,11 +104,11 @@ namespace SmartSaver.Desktop
                     possibility
                 });
 
-                listView1.Items.Add(item);
+                goalWindowListView.Items.Add(item);
             }
         }
 
-        private void goalAmount_KeyPress(object sender, KeyPressEventArgs e)
+        private void goalMoney_KeyPress(object sender, KeyPressEventArgs e)
         {
             var ch = e.KeyChar;
 
@@ -179,10 +180,11 @@ namespace SmartSaver.Desktop
 
         private void DeleteButton_Click(object sender, EventArgs e)
         {
-            var selectedTitle = listView1.Items[selectedId].Text;
-            listView1.Items.RemoveAt(selectedId);
+            var selectedTitle = goalWindowListView.Items[selectedId].Text;
+            goalWindowListView.Items.RemoveAt(selectedId);
             db.RemoveGoal(selectedTitle);
             UpdateGoalList();
+
         }
 
 
