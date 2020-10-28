@@ -9,13 +9,13 @@ namespace SmartSaver.Desktop
 {
     public partial class AddTransactionWindow : Form
     {
-        private readonly Database db = new Database();
-        private readonly Main mainWindow;
-        private List<Category> CategoryList;
+        private readonly Database _db = new Database();
+        private readonly Main _mainWindow;
+        private List<Category> _categoryList;
 
         public AddTransactionWindow(Main mw)
         {
-            mainWindow = mw;
+            _mainWindow = mw;
             InitializeComponent();
         }
 
@@ -65,15 +65,15 @@ namespace SmartSaver.Desktop
                 var newTransaction = new Transaction {TrTime = date, Amount = amountInDecimal, Details = details};
 
                 db.AddTransaction(newTransaction);
-                mainWindow.UpdateTransactionList();
-                MessageBox.Show("Transaction added");
+                _mainWindow.UpdateTransactionList();
+                MessageBox.Show(@"Transaction added");
                 Close();
             }
         }
 
-        private void PopulateComboBox(IEnumerable<Category> CategoryList)
+        private void PopulateComboBox(IEnumerable<Category> categoryList)
         {
-            foreach (var category in CategoryList)
+            foreach (var category in categoryList)
             {
                 transactionCategory.Items.Add(category.Title);
             }
@@ -81,8 +81,8 @@ namespace SmartSaver.Desktop
 
         private void AddTransactionWindow_Load(object sender, EventArgs e)
         {
-            CategoryList = (List<Category>)db.GetCategories();
-            PopulateComboBox(CategoryList);
+            _categoryList = (List<Category>)_db.GetCategories();
+            PopulateComboBox(_categoryList);
         }
     }
 }
