@@ -22,17 +22,17 @@ namespace SmartSaver.Desktop
         private void transactionAmount_KeyPress(object sender, KeyPressEventArgs e)
         {
             var ch = e.KeyChar;
+           
+                if (ch == 46 && transactionAmount.Text.IndexOf('.') != -1)
+                {
+                    e.Handled = true;
+                    return;
+                }
 
-            if (ch == 46 && transactionAmount.Text.IndexOf('.') != -1)
-            {
-                e.Handled = true;
-                return;
-            }
-
-            if (!Char.IsDigit(ch) && ch != 8 && ch != 46)
-            {
-                e.Handled = true;
-            }
+                if (!Char.IsDigit(ch) && ch != 8 && ch != 46)
+                {
+                    e.Handled = true;
+                }
         }
 
         public void ValidateFields(string amount, string details)
@@ -53,22 +53,28 @@ namespace SmartSaver.Desktop
             var date = transactionDate.Value;
             var amount = transactionAmount.Text;
             var details = transactionDetailsReasons.Text;
-            var counterParty = transactionCategory.Text;
 
             ValidateFields(amount, details);
-
-            if (!String.IsNullOrWhiteSpace(amount) && !String.IsNullOrWhiteSpace(details))
+            try
             {
-                var amountInDecimal = decimal.Parse(amount);
-                var db = new Database();
+                if (!String.IsNullOrWhiteSpace(amount) && !String.IsNullOrWhiteSpace(details))
+                {
+                    var amountInDecimal = decimal.Parse(amount);
+                    var db = new Database();
 
-                var newTransaction = new Transaction {TrTime = date, Amount = amountInDecimal, Details = details};
+                    var newTransaction = new Transaction {TrTime = date, Amount = amountInDecimal, Details = details};
 
-                db.AddTransaction(newTransaction);
-                _mainWindow.UpdateTransactionList();
-                MessageBox.Show(@"Transaction added");
-                Close();
+                    db.AddTransaction(newTransaction);
+                    _mainWindow.UpdateTransactionList();
+                    MessageBox.Show(@"Transaction added");
+                    Close();
+                }
             }
+            catch (Exception)
+            {
+                MessageBox.Show("Invalid values");
+            }
+         
         }
 
         private void PopulateComboBox(IEnumerable<Category> categoryList)

@@ -92,31 +92,31 @@ namespace SmartSaver.Desktop
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            string title = budgetAndCategoriesView.Rows[budgetAndCategoriesView.RowCount - 2].Cells[1].Value.ToString();
-            decimal dedicatedAmount = 0;
-            var dedicated = budgetAndCategoriesView
+            try
+            {
+
+                var title = budgetAndCategoriesView.Rows[budgetAndCategoriesView.RowCount - 2].Cells[1].Value;
+                var dedicated = budgetAndCategoriesView
                     .Rows[budgetAndCategoriesView.RowCount - 2]
                     .Cells[2].Value;
 
-             if (dedicated != null)
-             {
-                dedicatedAmount = decimal.Parse(dedicated.ToString()!);
-             }
+                if (title == null || dedicated == null)
+                {
+                    MessageBox.Show("Invalid catgory");
+                    return;
+                }
 
-            Database db = new Database();
+                var dedicatedAmount = decimal.Parse(dedicated.ToString()!);
 
-            Category newCategory = new Category
-            {
-                Title = title,
-                DedicatedAmount = dedicatedAmount
-            };
+                Database db = new Database();
 
-            try
-            {
-                db.AddCategory(newCategory); 
+                Category newCategory = new Category {Title = title.ToString(), DedicatedAmount = dedicatedAmount};
+
+
+                db.AddCategory(newCategory);
                 MessageBox.Show(@"New category added successfully");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 MessageBox.Show(@"Category duplicate");
                 budgetAndCategoriesView.Rows[budgetAndCategoriesView.RowCount - 2].Cells[0].Value = null;
@@ -124,6 +124,7 @@ namespace SmartSaver.Desktop
                 budgetAndCategoriesView.Rows[budgetAndCategoriesView.RowCount - 2].Cells[2].Value = null;
                 budgetAndCategoriesView.Rows[budgetAndCategoriesView.RowCount - 2].Cells[3].Value = null;
                 budgetAndCategoriesView.Rows[budgetAndCategoriesView.RowCount - 2].Cells[4].Value = null;
+                Debug.WriteLine(ex);
             }
         }
 
