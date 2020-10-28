@@ -67,5 +67,17 @@ namespace SmartSaver.Data
 
             return db.SaveChanges();
         }
+        public int RemoveGoal(string selectedTitle)
+        {
+            using var db = new postgresContext();
+            var itemToRemove = db.Goal.SingleOrDefault(x => x.Title == selectedTitle);
+
+            if (itemToRemove != null)
+            {
+                db.Goal.Remove(itemToRemove);
+            }
+
+            return db.SaveChanges();
+        }
     }
 }

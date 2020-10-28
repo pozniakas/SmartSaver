@@ -9,28 +9,31 @@ namespace SmartSaver.Controllers
     {
         public void Export()
         {
-            var saveFileDialog = new SaveFileDialog();
-            var filter = "CSV file (*.csv)|*.csv| All Files (*.*)|*.*";
-            saveFileDialog.Filter = filter;
+            var saveFileDialog = new SaveFileDialog {Filter = @"CSV file (*.csv)|*.csv| All Files (*.*)|*.*"};
             const string header = "\"Id\",\"Date\",\"Counter Party\",\"Details\",\"Amount\",";
 
             var db = new Database();
             var transactions = db.GetTransactions();
 
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            if (saveFileDialog.ShowDialog() != DialogResult.OK)
             {
-                var writer = new StreamWriter(saveFileDialog.FileName);
+                return;
+            }
 
-                writer.WriteLine(header);
-                foreach (var transaction in transactions)
+            using var writer = new StreamWriter(saveFileDialog.FileName);
+            writer.WriteLine(header);
+
+            foreach (var transaction in transactions)
+            {
+                if (transaction.TrTime != null)
                 {
                     var d = (DateTime)transaction.TrTime;
-                    writer.WriteLine("\"" + transaction.Id + "\",\"" + d.ToString("yyyy-MM-dd") + "\",\"" +
-                                     transaction.CounterParty + "\",\"" +
-                                     transaction.Details + "\",\"" + transaction.Amount + "\",");
+                    writer.WriteLine("\""
+                                     + transaction.Id + "\",\""
+                                     + d.ToString("yyyy-MM-dd") + "\",\""
+                                     + transaction.CounterParty + "\",\""
+                                     + transaction.Details + "\",\"" + transaction.Amount + "\",");
                 }
-
-                writer.Close();
             }
         }
     }
