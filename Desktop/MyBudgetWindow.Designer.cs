@@ -116,7 +116,7 @@
             this.updateButton.TabIndex = 2;
             this.updateButton.Text = "Update";
             this.updateButton.UseVisualStyleBackColor = true;
-            this.updateButton.Click += new System.EventHandler(this.buttonDelete_Click);
+            this.updateButton.Click += new System.EventHandler(this.buttonUpdate_Click);
             // 
             // MyBudgetWindow
             // 
