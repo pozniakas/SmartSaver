@@ -50,7 +50,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(528, 24);
+            this.label1.Location = new System.Drawing.Point(724, 25);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(97, 25);
             this.label1.TabIndex = 0;
@@ -59,7 +59,7 @@
             // goalNameBox
             // 
             this.goalNameBox.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.goalNameBox.Location = new System.Drawing.Point(528, 52);
+            this.goalNameBox.Location = new System.Drawing.Point(724, 53);
             this.goalNameBox.Name = "goalNameBox";
             this.goalNameBox.Size = new System.Drawing.Size(330, 31);
             this.goalNameBox.TabIndex = 1;
@@ -74,7 +74,7 @@
             // goalMoney
             // 
             this.goalMoney.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.goalMoney.Location = new System.Drawing.Point(528, 114);
+            this.goalMoney.Location = new System.Drawing.Point(724, 118);
             this.goalMoney.Name = "goalMoney";
             this.goalMoney.Size = new System.Drawing.Size(330, 31);
             this.goalMoney.TabIndex = 1;
@@ -86,7 +86,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label3.Location = new System.Drawing.Point(528, 210);
+            this.label3.Location = new System.Drawing.Point(724, 214);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(86, 25);
             this.label3.TabIndex = 0;
@@ -94,18 +94,18 @@
             // 
             // NextButton
             // 
-            this.NextButton.Location = new System.Drawing.Point(653, 400);
+            this.NextButton.Location = new System.Drawing.Point(849, 389);
             this.NextButton.Name = "NextButton";
             this.NextButton.Size = new System.Drawing.Size(75, 23);
             this.NextButton.TabIndex = 2;
             this.NextButton.Text = "ADD GOAL";
             this.NextButton.UseVisualStyleBackColor = true;
-            this.NextButton.Click += new System.EventHandler(this.button1_Click);
+            this.NextButton.Click += new System.EventHandler(this.addGoal_Click);
             // 
             // descriptionBox
             // 
             this.descriptionBox.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.descriptionBox.Location = new System.Drawing.Point(528, 176);
+            this.descriptionBox.Location = new System.Drawing.Point(724, 180);
             this.descriptionBox.Name = "descriptionBox";
             this.descriptionBox.Size = new System.Drawing.Size(330, 31);
             this.descriptionBox.TabIndex = 1;
@@ -119,7 +119,7 @@
             // 
             // goalDate
             // 
-            this.goalDate.Location = new System.Drawing.Point(528, 238);
+            this.goalDate.Location = new System.Drawing.Point(724, 242);
             this.goalDate.Name = "goalDate";
             this.goalDate.Size = new System.Drawing.Size(200, 23);
             this.goalDate.TabIndex = 2;
@@ -129,13 +129,13 @@
             this.goalWindowListView.HideSelection = false;
             this.goalWindowListView.Location = new System.Drawing.Point(2, 24);
             this.goalWindowListView.Name = "goalWindowListView";
-            this.goalWindowListView.Size = new System.Drawing.Size(520, 414);
+            this.goalWindowListView.Size = new System.Drawing.Size(716, 414);
             this.goalWindowListView.TabIndex = 3;
             this.goalWindowListView.UseCompatibleStateImageBehavior = false;
             // 
             // backButton
             // 
-            this.backButton.Location = new System.Drawing.Point(799, 430);
+            this.backButton.Location = new System.Drawing.Point(992, 440);
             this.backButton.Name = "backButton";
             this.backButton.Size = new System.Drawing.Size(75, 23);
             this.backButton.TabIndex = 4;
@@ -149,7 +149,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label5.Location = new System.Drawing.Point(528, 86);
+            this.label5.Location = new System.Drawing.Point(724, 90);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(54, 25);
             this.label5.TabIndex = 0;
@@ -161,7 +161,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label6.Location = new System.Drawing.Point(528, 148);
+            this.label6.Location = new System.Drawing.Point(724, 152);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(102, 25);
             this.label6.TabIndex = 0;
@@ -169,7 +169,7 @@
             // 
             // DeleteButton
             // 
-            this.DeleteButton.Location = new System.Drawing.Point(528, 400);
+            this.DeleteButton.Location = new System.Drawing.Point(724, 389);
             this.DeleteButton.Name = "DeleteButton";
             this.DeleteButton.Size = new System.Drawing.Size(75, 23);
             this.DeleteButton.TabIndex = 7;
@@ -181,7 +181,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(870, 450);
+            this.ClientSize = new System.Drawing.Size(1066, 463);
             this.Controls.Add(this.DeleteButton);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
