@@ -35,17 +35,22 @@ namespace SmartSaver.Desktop
                 }
         }
 
-        public void ValidateFields(string amount, string details)
+
+        public bool ValidateFields(string amount, string details)
         {
-            if (String.IsNullOrWhiteSpace(amount))
+            if (string.IsNullOrWhiteSpace(amount))
             {
                 transactionAmount.BackColor = Color.Red;
+                return false;
             }
 
-            if (String.IsNullOrWhiteSpace(details))
+            if (string.IsNullOrWhiteSpace(details))
             {
                 transactionDetailsReasons.BackColor = Color.Red;
+                return false;
             }
+
+            return true;
         }
 
         private void addNewTransactionButton_Click(object sender, EventArgs e)
@@ -54,27 +59,35 @@ namespace SmartSaver.Desktop
             var amount = transactionAmount.Text;
             var details = transactionDetailsReasons.Text;
 
-            ValidateFields(amount, details);
-            try
+            if (ValidateFields(amount, details))
             {
-                if (!String.IsNullOrWhiteSpace(amount) && !String.IsNullOrWhiteSpace(details))
+                try
                 {
-                    var amountInDecimal = decimal.Parse(amount);
-                    var db = new Database();
+                    if (!String.IsNullOrWhiteSpace(amount) && !String.IsNullOrWhiteSpace(details))
+                    {
+                        var amountInDecimal = decimal.Parse(amount);
+                        var db = new Database();
 
-                    var newTransaction = new Transaction {TrTime = date, Amount = amountInDecimal, Details = details};
+                        var newTransaction =
+                            new Transaction {TrTime = date, Amount = amountInDecimal, Details = details};
 
-                    db.AddTransaction(newTransaction);
-                    _mainWindow.UpdateTransactionList();
-                    MessageBox.Show(@"Transaction added");
-                    Close();
+                        db.AddTransaction(newTransaction);
+                        _mainWindow.UpdateTransactionList();
+                        MessageBox.Show(@"Transaction added");
+                        Close();
+                    }
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Invalid values");
                 }
             }
-            catch (Exception)
+            else
             {
-                MessageBox.Show("Invalid values");
+                MessageBox.Show("Invalid Values");
             }
-         
+
+
         }
 
         private void PopulateComboBox(IEnumerable<Category> categoryList)

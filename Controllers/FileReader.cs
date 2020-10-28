@@ -173,7 +173,7 @@ namespace SmartSaver.Controllers
             return d;
         }
 
-        private void AddTransaction(DateTime time, decimal amount, string counterParty, string details)
+        private void AddTransaction(DateTime time, decimal amount, string counterParty, string details = "")
         {
             var db = new Database();
             var newTransaction = new Transaction
