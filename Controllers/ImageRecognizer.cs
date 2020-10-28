@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
@@ -26,7 +24,6 @@ namespace SmartSaver.Controllers
                 DirectoryInfo dir = new DirectoryInfo(@"..\..\..\assets\Receipts");
                 foreach (var imgPath in dir.GetFiles("*.jpg"))
                 {
-                    //AutoCrop(imgPath.FullName);
                     var res = Recognize(imgPath);
 
                     var destPath = imgPath.Directory.Parent.FullName + @"\receiptsTxt\" + imgPath.Name + ".txt";
@@ -38,11 +35,10 @@ namespace SmartSaver.Controllers
             catch (Exception e)
             {
                 Debug.WriteLine(e);
-                throw;
             }
         }
 
-        private string Recognize(FileInfo imagePath)
+        private string Recognize(FileSystemInfo imagePath)
         {
             Debug.WriteLine(imagePath);
 
@@ -56,7 +52,7 @@ namespace SmartSaver.Controllers
             // Scaled Image
             var resizedImage = ResizeImage(originalImage, 500, (int)(500 / scaleIndex));
 
-            return ProccessImage(resizedImage);
+            return ProcessImage(resizedImage);
 
             // Split Image
             // SplitImage(resizedImage);
@@ -87,7 +83,7 @@ namespace SmartSaver.Controllers
                 using var contour = new VectorOfPoint();
                 var peri = CvInvoke.ArcLength(contourVector, true);
                 CvInvoke.ApproxPolyDP(contourVector, contour, 0.1 * peri, true);
-                if (contour != null && contour.ToArray().Length == 4 && CvInvoke.IsContourConvex(contour))
+                if (contour.ToArray().Length == 4 && CvInvoke.IsContourConvex(contour))
                 {
                     Debug.WriteLine(contour.ToString());
                     // return contour;
@@ -150,7 +146,7 @@ namespace SmartSaver.Controllers
             return new List<Image>();
         }
 
-        private string ProccessImage(Image image)
+        private string ProcessImage(Image image)
         {
             using var ocrEngineBest = new TesseractEngine(TessDataPath, "lit", EngineMode.Default);
             using var img = Pix.LoadFromMemory(ImageToByte(image));

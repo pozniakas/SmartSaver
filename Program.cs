@@ -15,13 +15,10 @@ namespace SmartSaver
         [STAThread]
         static void Main()
         {
-            Debug.WriteLine( CvInvoke.CheckLibraryLoaded() );
-
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new Main());
-            //(new ImageRecognizer()).RecognizeTestImages();
+            Application.Run(new Main());
         }
     }
 }
