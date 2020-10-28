@@ -36,6 +36,7 @@
             this.txtActivity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtAvailable = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.budgetAndCategoriesView = new System.Windows.Forms.DataGridView();
+            this.updateButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.budgetAndCategoriesView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -91,12 +92,6 @@
             this.txtAvailable.Name = "txtAvailable";
             this.txtAvailable.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
-            // MyBudgetWindow
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(586, 262);
-            // 
             // budgetAndCategoriesView
             // 
             this.budgetAndCategoriesView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -112,6 +107,23 @@
             this.budgetAndCategoriesView.TabIndex = 0;
             this.budgetAndCategoriesView.Text = "dataGridView1";
             this.budgetAndCategoriesView.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.budgetAndCategoriesView_CellEnter);
+            // 
+            // updateButton
+            // 
+            this.updateButton.Location = new System.Drawing.Point(330, 230);
+            this.updateButton.Name = "updateButton";
+            this.updateButton.Size = new System.Drawing.Size(74, 27);
+            this.updateButton.TabIndex = 2;
+            this.updateButton.Text = "Update";
+            this.updateButton.UseVisualStyleBackColor = true;
+            this.updateButton.Click += new System.EventHandler(this.buttonDelete_Click);
+            // 
+            // MyBudgetWindow
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(586, 262);
+            this.Controls.Add(this.updateButton);
             this.Controls.Add(this.buttonDelete);
             this.Controls.Add(this.buttonAdd);
             this.Controls.Add(this.budgetAndCategoriesView);
@@ -132,5 +144,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn txtBudgeted;
         private System.Windows.Forms.DataGridViewTextBoxColumn txtActivity;
         private System.Windows.Forms.DataGridViewTextBoxColumn txtAvailable;
+        private System.Windows.Forms.Button updateButton;
     }
 }
