@@ -11,9 +11,9 @@ namespace SmartSaver.Desktop
 {
     public static class DecimalExtension
     {
-        public static bool IsGreaterThen(this double i, double j)
+        public static bool IsLessThen(this double i, double j)
         {
-            return i > j;
+            return i < j;
         }
     }
     public partial class AddGoalWindow : Form
@@ -74,19 +74,19 @@ namespace SmartSaver.Desktop
             double profitAWeek = profit / 4.0;
             double possibilityRate = worth / profitAWeek;
 
-            if (possibilityRate.IsGreaterThen(1))
+            if (possibilityRate.IsLessThen(0.5))
             {
-                return "Small";
+                return "Huge";
             }
 
-            if (possibilityRate.IsGreaterThen(0.8))
+            if (possibilityRate.IsLessThen(0.8))
             {
                 return "Real";
             }
 
-            if (possibilityRate.IsGreaterThen(0.5))
+            if (possibilityRate.IsLessThen(1))
             {
-                return "Huge";
+                return "Small";
             }
 
             return "Not real";
@@ -101,7 +101,7 @@ namespace SmartSaver.Desktop
             {
 
                 int money;
-                if (((DateTime)goal.Deadlinedate).Subtract(DateTime.UtcNow).Days > 7)
+                if (((DateTime)goal.Deadlinedate).Subtract(DateTime.UtcNow).Days > 7 )
                 {
                     money = (decimal.ToInt32(goal.Amount)) /
                             ((((DateTime)goal.Deadlinedate).Subtract(DateTime.UtcNow) / 7).Days);
