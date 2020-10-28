@@ -6,15 +6,15 @@ truncate smartsaver.goal restart identity cascade;
 truncate smartsaver.tag restart identity cascade;
 truncate smartsaver.transaction_tag restart identity cascade;
 
--- SET CLIENT_ENCODING TO 'UTF8';
+SET CLIENT_ENCODING TO 'UTF8';
 
 insert into smartsaver.category
-(title)
+(title, dedicated_amount)
 values
-('Groceries'),
-('Wage & Salary'),
-('Transport'),
-('Entertainment');
+('Groceries', 100),
+('Wage & Salary', null),
+('Transport', 200),
+('Entertainment', 150);
 
 insert into smartsaver.transaction
 (tr_time, amount, details, counter_party, category_id)
@@ -44,9 +44,9 @@ values
 (1, 1);
 
 insert into smartsaver.goal
-(goal_date, amount, title, description)
+(creationDate, deadlineDate, amount, title, description)
 values
-('2021-01-01', 300, 'Party','Birthday of the year'),
-('2021-02-02', 1000, 'Skiing', 'Skiing in Alps, Italy');
+('2020-10-15', '2021-01-01', 300, 'Party','Birthday of the year'),
+('2020-10-15', '2021-02-02', 1000, 'Skiing', 'Skiing in Alps, Italy');
 
 commit; 

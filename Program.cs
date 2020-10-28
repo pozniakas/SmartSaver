@@ -4,16 +4,17 @@ using SmartSaver.Desktop;
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
+using SmartSaver.Desktop;
 
 namespace SmartSaver
 {
-    static class Program
+    internal static class Program
     {
         /// <summary>
-        ///  The main entry point for the application.
+        ///     The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             new ImageRecognizer().IsLoaded();
             Application.SetHighDpiMode(HighDpiMode.SystemAware);

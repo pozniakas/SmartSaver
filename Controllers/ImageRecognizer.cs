@@ -36,7 +36,7 @@ namespace SmartSaver.Controllers
         {
             try
             {
-                DirectoryInfo dir = new DirectoryInfo(@"..\..\..\assets\Receipts");
+                var dir = new DirectoryInfo(@"..\..\..\assets\Receipts");
                 foreach (var imgPath in dir.GetFiles("*.jpg"))
                 {
                     var res = Recognize(imgPath);
@@ -172,7 +172,7 @@ namespace SmartSaver.Controllers
 
         private byte[] ImageToByte(Image img)
         {
-            ImageConverter converter = new ImageConverter();
+            var converter = new ImageConverter();
             return (byte[])converter.ConvertTo(img, typeof(byte[]));
         }
     }

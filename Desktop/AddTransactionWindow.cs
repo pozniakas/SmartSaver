@@ -1,94 +1,107 @@
-﻿using SmartSaver.Data;
-using SmartSaver.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
+using SmartSaver.Data;
+using SmartSaver.Models;
 
 namespace SmartSaver.Desktop
 {
     public partial class AddTransactionWindow : Form
     {
-        private Main mainWindow;
+        private readonly Database _db = new Database();
+        private readonly Main _mainWindow;
+        private List<Category> _categoryList;
+
         public AddTransactionWindow(Main mw)
         {
-            mainWindow = mw;
+            _mainWindow = mw;
             InitializeComponent();
         }
 
         private void transactionAmount_KeyPress(object sender, KeyPressEventArgs e)
         {
-            char ch = e.KeyChar;
+            var ch = e.KeyChar;
+           
+                if (ch == 46 && transactionAmount.Text.IndexOf('.') != -1)
+                {
+                    e.Handled = true;
+                    return;
+                }
 
-            if (ch == 46 && transactionAmount.Text.IndexOf('.') != -1)
-            {
-                e.Handled = true;
-                return;
-            }
-            if (!Char.IsDigit(ch) && ch != 8 && ch != 46)
-            {
-                e.Handled = true;
-            }
+                if (!Char.IsDigit(ch) && ch != 8 && ch != 46)
+                {
+                    e.Handled = true;
+                }
         }
 
-        public void ValidateFields(string amount, string details)
+
+        public bool ValidateFields(string amount, string details)
         {
-            if (String.IsNullOrWhiteSpace(amount))
+            if (string.IsNullOrWhiteSpace(amount))
             {
                 transactionAmount.BackColor = Color.Red;
+                return false;
             }
-            if (String.IsNullOrWhiteSpace(details))
+
+            if (string.IsNullOrWhiteSpace(details))
             {
                 transactionDetailsReasons.BackColor = Color.Red;
+                return false;
             }
+
+            return true;
         }
 
         private void addNewTransactionButton_Click(object sender, EventArgs e)
         {
-            DateTime date = transactionDate.Value;
-            string amount = transactionAmount.Text;
-            string details = transactionDetailsReasons.Text;
-            string counterParty = transactionCategory.Text;
+            var date = transactionDate.Value;
+            var amount = transactionAmount.Text;
+            var details = transactionDetailsReasons.Text;
 
-            ValidateFields(amount, details);
-
-            if (!String.IsNullOrWhiteSpace(amount) && !String.IsNullOrWhiteSpace(details))
+            if (ValidateFields(amount, details))
             {
-                decimal amountInDecimal = decimal.Parse(amount);
+                try
+                {
+                    if (!String.IsNullOrWhiteSpace(amount) && !String.IsNullOrWhiteSpace(details))
+                    {
+                        var amountInDecimal = decimal.Parse(amount);
+                        var db = new Database();
 
-                Database db = new Database();
+                        var newTransaction =
+                            new Transaction {TrTime = date, Amount = amountInDecimal, Details = details};
 
-                Transaction newTransaction = new Transaction { 
-                    TrTime = date,
-                    Amount = amountInDecimal,
-                    Details = details
-                };
-
-                
-                db.AddTransaction(newTransaction);
-
-                mainWindow.UpdateTransactionList();
+                        db.AddTransaction(newTransaction);
+                        _mainWindow.UpdateTransactionList();
+                        MessageBox.Show(@"Transaction added");
+                        Close();
+                    }
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Invalid values");
+                }
             }
-            this.Close();
-        }
+            else
+            {
+                MessageBox.Show("Invalid Values");
+            }
 
-        private void transactionDate_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void transactionAmount_TextChanged(object sender, EventArgs e)
-        {
 
         }
 
-        private void transactionDetailsReasons_TextChanged(object sender, EventArgs e)
+        private void PopulateComboBox(IEnumerable<Category> categoryList)
         {
+            foreach (var category in categoryList)
+            {
+                transactionCategory.Items.Add(category.Title);
+            }
+        }
 
+        private void AddTransactionWindow_Load(object sender, EventArgs e)
+        {
+            _categoryList = (List<Category>)_db.GetCategories();
+            PopulateComboBox(_categoryList);
         }
     }
 }

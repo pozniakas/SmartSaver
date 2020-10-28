@@ -1,20 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+using System.Diagnostics;
 using System.Drawing;
-using System.Text;
+using System.Linq.Expressions;
 using System.Windows.Forms;
+using Microsoft.EntityFrameworkCore;
 using SmartSaver.Data;
 using SmartSaver.Models;
 
 namespace SmartSaver.Desktop
 {
-
+    public static class DecimalExtension
+        {
+            public static bool IsGreaterThen(this double i, double j)
+            {
+                return i > j;
+            }
+        }
     public partial class AddGoalWindow : Form
     {
         private readonly Database db = new Database();
-        private List<Goal> GoalList;
+        private List<Goal> _goalList;
+
+        private int selectedId;
+
         public AddGoalWindow()
         {
             InitializeComponent();
@@ -29,100 +38,199 @@ namespace SmartSaver.Desktop
 
         private void PrepareGoalListView()
         {
-            listView1.View = View.Details;
-            listView1.GridLines = true;
+            goalWindowListView.View = View.Details;
+            goalWindowListView.FullRowSelect = true;
+            goalWindowListView.GridLines = true;
 
-            listView1.Columns.Add("Title", 100);
-            listView1.Columns.Add("Datetime", 70);
-            listView1.Columns.Add("Amount", 100);
-            listView1.Columns.Add("Details", 246);
+            goalWindowListView.Columns.Add("Title", 150);
+            goalWindowListView.Columns.Add("Datetime", 70);
+            goalWindowListView.Columns.Add("Amount", 100);
+            goalWindowListView.Columns.Add("Details", 158);
+            goalWindowListView.Columns.Add("To save in a week", 120);
+            goalWindowListView.Columns.Add("Possibility", 100);
 
+            goalWindowListView.Select();
         }
 
         public void UpdateGoalList()
         {
-            GoalList = db.GetGoals();
-            GoalList.Reverse();
+            _goalList = (List<Goal>)db.GetGoals();
+            _goalList.Reverse();
             PopulateGoalListView();
+        }
+
+        public void ClearBox()
+        {
+            goalNameBox.Clear();
+            goalMoney.Clear();
+            descriptionBox.Clear();
         }
 
         private void PopulateGoalListView()
         {
-            PopulateGoalListView(GoalList);
+            PopulateGoalListView(_goalList);
         }
 
-        private void PopulateGoalListView(IEnumerable<Goal> GoalList)
+    
+        public string GoalPossibility(int profit, double worth)
         {
-            listView1.Items.Clear();
-
-            foreach (var goal in GoalList)
+            double profitAWeek = profit / 4.0;
+            double possibilityRate = worth / profitAWeek;
+            if (possibilityRate.IsGreaterThen(0.5))
             {
-                var item = new ListViewItem(new string[] {
-                    goal.Title,
-                    ((DateTime) goal.GoalDate).ToString("yyyy-MM-dd"),
-                    goal.Amount.ToString(),
-                    goal.Description,
+                return "Huge";
+            }
+
+            if (possibilityRate.IsGreaterThen(0.8))
+            {
+                return "Real";
+            }
+
+            if (possibilityRate.IsGreaterThen(1))
+            {
+                return "Small";
+            }
+
+            return "Not real";
+        }
+
+
+        private void PopulateGoalListView(IEnumerable<Goal> goalList)
+        {
+            goalWindowListView.Items.Clear();
+
+            foreach (var goal in goalList)
+            {
+
+                int money;
+                if (((DateTime)goal.Deadlinedate).Subtract(DateTime.UtcNow).Days > 7)
+                {
+                    money = (decimal.ToInt32(goal.Amount)) /
+                            ((((DateTime)goal.Deadlinedate).Subtract(DateTime.UtcNow) / 7).Days);
+                }
+                else
+                {
+                    money = (decimal.ToInt32(goal.Amount));
+                }
+
+                int profit = 200;
+                string possibility = GoalPossibility(profit, money);
+                var item = new ListViewItem(new string[]
+                {
+                    goal.Title, ((DateTime)goal.Deadlinedate).ToString("yyyy-MM-dd"), goal.Amount.ToString(),
+                    goal.Description, money.ToString(), possibility
                 });
 
-                listView1.Items.Add(item);
+                goalWindowListView.Items.Add(item);
             }
         }
-        private void goalAmount_KeyPress(object sender, KeyPressEventArgs e)
+
+        private void goalMoney_KeyPress(object sender, KeyPressEventArgs e)
         {
-            char ch = e.KeyChar;
+            var ch = e.KeyChar;
 
             if (ch == 46 && goalMoney.Text.IndexOf('.') != -1)
             {
                 e.Handled = true;
                 return;
             }
+
             if (!Char.IsDigit(ch) && ch != 8 && ch != 46)
             {
                 e.Handled = true;
             }
         }
 
-        public void ValidateFields(string amount, string details)
+        public bool ValidateFields(string amount, string details, string name, DateTime date)
         {
-            if (String.IsNullOrWhiteSpace(amount))
+
+            if (string.IsNullOrWhiteSpace(name))
             {
-                goalMoney.BackColor = Color.Red;
+                goalNameBox.BackColor = Color.Red;
+                return false;
             }
-            if (String.IsNullOrWhiteSpace(details))
+
+            if (string.IsNullOrWhiteSpace(amount))
             {
                 goalMoney.BackColor = Color.Red;
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(details))
+            {
+                descriptionBox.BackColor = Color.Red;
+                return false;
+            }
+
+            if (DateTime.Compare(date, DateTime.Now) <= 0)
+            {
+                MessageBox.Show("Wrong date");
+                return false;
+            }
+
+            return true;
+        }
+
+        private void addGoal_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var date = goalDate.Value;
+                var amount = goalMoney.Text;
+                var name = goalNameBox.Text;
+                var description = descriptionBox.Text;
+
+                if (ValidateFields(amount, description, name, date))
+                {
+                    var newGoal = new Goal
+                    {
+                        Deadlinedate = date,
+                        Amount = decimal.Parse(amount),
+                        Title = name,
+                        Description = description,
+                        Creationdate = DateTime.UtcNow
+                    };
+
+                    try
+                    {
+                        db.AddGoal(newGoal);
+                        UpdateGoalList();
+                        ClearBox();
+                    }
+                    catch (DbUpdateException)
+                    {
+                        MessageBox.Show("Something went wrong. ");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Wrong format");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
             }
         }
-        private void button1_Click(object sender, EventArgs e)
+
+        private void DeleteButton_Click(object sender, EventArgs e)
         {
-            DateTime date = goalDate.Value;
-            string amount = goalMoney.Text;
-            string name = goalNameBox.Text;
-            string description = descriptionBox.Text;
-
-            ValidateFields(amount, name);
-
-            if (!String.IsNullOrWhiteSpace(amount) && !String.IsNullOrWhiteSpace(name))
+            try
             {
-                decimal amountInDecimal = decimal.Parse(amount);
-
-                Database db = new Database();
-
-                Goal newGoal = new Goal
-                {
-                    GoalDate = date,
-                    Amount = amountInDecimal,
-                    Title = name,
-                    Description = description
-                };
-                db.AddGoal(newGoal);
+                var selectedTitle = goalWindowListView.SelectedItems[0].Text;
+                goalWindowListView.Items.RemoveAt(selectedId);
+                db.RemoveGoal(selectedTitle);
                 UpdateGoalList();
             }
-
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
         }
+
         private void backButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }

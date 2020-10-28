@@ -1,9 +1,11 @@
-﻿using SmartSaver.Data;
-using SmartSaver.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
+using SmartSaver.Controllers;
+using SmartSaver.Data;
+using SmartSaver.Models;
 
 namespace SmartSaver.Desktop
 {
@@ -36,7 +38,7 @@ namespace SmartSaver.Desktop
 
         public void UpdateTransactionList()
         {
-            TransactionList = db.GetTransactions();
+            TransactionList = (List<Transaction>)db.GetTransactions();
             TransactionList.Reverse();
             PopulateTransactionListView();
         }
@@ -52,11 +54,10 @@ namespace SmartSaver.Desktop
 
             foreach (var transaction in transactionList)
             {
-                var item = new ListViewItem(new string[] { 
-                    ((DateTime) transaction.TrTime).ToString("yyyy-MM-dd HH:mm"),
-                    transaction.Amount.ToString(),
-                    transaction.Details,
-                    transaction.CounterParty
+                var item = new ListViewItem(new[]
+                {
+                    ((DateTime)transaction.TrTime).ToString("yyyy-MM-dd HH:mm"), transaction.Amount.ToString(),
+                    transaction.Details, transaction.CounterParty
                 });
 
                 listTransactionsView.Items.Add(item);
@@ -65,32 +66,32 @@ namespace SmartSaver.Desktop
 
         private void buttonSetGoal_Click(object sender, EventArgs e)
         {
-            AddGoalWindow newGoalWindow = new AddGoalWindow();
+            var newGoalWindow = new AddGoalWindow();
             newGoalWindow.Show();
         }
 
         private void buttonAddTransaction_Click(object sender, EventArgs e)
         {
-            AddTransactionWindow newTransactionWindow = new AddTransactionWindow(this);
+            var newTransactionWindow = new AddTransactionWindow(this);
             newTransactionWindow.Show();
         }
 
         private void buttonUpload_Click(object sender, EventArgs e)
         {
-            FileManager fileManager = new FileManager();
-            fileManager.Import();
+            var reader = new FileReader();
+            reader.Import();
             UpdateTransactionList();
         }
 
         private void buttonExport_Click(object sender, EventArgs e)
         {
-            FileManager fileManager = new FileManager();
-            fileManager.Export();
+            var writer = new FileWriter();
+            writer.Export();
         }
 
         private void buttonFilter_Click(object sender, EventArgs e)
         {
-            IEnumerable<Transaction> filteredTransactions = TransactionList.Where(transaction =>
+            var filteredTransactions = TransactionList.Where(transaction =>
                 transaction.TrTime >= dateFilterFrom.Value && transaction.TrTime <= dateFilterTo.Value
             );
             PopulateTransactionListView(filteredTransactions);
@@ -99,6 +100,20 @@ namespace SmartSaver.Desktop
         private void buttonResetFilter_Click(object sender, EventArgs e)
         {
             UpdateTransactionList();
+        }
+
+        private void tipButton_Click(object sender, EventArgs e)
+        {
+            var tipWindow = new TipWindow();
+            tipWindow.Show();
+
+            tipWindow.Location = Location;
+        }
+
+        private void buttonMyBudget_Click(object sender, EventArgs e)
+        {
+            var myBudgetWindow = new MyBudgetWindow();
+            myBudgetWindow.Show();
         }
     }
 }
