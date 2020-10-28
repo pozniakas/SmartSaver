@@ -42,10 +42,14 @@
             this.buttonAddTransaction = new System.Windows.Forms.Button();
             this.buttonUpload = new System.Windows.Forms.Button();
             this.panelRightSidebar = new System.Windows.Forms.Panel();
+            this.incomeLabel = new System.Windows.Forms.Label();
+            this.buttonMyBudget = new System.Windows.Forms.Button();
             this.tipButton = new System.Windows.Forms.Button();
             this.buttonSetGoal = new System.Windows.Forms.Button();
             this.buttonExport = new System.Windows.Forms.Button();
-            this.buttonMyBudget = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.outcomeLabel = new System.Windows.Forms.Label();
             this.panelTopSidebar.SuspendLayout();
             this.panelMain.SuspendLayout();
             this.panelRightSidebar.SuspendLayout();
@@ -192,6 +196,10 @@
             // 
             // panelRightSidebar
             // 
+            this.panelRightSidebar.Controls.Add(this.outcomeLabel);
+            this.panelRightSidebar.Controls.Add(this.label2);
+            this.panelRightSidebar.Controls.Add(this.label1);
+            this.panelRightSidebar.Controls.Add(this.incomeLabel);
             this.panelRightSidebar.Controls.Add(this.buttonMyBudget);
             this.panelRightSidebar.Controls.Add(this.tipButton);
             this.panelRightSidebar.Controls.Add(this.buttonSetGoal);
@@ -204,6 +212,26 @@
             this.panelRightSidebar.Name = "panelRightSidebar";
             this.panelRightSidebar.Size = new System.Drawing.Size(255, 422);
             this.panelRightSidebar.TabIndex = 0;
+            // 
+            // incomeLabel
+            // 
+            this.incomeLabel.AutoSize = true;
+            this.incomeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.incomeLabel.Location = new System.Drawing.Point(118, 107);
+            this.incomeLabel.Name = "incomeLabel";
+            this.incomeLabel.Size = new System.Drawing.Size(55, 17);
+            this.incomeLabel.TabIndex = 4;
+            this.incomeLabel.Text = "INCOME";
+            // 
+            // buttonMyBudget
+            // 
+            this.buttonMyBudget.Location = new System.Drawing.Point(53, 274);
+            this.buttonMyBudget.Name = "buttonMyBudget";
+            this.buttonMyBudget.Size = new System.Drawing.Size(159, 23);
+            this.buttonMyBudget.TabIndex = 4;
+            this.buttonMyBudget.Text = "My Budget";
+            this.buttonMyBudget.UseVisualStyleBackColor = true;
+            this.buttonMyBudget.Click += new System.EventHandler(this.buttonMyBudget_Click);
             // 
             // tipButton
             // 
@@ -240,15 +268,33 @@
             this.buttonExport.UseVisualStyleBackColor = true;
             this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
             // 
-            // buttonMyBudget
+            // label1
             // 
-            this.buttonMyBudget.Location = new System.Drawing.Point(53, 274);
-            this.buttonMyBudget.Name = "buttonMyBudget";
-            this.buttonMyBudget.Size = new System.Drawing.Size(159, 23);
-            this.buttonMyBudget.TabIndex = 4;
-            this.buttonMyBudget.Text = "My Budget";
-            this.buttonMyBudget.UseVisualStyleBackColor = true;
-            this.buttonMyBudget.Click += new System.EventHandler(this.buttonMyBudget_Click);
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(19, 106);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(70, 15);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "INCOME (€)";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(20, 136);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(80, 15);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "OUTCOME (€)";
+            // 
+            // outcomeLabel
+            // 
+            this.outcomeLabel.AutoSize = true;
+            this.outcomeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.outcomeLabel.Location = new System.Drawing.Point(118, 136);
+            this.outcomeLabel.Name = "outcomeLabel";
+            this.outcomeLabel.Size = new System.Drawing.Size(65, 17);
+            this.outcomeLabel.TabIndex = 6;
+            this.outcomeLabel.Text = "OUTCOME";
             // 
             // Main
             // 
@@ -268,6 +314,7 @@
             this.panelTopSidebar.PerformLayout();
             this.panelMain.ResumeLayout(false);
             this.panelRightSidebar.ResumeLayout(false);
+            this.panelRightSidebar.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -291,5 +338,9 @@
         private System.Windows.Forms.DateTimePicker dateFilterFrom;
         private System.Windows.Forms.Label labelFilter;
         private System.Windows.Forms.Button buttonMyBudget;
+        private System.Windows.Forms.Label incomeLabel;
+        private System.Windows.Forms.Label outcomeLabel;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
     }
 }

@@ -22,6 +22,7 @@ namespace SmartSaver.Desktop
         {
             PrepareTransactionListView();
             UpdateTransactionList();
+            IncomeAndOutcomeCalculation(_transactionList);
         }
 
         private void PrepareTransactionListView()
@@ -113,6 +114,26 @@ namespace SmartSaver.Desktop
         {
             var myBudgetWindow = new MyBudgetWindow();
             myBudgetWindow.Show();
+        }
+
+        private void IncomeAndOutcomeCalculation (IEnumerable<Transaction> transactionList)
+        {
+            decimal income = 0;
+            decimal outcome = 0;
+            foreach (var transaction in transactionList)
+            {
+                if (transaction.Amount < 0)
+                {
+                    outcome += transaction.Amount;
+                }
+                else if (transaction.Amount > 0)
+                {
+                    income += transaction.Amount;
+                }
+            }
+
+            incomeLabel.Text = income.ToString();
+            outcomeLabel.Text = outcome.ToString();
         }
     }
 }
