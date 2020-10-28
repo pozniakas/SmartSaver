@@ -7,7 +7,7 @@ namespace SmartSaver.Desktop
 {
     public partial class TipWindow : Form
     {
-        public static int index = new Random().Next(0, 6);
+        public static int Index = new Random().Next(0, 6);
 
         public TipWindow()
         {
@@ -39,7 +39,7 @@ namespace SmartSaver.Desktop
         public void LoadTipsAndLinks()
         {
             textLabel.Left = (Width - textLabel.Width) / 2;
-            tipLinkLabel.Text = ValidateTips()[index].tipName;
+            tipLinkLabel.Text = ValidateTips()[Index].TipName;
             tipLinkLabel.Left = (Width - tipLinkLabel.Width) / 2;
         }
 
@@ -53,7 +53,7 @@ namespace SmartSaver.Desktop
         {
             try
             {
-                var psi = new ProcessStartInfo {FileName = ValidateTips()[index].tipLink, UseShellExecute = true};
+                var psi = new ProcessStartInfo { FileName = ValidateTips()[Index].TipLink, UseShellExecute = true };
 
                 tipLinkLabel.LinkVisited = true;
                 Process.Start(psi);

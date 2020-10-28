@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq.Expressions;
 using System.Windows.Forms;
 using Microsoft.EntityFrameworkCore;
 using SmartSaver.Data;
@@ -11,15 +10,15 @@ using SmartSaver.Models;
 namespace SmartSaver.Desktop
 {
     public static class DecimalExtension
+    {
+        public static bool IsGreaterThen(this double i, double j)
         {
-            public static bool IsGreaterThen(this double i, double j)
-            {
-                return i > j;
-            }
+            return i > j;
         }
+    }
     public partial class AddGoalWindow : Form
     {
-        private readonly Database db = new Database();
+        private readonly Database _db = new Database();
         private List<Goal> _goalList;
 
         private int selectedId;
@@ -54,7 +53,7 @@ namespace SmartSaver.Desktop
 
         public void UpdateGoalList()
         {
-            _goalList = (List<Goal>)db.GetGoals();
+            _goalList = (List<Goal>)_db.GetGoals();
             _goalList.Reverse();
             PopulateGoalListView();
         }
@@ -71,7 +70,7 @@ namespace SmartSaver.Desktop
             PopulateGoalListView(_goalList);
         }
 
-    
+
         public string GoalPossibility(int profit, double worth)
         {
             double profitAWeek = profit / 4.0;
@@ -164,7 +163,7 @@ namespace SmartSaver.Desktop
 
             if (DateTime.Compare(date, DateTime.Now) <= 0)
             {
-                MessageBox.Show("Wrong date");
+                MessageBox.Show(@"Wrong date");
                 return false;
             }
 
@@ -193,18 +192,18 @@ namespace SmartSaver.Desktop
 
                     try
                     {
-                        db.AddGoal(newGoal);
+                        _db.AddGoal(newGoal);
                         UpdateGoalList();
                         ClearBox();
                     }
                     catch (DbUpdateException)
                     {
-                        MessageBox.Show("Something went wrong. ");
+                        MessageBox.Show(@"Something went wrong. ");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Wrong format");
+                    MessageBox.Show(@"Wrong format");
                 }
             }
             catch (Exception ex)
@@ -219,7 +218,7 @@ namespace SmartSaver.Desktop
             {
                 var selectedTitle = goalWindowListView.SelectedItems[0].Text;
                 goalWindowListView.Items.RemoveAt(selectedId);
-                db.RemoveGoal(selectedTitle);
+                _db.RemoveGoal(selectedTitle);
                 UpdateGoalList();
             }
             catch (Exception ex)

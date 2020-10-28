@@ -27,8 +27,8 @@ namespace SmartSaver.Desktop
 
         public void UpdateCategoriesList()
         {
-            _categoryList = (List<Category>) _db.GetCategories();
-            _transactionList = (List<Transaction>) _db.GetTransactions();
+            _categoryList = (List<Category>)_db.GetCategories();
+            _transactionList = (List<Transaction>)_db.GetTransactions();
             PopulateCategoryListView();
             Calculation(_categoryList, _transactionList);
         }
@@ -38,7 +38,7 @@ namespace SmartSaver.Desktop
             PopulateCategoryListView(_categoryList);
         }
 
-        public void Calculation (IEnumerable<Category> categoryList, IEnumerable<Transaction> transactionList)
+        public void Calculation(IEnumerable<Category> categoryList, IEnumerable<Transaction> transactionList)
         {
             if (categoryList == null)
             {
@@ -52,7 +52,7 @@ namespace SmartSaver.Desktop
 
             decimal calc = 0;
             int index = 0;
-           
+
             foreach (var category in categoryList)
             {
                 foreach (var transaction in transactionList)
@@ -72,11 +72,11 @@ namespace SmartSaver.Desktop
                 {
                     budgetAndCategoriesView.Rows[index].Cells[4].Style.BackColor = Color.Green;
                 }
-                else if (category.DedicatedAmount == null) 
-                { 
+                else if (category.DedicatedAmount == null)
+                {
                     budgetAndCategoriesView.Rows[index].Cells[4].Style.BackColor = Color.Orange;
                 }
-               
+
                 calc = 0;
                 index++;
             }
@@ -103,7 +103,7 @@ namespace SmartSaver.Desktop
 
                 if (title == null || dedicated == null)
                 {
-                    MessageBox.Show("Invalid catgory");
+                    MessageBox.Show(@"Invalid category");
                     return;
                 }
 
@@ -111,7 +111,7 @@ namespace SmartSaver.Desktop
 
                 Database db = new Database();
 
-                Category newCategory = new Category {Title = title.ToString(), DedicatedAmount = dedicatedAmount};
+                Category newCategory = new Category { Title = title.ToString(), DedicatedAmount = dedicatedAmount };
 
 
                 db.AddCategory(newCategory);
@@ -133,7 +133,7 @@ namespace SmartSaver.Desktop
         {
             string selectedTitle = budgetAndCategoriesView.Rows[_selectedId].Cells[1].Value.ToString();
             Database db = new Database();
-           
+
             db.RemoveCategory(selectedTitle);
             Debug.WriteLine(_selectedId);
             budgetAndCategoriesView.Rows.RemoveAt(_selectedId);

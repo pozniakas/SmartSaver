@@ -1,9 +1,6 @@
-﻿using Emgu.CV;
-using SmartSaver.Controllers;
-using SmartSaver.Desktop;
-using System;
-using System.Diagnostics;
+﻿using System;
 using System.Windows.Forms;
+using SmartSaver.Controllers;
 using SmartSaver.Desktop;
 
 namespace SmartSaver

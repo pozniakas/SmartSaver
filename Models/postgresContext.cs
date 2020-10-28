@@ -1,7 +1,5 @@
-﻿using System;
-using System.Configuration;
+﻿using System.Configuration;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace SmartSaver.Models
 {
@@ -26,7 +24,7 @@ namespace SmartSaver.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-               optionsBuilder.UseNpgsql(ConfigurationManager.ConnectionStrings["postgresDatabase"].ConnectionString);
+                optionsBuilder.UseNpgsql(ConfigurationManager.ConnectionStrings["postgresDatabase"].ConnectionString);
             }
         }
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using SmartSaver.Controllers;
@@ -11,8 +10,8 @@ namespace SmartSaver.Desktop
 {
     public partial class Main : Form
     {
-        private readonly Database db = new Database();
-        private List<Transaction> TransactionList;
+        private readonly Database _db = new Database();
+        private List<Transaction> _transactionList;
 
         public Main()
         {
@@ -38,14 +37,14 @@ namespace SmartSaver.Desktop
 
         public void UpdateTransactionList()
         {
-            TransactionList = (List<Transaction>)db.GetTransactions();
-            TransactionList.Reverse();
+            _transactionList = (List<Transaction>)_db.GetTransactions();
+            _transactionList.Reverse();
             PopulateTransactionListView();
         }
 
         private void PopulateTransactionListView()
         {
-            PopulateTransactionListView(TransactionList);
+            PopulateTransactionListView(_transactionList);
         }
 
         private void PopulateTransactionListView(IEnumerable<Transaction> transactionList)
@@ -91,7 +90,7 @@ namespace SmartSaver.Desktop
 
         private void buttonFilter_Click(object sender, EventArgs e)
         {
-            var filteredTransactions = TransactionList.Where(transaction =>
+            var filteredTransactions = _transactionList.Where(transaction =>
                 transaction.TrTime >= dateFilterFrom.Value && transaction.TrTime <= dateFilterTo.Value
             );
             PopulateTransactionListView(filteredTransactions);

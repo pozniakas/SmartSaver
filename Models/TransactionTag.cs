@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace SmartSaver.Models
+﻿namespace SmartSaver.Models
 {
     public partial class TransactionTag
     {

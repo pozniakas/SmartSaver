@@ -22,17 +22,17 @@ namespace SmartSaver.Desktop
         private void transactionAmount_KeyPress(object sender, KeyPressEventArgs e)
         {
             var ch = e.KeyChar;
-           
-                if (ch == 46 && transactionAmount.Text.IndexOf('.') != -1)
-                {
-                    e.Handled = true;
-                    return;
-                }
 
-                if (!Char.IsDigit(ch) && ch != 8 && ch != 46)
-                {
-                    e.Handled = true;
-                }
+            if (ch == 46 && transactionAmount.Text.IndexOf('.') != -1)
+            {
+                e.Handled = true;
+                return;
+            }
+
+            if (!Char.IsDigit(ch) && ch != 8 && ch != 46)
+            {
+                e.Handled = true;
+            }
         }
 
 
@@ -69,7 +69,7 @@ namespace SmartSaver.Desktop
                         var db = new Database();
 
                         var newTransaction =
-                            new Transaction {TrTime = date, Amount = amountInDecimal, Details = details};
+                            new Transaction { TrTime = date, Amount = amountInDecimal, Details = details };
 
                         db.AddTransaction(newTransaction);
                         _mainWindow.UpdateTransactionList();
@@ -79,14 +79,13 @@ namespace SmartSaver.Desktop
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("Invalid values");
+                    MessageBox.Show(@"Invalid values");
                 }
             }
             else
             {
-                MessageBox.Show("Invalid Values");
+                MessageBox.Show(@"Invalid Values");
             }
-
 
         }
 

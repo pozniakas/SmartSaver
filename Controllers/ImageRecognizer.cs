@@ -25,7 +25,7 @@ namespace SmartSaver.Controllers
                 Debug.WriteLine("Image recognizer is loaded");
                 return isLoaded;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex);
                 return false;
@@ -59,7 +59,7 @@ namespace SmartSaver.Controllers
 
             #region Original Image
             using var originalImage = Image.FromFile(imagePath.FullName);
-            double scaleIndex = (double) originalImage.Width / originalImage.Height;
+            double scaleIndex = (double)originalImage.Width / originalImage.Height;
             #endregion
 
             // Auto crop Image

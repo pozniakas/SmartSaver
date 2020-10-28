@@ -178,7 +178,10 @@ namespace SmartSaver.Controllers
             var db = new Database();
             var newTransaction = new Transaction
             {
-                TrTime = time, Amount = amount, CounterParty = counterParty, Details = details
+                TrTime = time,
+                Amount = amount,
+                CounterParty = counterParty,
+                Details = details
             };
             db.AddTransaction(newTransaction);
         }
