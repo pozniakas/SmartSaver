@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing.Design;
 using System.Linq;
 using SmartSaver.Models;
 
@@ -67,6 +68,23 @@ namespace SmartSaver.Data
 
             return db.SaveChanges();
         }
+
+        public int UpdateCategory(Category newCategory)
+        {
+            using var db = new postgresContext();
+            var toChange = db.Category.SingleOrDefault(cat => cat.Id == newCategory.Id);
+
+            if (toChange == null)
+            {
+                return 0;
+            }
+
+            toChange.Title = newCategory.Title;
+            toChange.DedicatedAmount = newCategory.DedicatedAmount;
+
+            return db.SaveChanges();
+        }
+
         public int RemoveGoal(string selectedTitle)
         {
             using var db = new postgresContext();
