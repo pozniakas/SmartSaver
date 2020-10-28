@@ -143,5 +143,9 @@ namespace SmartSaver.Desktop
             _selectedId = e.RowIndex;
         }
 
+        private void buttonUpdate_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
