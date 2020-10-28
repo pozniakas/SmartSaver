@@ -65,24 +65,20 @@ namespace SmartSaver.Desktop
 
         public string GoalPossibility(int profit, double worth)
         {
-            double profitAWeek = profit / 4;
+            double profitAWeek = profit / 4.0;
             if (worth / profitAWeek <= 0.5)
             {
                 return "Huge";
             }
-            else if (worth / profitAWeek <= 0.8)
+            if (worth / profitAWeek <= 0.8)
             {
                 return "Real";
             }
-            else if (worth / profitAWeek <= 1)
+            if (worth / profitAWeek <= 1)
             {
                 return "Small";
             }
-            else
-            {
-                return "Not real";
-            }
-
+            return "Not real";
         }
 
 
@@ -96,12 +92,12 @@ namespace SmartSaver.Desktop
                 int money;
                 if (((DateTime)goal.Deadlinedate).Subtract(DateTime.UtcNow).Days > 7)
                 {
-                    money = (Decimal.ToInt32(goal.Amount)) /
+                    money = (decimal.ToInt32(goal.Amount)) /
                             ((((DateTime)goal.Deadlinedate).Subtract(DateTime.UtcNow) / 7).Days);
                 }
                 else
                 {
-                    money = (Decimal.ToInt32(goal.Amount));
+                    money = (decimal.ToInt32(goal.Amount));
                 }
 
                 int profit = 200;
@@ -135,22 +131,33 @@ namespace SmartSaver.Desktop
             }
         }
 
-        public void ValidateFields(string amount, string details, string name)
+        public bool ValidateFields(string amount, string details, string name, DateTime date)
         {
-            if (String.IsNullOrWhiteSpace(amount))
-            {
-                  goalMoney.BackColor = Color.Red;
-            }
 
-            if (String.IsNullOrWhiteSpace(details))
-            {
-                descriptionBox.BackColor = Color.Red;
-            }
-
-            if (String.IsNullOrWhiteSpace(name))
+            if (string.IsNullOrWhiteSpace(name))
             {
                 goalNameBox.BackColor = Color.Red;
+                return false;
             }
+
+            if (string.IsNullOrWhiteSpace(amount))
+            {
+                  goalMoney.BackColor = Color.Red;
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(details))
+            {
+                descriptionBox.BackColor = Color.Red;
+                return false;
+            }
+
+            if (DateTime.Compare(date, DateTime.Now) <= 0)
+            {
+                MessageBox.Show("Wrong date");
+                return false;
+            }
+            return true;
         }
 
         private void addGoal_Click(object sender, EventArgs e)
@@ -159,22 +166,15 @@ namespace SmartSaver.Desktop
             var amount = goalMoney.Text;
             var name = goalNameBox.Text;
             var description = descriptionBox.Text;
-            decimal amountInDecimal;
-            ValidateFields(amount, description, name);
 
-            if(DateTime.Compare(date, DateTime.Now) <=0)
-            {
-                MessageBox.Show("Wrong date");
-                return;
-            }
-            if (!String.IsNullOrWhiteSpace(amount) && !String.IsNullOrWhiteSpace(name) && decimal.TryParse(amount, out amountInDecimal) && date.ToShortDateString() != DateTime.UtcNow.ToShortDateString())
+            if (ValidateFields(amount, description, name, date))
             {
                 var db = new Database();
 
                 var newGoal = new Goal
                 {
                     Deadlinedate = date,
-                    Amount = amountInDecimal,
+                    Amount = decimal.Parse(amount),
                     Title = name,
                     Description = description,
                     Creationdate = DateTime.UtcNow
