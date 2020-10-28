@@ -108,16 +108,6 @@
             this.budgetAndCategoriesView.Text = "dataGridView1";
             this.budgetAndCategoriesView.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.budgetAndCategoriesView_CellEnter);
             // 
-            // updateButton
-            // 
-            this.updateButton.Location = new System.Drawing.Point(330, 230);
-            this.updateButton.Name = "updateButton";
-            this.updateButton.Size = new System.Drawing.Size(74, 27);
-            this.updateButton.TabIndex = 2;
-            this.updateButton.Text = "Update";
-            this.updateButton.UseVisualStyleBackColor = true;
-            this.updateButton.Click += new System.EventHandler(this.buttonUpdate_Click);
-            // 
             // MyBudgetWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);

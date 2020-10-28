@@ -62,19 +62,19 @@ namespace SmartSaver.Desktop
                         calc += transaction.Amount;
                     }
                 }
-                this.budgetAndCategoriesView.Rows[index].Cells[3].Value = Math.Abs(calc);
-                this.budgetAndCategoriesView.Rows[index].Cells[4].Value = category.DedicatedAmount - Math.Abs(calc);
+                budgetAndCategoriesView.Rows[index].Cells[3].Value = Math.Abs(calc);
+                budgetAndCategoriesView.Rows[index].Cells[4].Value = category.DedicatedAmount - Math.Abs(calc);
                 if (category.DedicatedAmount - calc < 0)
                 {
-                    this.budgetAndCategoriesView.Rows[index].Cells[4].Style.BackColor = Color.Red;
+                    budgetAndCategoriesView.Rows[index].Cells[4].Style.BackColor = Color.Red;
                 }
                 else if (category.DedicatedAmount >= 0)
                 {
-                    this.budgetAndCategoriesView.Rows[index].Cells[4].Style.BackColor = Color.Green;
+                    budgetAndCategoriesView.Rows[index].Cells[4].Style.BackColor = Color.Green;
                 }
                 else if (category.DedicatedAmount == null) 
                 { 
-                    this.budgetAndCategoriesView.Rows[index].Cells[4].Style.BackColor = Color.Orange;
+                    budgetAndCategoriesView.Rows[index].Cells[4].Style.BackColor = Color.Orange;
                 }
                
                 calc = 0;
@@ -84,9 +84,10 @@ namespace SmartSaver.Desktop
 
         private void PopulateCategoryListView(IEnumerable<Category> categoryList)
         {
+            budgetAndCategoriesView.Rows.Clear();
             foreach (var category in categoryList)
             {
-                this.budgetAndCategoriesView.Rows.Add(category.Id, category.Title, category.DedicatedAmount);
+                budgetAndCategoriesView.Rows.Add(category.Id, category.Title, category.DedicatedAmount);
             }
         }
 
@@ -143,9 +144,5 @@ namespace SmartSaver.Desktop
             _selectedId = e.RowIndex;
         }
 
-        private void buttonUpdate_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

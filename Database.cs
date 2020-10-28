@@ -63,24 +63,7 @@ namespace SmartSaver.Data
             if (itemToRemove != null)
             {
                 db.Category.Remove(itemToRemove);
-                //return db.SaveChanges();
             }
-
-            return db.SaveChanges();
-        }
-
-        public int UpdateCategory(Category newCategory)
-        {
-            using var db = new postgresContext();
-            var toChange = db.Category.SingleOrDefault(cat => cat.Id == newCategory.Id);
-
-            if (toChange == null)
-            {
-                return 0;
-            }
-
-            toChange.Title = newCategory.Title;
-            toChange.DedicatedAmount = newCategory.DedicatedAmount;
 
             return db.SaveChanges();
         }
