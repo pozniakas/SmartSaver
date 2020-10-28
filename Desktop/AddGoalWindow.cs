@@ -13,7 +13,7 @@ namespace SmartSaver.Desktop
     public partial class AddGoalWindow : Form
     {
         private readonly Database db = new Database();
-        private List<Goal> GoalList;
+        private List<Goal> _goalList;
 
         private int selectedId;
 
@@ -47,8 +47,8 @@ namespace SmartSaver.Desktop
 
         public void UpdateGoalList()
         {
-            GoalList = (List<Goal>)db.GetGoals();
-            GoalList.Reverse();
+            _goalList = (List<Goal>)db.GetGoals();
+            _goalList.Reverse();
             PopulateGoalListView();
         }
 
@@ -61,7 +61,7 @@ namespace SmartSaver.Desktop
 
         private void PopulateGoalListView()
         {
-            PopulateGoalListView(GoalList);
+            PopulateGoalListView(_goalList);
         }
 
         public string GoalPossibility(int profit, double worth)
@@ -86,11 +86,11 @@ namespace SmartSaver.Desktop
         }
 
 
-        private void PopulateGoalListView(IEnumerable<Goal> GoalList)
+        private void PopulateGoalListView(IEnumerable<Goal> goalList)
         {
             goalWindowListView.Items.Clear();
 
-            foreach (var goal in GoalList)
+            foreach (var goal in goalList)
             {
 
                 int money;

@@ -37,12 +37,12 @@ namespace SmartSaver.Desktop
 
         public void ValidateFields(string amount, string details)
         {
-            if (String.IsNullOrWhiteSpace(amount))
+            if (string.IsNullOrWhiteSpace(amount))
             {
                 transactionAmount.BackColor = Color.Red;
             }
 
-            if (String.IsNullOrWhiteSpace(details))
+            if (string.IsNullOrWhiteSpace(details))
             {
                 transactionDetailsReasons.BackColor = Color.Red;
             }
