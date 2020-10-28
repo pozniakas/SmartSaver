@@ -10,6 +10,13 @@ using SmartSaver.Models;
 
 namespace SmartSaver.Desktop
 {
+    public static class DecimalExtension
+        {
+            public static bool IsGreaterThen(this double i, double j)
+            {
+                return i > j;
+            }
+        }
     public partial class AddGoalWindow : Form
     {
         private readonly Database db = new Database();
@@ -64,20 +71,22 @@ namespace SmartSaver.Desktop
             PopulateGoalListView(GoalList);
         }
 
+    
         public string GoalPossibility(int profit, double worth)
         {
             double profitAWeek = profit / 4.0;
-            if (worth / profitAWeek <= 0.5)
+            double possibilityRate = worth / profitAWeek;
+            if (possibilityRate.IsGreaterThen(0.5))
             {
                 return "Huge";
             }
 
-            if (worth / profitAWeek <= 0.8)
+            if (possibilityRate.IsGreaterThen(0.8))
             {
                 return "Real";
             }
 
-            if (worth / profitAWeek <= 1)
+            if (possibilityRate.IsGreaterThen(1))
             {
                 return "Small";
             }
