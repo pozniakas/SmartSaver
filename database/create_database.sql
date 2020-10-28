@@ -24,7 +24,7 @@ create table smartsaver.transaction (
 
 	constraint "pk_smartsaver.transaction" primary key(id),
 	constraint "fk_smartsaver.transaction__category_id" foreign key(category_id)
-		references smartsaver.category(id)
+		references smartsaver.category(id) on delete set null
 );
 
 create table smartsaver.tag (
