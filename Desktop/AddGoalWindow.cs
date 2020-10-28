@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
-using System.Linq.Expressions;
 using System.Windows.Forms;
 using Microsoft.EntityFrameworkCore;
 using SmartSaver.Data;
@@ -9,10 +9,17 @@ using SmartSaver.Models;
 
 namespace SmartSaver.Desktop
 {
+    public static class DecimalExtension
+    {
+        public static bool IsGreaterThen(this double i, double j)
+        {
+            return i > j;
+        }
+    }
     public partial class AddGoalWindow : Form
     {
-        private readonly Database db = new Database();
-        private List<Goal> GoalList;
+        private readonly Database _db = new Database();
+        private List<Goal> _goalList;
 
         private int selectedId;
 
@@ -46,8 +53,8 @@ namespace SmartSaver.Desktop
 
         public void UpdateGoalList()
         {
-            GoalList = (List<Goal>)db.GetGoals();
-            GoalList.Reverse();
+            _goalList = (List<Goal>)_db.GetGoals();
+            _goalList.Reverse();
             PopulateGoalListView();
         }
 
@@ -60,59 +67,57 @@ namespace SmartSaver.Desktop
 
         private void PopulateGoalListView()
         {
-            PopulateGoalListView(GoalList);
+            PopulateGoalListView(_goalList);
         }
+
 
         public string GoalPossibility(int profit, double worth)
         {
-            double profitAWeek = profit / 4;
-            if (worth / profitAWeek <= 0.5)
+            double profitAWeek = profit / 4.0;
+            double possibilityRate = worth / profitAWeek;
+            if (possibilityRate.IsGreaterThen(0.5))
             {
                 return "Huge";
             }
-            else if (worth / profitAWeek <= 0.8)
+
+            if (possibilityRate.IsGreaterThen(0.8))
             {
                 return "Real";
             }
-            else if (worth / profitAWeek <= 1)
+
+            if (possibilityRate.IsGreaterThen(1))
             {
                 return "Small";
             }
-            else
-            {
-                return "Not real";
-            }
 
+            return "Not real";
         }
 
 
-        private void PopulateGoalListView(IEnumerable<Goal> GoalList)
+        private void PopulateGoalListView(IEnumerable<Goal> goalList)
         {
             goalWindowListView.Items.Clear();
 
-            foreach (var goal in GoalList)
+            foreach (var goal in goalList)
             {
 
                 int money;
                 if (((DateTime)goal.Deadlinedate).Subtract(DateTime.UtcNow).Days > 7)
                 {
-                    money = (Decimal.ToInt32(goal.Amount)) /
+                    money = (decimal.ToInt32(goal.Amount)) /
                             ((((DateTime)goal.Deadlinedate).Subtract(DateTime.UtcNow) / 7).Days);
                 }
                 else
                 {
-                    money = (Decimal.ToInt32(goal.Amount));
+                    money = (decimal.ToInt32(goal.Amount));
                 }
 
                 int profit = 200;
                 string possibility = GoalPossibility(profit, money);
-                var item = new ListViewItem(new string[] {
-                    goal.Title,
-                    ((DateTime) goal.Deadlinedate).ToString("yyyy-MM-dd"),
-                    goal.Amount.ToString(),
-                    goal.Description,
-                    money.ToString(),
-                    possibility
+                var item = new ListViewItem(new string[]
+                {
+                    goal.Title, ((DateTime)goal.Deadlinedate).ToString("yyyy-MM-dd"), goal.Amount.ToString(),
+                    goal.Description, money.ToString(), possibility
                 });
 
                 goalWindowListView.Items.Add(item);
@@ -135,67 +140,90 @@ namespace SmartSaver.Desktop
             }
         }
 
-        public void ValidateFields(string amount, string details, string name)
+        public bool ValidateFields(string amount, string details, string name, DateTime date)
         {
-            if (String.IsNullOrWhiteSpace(amount))
-            {
-                  goalMoney.BackColor = Color.Red;
-            }
 
-            if (String.IsNullOrWhiteSpace(details))
-            {
-                descriptionBox.BackColor = Color.Red;
-            }
-
-            if (String.IsNullOrWhiteSpace(name))
+            if (string.IsNullOrWhiteSpace(name))
             {
                 goalNameBox.BackColor = Color.Red;
+                return false;
             }
+
+            if (string.IsNullOrWhiteSpace(amount))
+            {
+                goalMoney.BackColor = Color.Red;
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(details))
+            {
+                descriptionBox.BackColor = Color.Red;
+                return false;
+            }
+
+            if (DateTime.Compare(date, DateTime.Now) <= 0)
+            {
+                MessageBox.Show(@"Wrong date");
+                return false;
+            }
+
+            return true;
         }
 
         private void addGoal_Click(object sender, EventArgs e)
         {
-            var date = goalDate.Value;
-            var amount = goalMoney.Text;
-            var name = goalNameBox.Text;
-            var description = descriptionBox.Text;
-            decimal amountInDecimal;
-            ValidateFields(amount, description, name);
-
-            if(DateTime.Compare(date, DateTime.Now) <=0)
+            try
             {
-                MessageBox.Show("Wrong date");
-                return;
-            }
-            if (!String.IsNullOrWhiteSpace(amount) && !String.IsNullOrWhiteSpace(name) && decimal.TryParse(amount, out amountInDecimal) && date.ToShortDateString() != DateTime.UtcNow.ToShortDateString())
-            {
-                var db = new Database();
+                var date = goalDate.Value;
+                var amount = goalMoney.Text;
+                var name = goalNameBox.Text;
+                var description = descriptionBox.Text;
 
-                var newGoal = new Goal
+                if (ValidateFields(amount, description, name, date))
                 {
-                    Deadlinedate = date,
-                    Amount = amountInDecimal,
-                    Title = name,
-                    Description = description,
-                    Creationdate = DateTime.UtcNow
-                };
+                    var newGoal = new Goal
+                    {
+                        Deadlinedate = date,
+                        Amount = decimal.Parse(amount),
+                        Title = name,
+                        Description = description,
+                        Creationdate = DateTime.UtcNow
+                    };
 
-                try
-                {
-                    db.AddGoal(newGoal);
-                    UpdateGoalList();
-                    ClearBox();
+                    try
+                    {
+                        _db.AddGoal(newGoal);
+                        UpdateGoalList();
+                        ClearBox();
+                    }
+                    catch (DbUpdateException)
+                    {
+                        MessageBox.Show(@"Something went wrong. ");
+                    }
                 }
-                catch (DbUpdateException)
+                else
                 {
-                    MessageBox.Show("Something went wrong. ");
-
+                    MessageBox.Show(@"Wrong format");
                 }
-
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Wrong format");
+                Debug.WriteLine(ex);
+            }
+        }
+
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var selectedTitle = goalWindowListView.SelectedItems[0].Text;
+                goalWindowListView.Items.RemoveAt(selectedId);
+                _db.RemoveGoal(selectedTitle);
+                UpdateGoalList();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
             }
         }
 
@@ -203,16 +231,5 @@ namespace SmartSaver.Desktop
         {
             Close();
         }
-
-        private void DeleteButton_Click(object sender, EventArgs e)
-        {
-            var selectedTitle = goalWindowListView.SelectedItems[0].Text;
-            goalWindowListView.Items.RemoveAt(selectedId);
-            db.RemoveGoal(selectedTitle);
-            UpdateGoalList();
-
-        }
-
-
     }
 }

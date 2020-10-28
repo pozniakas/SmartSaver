@@ -9,7 +9,7 @@ namespace SmartSaver.Controllers
     {
         public void Export()
         {
-            var saveFileDialog = new SaveFileDialog {Filter = @"CSV file (*.csv)|*.csv| All Files (*.*)|*.*"};
+            var saveFileDialog = new SaveFileDialog { Filter = @"CSV file (*.csv)|*.csv| All Files (*.*)|*.*" };
             const string header = "\"Id\",\"Date\",\"Counter Party\",\"Details\",\"Amount\",";
 
             var db = new Database();

@@ -1,5 +1,6 @@
-using System;
+﻿using System;
 using System.Windows.Forms;
+using SmartSaver.Controllers;
 using SmartSaver.Desktop;
 
 namespace SmartSaver
@@ -12,6 +13,7 @@ namespace SmartSaver
         [STAThread]
         private static void Main()
         {
+            new ImageRecognizer().IsLoaded();
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

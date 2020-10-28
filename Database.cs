@@ -62,11 +62,11 @@ namespace SmartSaver.Data
             if (itemToRemove != null)
             {
                 db.Category.Remove(itemToRemove);
-                //return db.SaveChanges();
             }
 
             return db.SaveChanges();
         }
+
         public int RemoveGoal(string selectedTitle)
         {
             using var db = new postgresContext();
