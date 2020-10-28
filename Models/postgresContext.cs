@@ -123,6 +123,7 @@ namespace SmartSaver.Models
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Transaction)
                     .HasForeignKey(d => d.CategoryId)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("fk_smartsaver.transaction__category_id");
             });
 
