@@ -31,7 +31,7 @@ namespace SmartSaver.Desktop
                 return;
             }
 
-            if (!Char.IsDigit(ch) && ch != 8 && ch != 46 && ch != 45)
+            if (!char.IsDigit(ch) && ch != 8 && ch != 46 && ch != 45)
             {
                 e.Handled = true;
             }
