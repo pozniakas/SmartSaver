@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq.Expressions;
 using System.Windows.Forms;
+using Microsoft.EntityFrameworkCore;
 using SmartSaver.Data;
 using SmartSaver.Models;
 
@@ -39,6 +40,8 @@ namespace SmartSaver.Desktop
             goalWindowListView.Columns.Add("Details", 158);
             goalWindowListView.Columns.Add("To save in a week", 120);
             goalWindowListView.Columns.Add("Possibility", 100);
+
+            goalWindowListView.Select();
         }
 
         public void UpdateGoalList()
@@ -46,6 +49,13 @@ namespace SmartSaver.Desktop
             GoalList = (List<Goal>)db.GetGoals();
             GoalList.Reverse();
             PopulateGoalListView();
+        }
+
+        public void ClearBox()
+        {
+            goalNameBox.Clear();
+            goalMoney.Clear();
+            descriptionBox.Clear();
         }
 
         private void PopulateGoalListView()
@@ -74,6 +84,7 @@ namespace SmartSaver.Desktop
             }
 
         }
+
 
         private void PopulateGoalListView(IEnumerable<Goal> GoalList)
         {
@@ -151,9 +162,13 @@ namespace SmartSaver.Desktop
             decimal amountInDecimal;
             ValidateFields(amount, description, name);
 
+            if(DateTime.Compare(date, DateTime.Now) <=0)
+            {
+                MessageBox.Show("Wrong date");
+                return;
+            }
             if (!String.IsNullOrWhiteSpace(amount) && !String.IsNullOrWhiteSpace(name) && decimal.TryParse(amount, out amountInDecimal) && date.ToShortDateString() != DateTime.UtcNow.ToShortDateString())
             {
-                MessageBox.Show(date.ToShortDateString());
                 var db = new Database();
 
                 var newGoal = new Goal
@@ -164,8 +179,19 @@ namespace SmartSaver.Desktop
                     Description = description,
                     Creationdate = DateTime.UtcNow
                 };
-                db.AddGoal(newGoal);
-                UpdateGoalList();
+
+                try
+                {
+                    db.AddGoal(newGoal);
+                    UpdateGoalList();
+                    ClearBox();
+                }
+                catch (DbUpdateException)
+                {
+                    MessageBox.Show("Something went wrong. ");
+
+                }
+
             }
             else
             {
@@ -180,7 +206,7 @@ namespace SmartSaver.Desktop
 
         private void DeleteButton_Click(object sender, EventArgs e)
         {
-            var selectedTitle = goalWindowListView.Items[selectedId].Text;
+            var selectedTitle = goalWindowListView.SelectedItems[0].Text;
             goalWindowListView.Items.RemoveAt(selectedId);
             db.RemoveGoal(selectedTitle);
             UpdateGoalList();
