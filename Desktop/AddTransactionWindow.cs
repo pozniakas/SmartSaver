@@ -24,13 +24,14 @@ namespace SmartSaver.Desktop
         {
             var ch = e.KeyChar;
 
-            if (ch == 46 && transactionAmount.Text.IndexOf('.') != -1)
+            if ((ch == 46 && transactionAmount.Text.IndexOf('.') != -1)
+                || (ch == 45 && transactionAmount.Text.IndexOf('-') != -1))
             {
                 e.Handled = true;
                 return;
             }
 
-            if (!Char.IsDigit(ch) && ch != 8 && ch != 46)
+            if (!Char.IsDigit(ch) && ch != 8 && ch != 46 && ch != 45)
             {
                 e.Handled = true;
             }
