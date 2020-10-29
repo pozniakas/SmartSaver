@@ -42,14 +42,14 @@
             this.buttonAddTransaction = new System.Windows.Forms.Button();
             this.buttonUpload = new System.Windows.Forms.Button();
             this.panelRightSidebar = new System.Windows.Forms.Panel();
+            this.outcomeLabel = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.incomeLabel = new System.Windows.Forms.Label();
             this.buttonMyBudget = new System.Windows.Forms.Button();
             this.tipButton = new System.Windows.Forms.Button();
             this.buttonSetGoal = new System.Windows.Forms.Button();
             this.buttonExport = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.outcomeLabel = new System.Windows.Forms.Label();
             this.panelTopSidebar.SuspendLayout();
             this.panelMain.SuspendLayout();
             this.panelRightSidebar.SuspendLayout();
@@ -213,6 +213,34 @@
             this.panelRightSidebar.Size = new System.Drawing.Size(255, 422);
             this.panelRightSidebar.TabIndex = 0;
             // 
+            // outcomeLabel
+            // 
+            this.outcomeLabel.AutoSize = true;
+            this.outcomeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.outcomeLabel.Location = new System.Drawing.Point(118, 136);
+            this.outcomeLabel.Name = "outcomeLabel";
+            this.outcomeLabel.Size = new System.Drawing.Size(65, 17);
+            this.outcomeLabel.TabIndex = 6;
+            this.outcomeLabel.Text = "OUTCOME";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(20, 136);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(77, 15);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "EXPENSES (€)";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(19, 106);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(70, 15);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "INCOME (€)";
+            // 
             // incomeLabel
             // 
             this.incomeLabel.AutoSize = true;
@@ -267,34 +295,6 @@
             this.buttonExport.Text = "Export transactions";
             this.buttonExport.UseVisualStyleBackColor = true;
             this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(19, 106);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 15);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "INCOME (€)";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(20, 136);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(80, 15);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "OUTCOME (€)";
-            // 
-            // outcomeLabel
-            // 
-            this.outcomeLabel.AutoSize = true;
-            this.outcomeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.outcomeLabel.Location = new System.Drawing.Point(118, 136);
-            this.outcomeLabel.Name = "outcomeLabel";
-            this.outcomeLabel.Size = new System.Drawing.Size(65, 17);
-            this.outcomeLabel.TabIndex = 6;
-            this.outcomeLabel.Text = "OUTCOME";
             // 
             // Main
             // 
