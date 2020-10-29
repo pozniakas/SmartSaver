@@ -81,6 +81,7 @@ namespace SmartSaver.Desktop
             var reader = new FileReader();
             reader.Import();
             UpdateTransactionList();
+            IncomeAndOutcomeCalculation();
         }
 
         private void buttonExport_Click(object sender, EventArgs e)
@@ -116,7 +117,7 @@ namespace SmartSaver.Desktop
             myBudgetWindow.Show();
         }
 
-        private void IncomeAndOutcomeCalculation ()
+        public void IncomeAndOutcomeCalculation ()
         {
             decimal income = 0;
             decimal outcome = 0;

@@ -83,6 +83,7 @@ namespace SmartSaver.Desktop
 
                 db.AddTransaction(newTransaction);
                 _mainWindow.UpdateTransactionList();
+                _mainWindow.IncomeAndOutcomeCalculation();
                 MessageBox.Show(@"Transaction added");
                 Close();
             }
