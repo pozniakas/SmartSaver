@@ -25,6 +25,7 @@ namespace SmartSaver.Controllers
             var line = reader.ReadLine();
             if (line != null && line.Length > 12)
             {
+                //Check the type of header
                 switch (line.Substring(0, 12))
                 {
                     case "\"Id\",\"Date\",":
@@ -61,14 +62,17 @@ namespace SmartSaver.Controllers
                 line = reader.ReadLine();
                 if (line != null)
                 {
+                    //Split line
                     const string pattern = @"""\s*,\s*""";
-                    var tokens = Regex.Split(
+                    var transaction = Regex.Split(
                         line.Substring(1, line.Length - 2), pattern);
 
-                    tokens[4] = tokens[4].Substring(0, tokens[4].Length - 1);
+                    //Drop last extra symbol
+                    transaction[4] = transaction[4].Substring(0, transaction[4].Length - 1);
 
-                    AddTransaction(DateTime.Parse(tokens[1]), decimal.Parse(tokens[4], CultureInfo.InvariantCulture),
-                        tokens[2], tokens[3]);
+                    var amount = decimal.Parse(transaction[4], CultureInfo.InvariantCulture);
+
+                    AddTransaction(DateTime.Parse(transaction[1]), amount, transaction[2], transaction[3]);
                 }
             }
         }
@@ -81,16 +85,18 @@ namespace SmartSaver.Controllers
                 line = reader.ReadLine();
                 if (line != null)
                 {
+                    //Split line
                     const string pattern = @"""\s*,\s*""";
-                    var tokens = Regex.Split(
+                    var transaction = Regex.Split(
                         line.Substring(1, line.Length - 2), pattern);
 
-                    if (tokens[5] != "Apyvarta")
+                    //Check if transaction list ended
+                    if (transaction[5] != "Apyvarta")
                     {
-                        var d = decimal.Parse(tokens[6], CultureInfo.InvariantCulture);
-                        d = CheckIfDebit(tokens[8], d);
+                        var amount = decimal.Parse(transaction[6], CultureInfo.InvariantCulture);
+                        amount = CheckIfDebit(transaction[8], amount);
 
-                        AddTransaction(DateTime.Parse(tokens[2]), d, tokens[3], tokens[5]);
+                        AddTransaction(DateTime.Parse(transaction[2]), amount, transaction[3], transaction[5]);
                     }
                     else
                     {
@@ -111,26 +117,27 @@ namespace SmartSaver.Controllers
                     string details;
                     string counterParty;
 
+                    //Split line
                     const string pattern = @"\s*;\s*";
-                    var tokens = Regex.Split(line, pattern);
+                    var transaction = Regex.Split(line, pattern);
 
-                    var d = decimal.Parse(tokens[3].Replace(',', '.'), CultureInfo.InvariantCulture);
+                    var amount = decimal.Parse(transaction[3].Replace(',', '.'), CultureInfo.InvariantCulture);
                     if (quotes)
                     {
-                        d = CheckIfDebit(tokens[14].Substring(1, tokens[14].Length - 2), d);
+                        amount = CheckIfDebit(transaction[14].Substring(1, transaction[14].Length - 2), amount);
 
-                        details = tokens[9].Substring(1, tokens[9].Length - 2);
-                        counterParty = tokens[4].Substring(1, tokens[4].Length - 2);
+                        details = transaction[9].Substring(1, transaction[9].Length - 2);
+                        counterParty = transaction[4].Substring(1, transaction[4].Length - 2);
                     }
                     else
                     {
-                        d = CheckIfDebit(tokens[14], d);
+                        amount = CheckIfDebit(transaction[14], amount);
 
-                        details = tokens[9];
-                        counterParty = tokens[4];
+                        details = transaction[9];
+                        counterParty = transaction[4];
                     }
 
-                    AddTransaction(DateTime.Parse(tokens[1]), d, counterParty, details);
+                    AddTransaction(DateTime.Parse(transaction[1]), amount, counterParty, details);
                 }
             }
         }
@@ -143,22 +150,24 @@ namespace SmartSaver.Controllers
                 line = reader.ReadLine();
                 if (line != null)
                 {
+                    //Split line
                     const string pattern = @"\s*;\s*";
-                    var tokens = Regex.Split(
+                    var transaction = Regex.Split(
                         line, pattern);
 
-                    var y = int.Parse(tokens[1].Substring(0, 4));
-                    var m = int.Parse(tokens[1].Substring(4, 2));
-                    var day = int.Parse(tokens[1].Substring(6, 2));
-                    var h = int.Parse(tokens[2].Substring(0, 2));
-                    var min = int.Parse(tokens[2].Substring(2, 2));
-                    var s = int.Parse(tokens[2].Substring(4, 2));
+                    //Parse yyyymmdd;hhmmss format
+                    var y = int.Parse(transaction[1].Substring(0, 4));
+                    var m = int.Parse(transaction[1].Substring(4, 2));
+                    var day = int.Parse(transaction[1].Substring(6, 2));
+                    var h = int.Parse(transaction[2].Substring(0, 2));
+                    var min = int.Parse(transaction[2].Substring(2, 2));
+                    var s = int.Parse(transaction[2].Substring(4, 2));
 
-                    var d = decimal.Parse(tokens[3], CultureInfo.InvariantCulture);
-                    d = CheckIfDebit(tokens[5], d);
+                    var amount = decimal.Parse(transaction[3], CultureInfo.InvariantCulture);
+                    amount = CheckIfDebit(transaction[5], amount);
 
                     AddTransaction(new DateTime(y, m, day, h, min, s),
-                        d, tokens[12], tokens[16]);
+                        amount, transaction[12], transaction[16]);
                 }
             }
         }

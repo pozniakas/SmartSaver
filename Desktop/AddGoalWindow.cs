@@ -11,17 +11,15 @@ namespace SmartSaver.Desktop
 {
     public static class DecimalExtension
     {
-        public static bool IsGreaterThen(this double i, double j)
+        public static bool IsLessThen(this double i, double j)
         {
-            return i > j;
+            return i < j;
         }
     }
     public partial class AddGoalWindow : Form
     {
         private readonly Database _db = new Database();
         private List<Goal> _goalList;
-
-        private int selectedId;
 
         public AddGoalWindow()
         {
@@ -75,17 +73,18 @@ namespace SmartSaver.Desktop
         {
             double profitAWeek = profit / 4.0;
             double possibilityRate = worth / profitAWeek;
-            if (possibilityRate.IsGreaterThen(0.5))
+
+            if (possibilityRate.IsLessThen(0.5))
             {
                 return "Huge";
             }
 
-            if (possibilityRate.IsGreaterThen(0.8))
+            if (possibilityRate.IsLessThen(0.8))
             {
                 return "Real";
             }
 
-            if (possibilityRate.IsGreaterThen(1))
+            if (possibilityRate.IsLessThen(1))
             {
                 return "Small";
             }
@@ -102,7 +101,7 @@ namespace SmartSaver.Desktop
             {
 
                 int money;
-                if (((DateTime)goal.Deadlinedate).Subtract(DateTime.UtcNow).Days > 7)
+                if (((DateTime)goal.Deadlinedate).Subtract(DateTime.UtcNow).Days > 7 )
                 {
                     money = (decimal.ToInt32(goal.Amount)) /
                             ((((DateTime)goal.Deadlinedate).Subtract(DateTime.UtcNow) / 7).Days);
@@ -214,10 +213,16 @@ namespace SmartSaver.Desktop
 
         private void DeleteButton_Click(object sender, EventArgs e)
         {
+            if (goalWindowListView.SelectedItems.Count < 0)
+            {
+                return;
+            }
+
+            var selectedTitle = goalWindowListView.SelectedItems[0].Text;
+            goalWindowListView.Items.RemoveAt(goalWindowListView.SelectedItems[0].Index);
+
             try
             {
-                var selectedTitle = goalWindowListView.SelectedItems[0].Text;
-                goalWindowListView.Items.RemoveAt(selectedId);
                 _db.RemoveGoal(selectedTitle);
                 UpdateGoalList();
             }
