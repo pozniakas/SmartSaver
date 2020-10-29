@@ -2,10 +2,6 @@
 {
     public class Tip
     {
-        public Tip()
-        {
-
-        }
         public Tip(string aTipName, string aTipLink)
         {
             TipName = aTipName;
