@@ -57,15 +57,16 @@ namespace SmartSaver.Desktop
             foreach (var category in categoryList)
             {
                 calc += transactionList.Where(transaction => category.Id == transaction.CategoryId)
-                                       .Sum(transaction => transaction.Amount);
+                    .Sum(transaction => transaction.Amount);
 
                 budgetAndCategoriesView.Rows[index].Cells[3].Value = Math.Abs(calc);
                 budgetAndCategoriesView.Rows[index].Cells[4].Value = category.DedicatedAmount - Math.Abs(calc);
-                if (category.DedicatedAmount - calc < 0)
+                Debug.WriteLine(category.DedicatedAmount - calc);
+                if (category.DedicatedAmount - Math.Abs(calc) < 0)
                 {
                     budgetAndCategoriesView.Rows[index].Cells[4].Style.BackColor = Color.Red;
                 }
-                else if (category.DedicatedAmount >= 0)
+                else if (category.DedicatedAmount - Math.Abs(calc) >= 0)
                 {
                     budgetAndCategoriesView.Rows[index].Cells[4].Style.BackColor = Color.Green;
                 }
