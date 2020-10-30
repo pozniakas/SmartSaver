@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\Axelandras\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\Axelandras\\.nuget\\packages"
+    ]
+  }
+}
