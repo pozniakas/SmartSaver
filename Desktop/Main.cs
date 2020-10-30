@@ -1,16 +1,17 @@
-﻿using SmartSaver.Data;
-using SmartSaver.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using SmartSaver.Controllers;
+using SmartSaver.Data;
+using SmartSaver.Models;
 
 namespace SmartSaver.Desktop
 {
     public partial class Main : Form
     {
-        private readonly Database db = new Database();
-        private List<Transaction> TransactionList;
+        private readonly Database _db = new Database();
+        private List<Transaction> _transactionList;
 
         public Main()
         {
@@ -21,6 +22,7 @@ namespace SmartSaver.Desktop
         {
             PrepareTransactionListView();
             UpdateTransactionList();
+            IncomeAndOutcomeCalculation();
         }
 
         private void PrepareTransactionListView()
@@ -36,14 +38,14 @@ namespace SmartSaver.Desktop
 
         public void UpdateTransactionList()
         {
-            TransactionList = db.GetTransactions();
-            TransactionList.Reverse();
+            _transactionList = (List<Transaction>)_db.GetTransactions();
+            _transactionList.Reverse();
             PopulateTransactionListView();
         }
 
         private void PopulateTransactionListView()
         {
-            PopulateTransactionListView(TransactionList);
+            PopulateTransactionListView(_transactionList);
         }
 
         private void PopulateTransactionListView(IEnumerable<Transaction> transactionList)
@@ -52,11 +54,10 @@ namespace SmartSaver.Desktop
 
             foreach (var transaction in transactionList)
             {
-                var item = new ListViewItem(new string[] { 
-                    ((DateTime) transaction.TrTime).ToString("yyyy-MM-dd HH:mm"),
-                    transaction.Amount.ToString(),
-                    transaction.Details,
-                    transaction.CounterParty
+                var item = new ListViewItem(new[]
+                {
+                    ((DateTime)transaction.TrTime).ToString("yyyy-MM-dd HH:mm"), transaction.Amount.ToString(),
+                    transaction.Details, transaction.CounterParty
                 });
 
                 listTransactionsView.Items.Add(item);
@@ -65,32 +66,33 @@ namespace SmartSaver.Desktop
 
         private void buttonSetGoal_Click(object sender, EventArgs e)
         {
-            AddGoalWindow newGoalWindow = new AddGoalWindow();
+            var newGoalWindow = new AddGoalWindow();
             newGoalWindow.Show();
         }
 
         private void buttonAddTransaction_Click(object sender, EventArgs e)
         {
-            AddTransactionWindow newTransactionWindow = new AddTransactionWindow(this);
+            var newTransactionWindow = new AddTransactionWindow(this);
             newTransactionWindow.Show();
         }
 
         private void buttonUpload_Click(object sender, EventArgs e)
         {
-            FileManager fileManager = new FileManager();
-            fileManager.Import();
+            var reader = new FileReader();
+            reader.Import();
             UpdateTransactionList();
+            IncomeAndOutcomeCalculation();
         }
 
         private void buttonExport_Click(object sender, EventArgs e)
         {
-            FileManager fileManager = new FileManager();
-            fileManager.Export();
+            var writer = new FileWriter();
+            writer.Export();
         }
 
         private void buttonFilter_Click(object sender, EventArgs e)
         {
-            IEnumerable<Transaction> filteredTransactions = TransactionList.Where(transaction =>
+            var filteredTransactions = _transactionList.Where(transaction =>
                 transaction.TrTime >= dateFilterFrom.Value && transaction.TrTime <= dateFilterTo.Value
             );
             PopulateTransactionListView(filteredTransactions);
@@ -103,11 +105,36 @@ namespace SmartSaver.Desktop
 
         private void tipButton_Click(object sender, EventArgs e)
         {
-            TipWindow tipWindow = new TipWindow();
+            var tipWindow = new TipWindow();
             tipWindow.Show();
 
-            tipWindow.Location = this.Location;
+            tipWindow.Location = Location;
+        }
 
+        private void buttonMyBudget_Click(object sender, EventArgs e)
+        {
+            var myBudgetWindow = new MyBudgetWindow();
+            myBudgetWindow.Show();
+        }
+
+        public void IncomeAndOutcomeCalculation ()
+        {
+            decimal income = 0;
+            decimal outcome = 0;
+            foreach (var transaction in _transactionList)
+            {
+                if (transaction.Amount < 0)
+                {
+                    outcome += transaction.Amount;
+                }
+                else if (transaction.Amount > 0)
+                {
+                    income += transaction.Amount;
+                }
+            }
+
+            incomeLabel.Text = income.ToString();
+            outcomeLabel.Text = outcome.ToString();
         }
     }
 }

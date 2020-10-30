@@ -1,23 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SmartSaver.Models
+﻿namespace SmartSaver.Models
 {
     public class Tip
     {
-        public string tipName { get; set; }
-        public string tipLink { get; set; }
-
-        public Tip()
+        public Tip(string aTipName, string aTipLink)
         {
+            TipName = aTipName;
+            TipLink = aTipLink;
         }
 
-        public Tip(string aTipName, string atipLink)
-        {
-            tipName = aTipName;
-            tipLink = atipLink;
-        }
-
+        public string TipName { get; set; }
+        public string TipLink { get; set; }
     }
 }

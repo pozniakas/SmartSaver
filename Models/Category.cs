@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace SmartSaver.Models
 {
@@ -12,7 +11,7 @@ namespace SmartSaver.Models
 
         public long Id { get; set; }
         public string Title { get; set; }
-        public string Description { get; set; }
+        public decimal? DedicatedAmount { get; set; }
 
         public virtual ICollection<Transaction> Transaction { get; set; }
     }
