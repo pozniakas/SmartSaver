@@ -7,6 +7,8 @@ import { Counter } from './components/Counter';
 
 import './custom.css'
 import { FetchTransactions } from './components/FetchTransactions';
+import { FetchCategories } from './components/FetchCategories';
+import { FetchGoals } from './components/FetchGoals';
 
 export default class App extends Component {
     static displayName = App.name;
@@ -23,6 +25,8 @@ export default class App extends Component {
             <Route path='/counter' component={Counter} />
             <Route path='/fetch-data' component={FetchData} />
             <Route path='/fetch-transactions' component={FetchTransactions} />
+            <Route path='/fetch-categories' component={FetchCategories} />
+            <Route path='/fetch-goals' component={FetchGoals} />
       </Layout>
     );
   }

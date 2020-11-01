@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import App from '../App';
 import { Transaction } from './models/Transaction';
+import { FetchCategories } from './FetchCategories';
 
 type State = {
     transactions: string;
@@ -26,19 +27,19 @@ export class FetchTransactions extends Component {
       <table className='table table-striped' aria-labelledby="tabelLabel">
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Temp. (C)</th>
-            <th>Temp. (F)</th>
-            <th>Summary</th>
+            <th>Time</th>
+            <th>Amount</th>
+            <th>Details</th>
+            <th>Category</th>
           </tr>
         </thead>
         <tbody>
           {transaction.map(transacton =>
               <tr key={transacton.id}>
-                  <td>{transacton.id}</td>
                   <td>{transacton.time}</td>
                   <td>{transacton.amount}</td>
                   <td>{transacton.details}</td>
+                  <td>{transacton.categoryid}</td>
               </tr>
           )}
         </tbody>
