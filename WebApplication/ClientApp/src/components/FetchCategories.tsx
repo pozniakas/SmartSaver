@@ -21,7 +21,7 @@ export class FetchCategories extends Component {
     this.populateWeatherData();
   }
 
-    static renderForecastsTable(category: Category[]) {
+    static renderCategoriesTable(category: Category[]) {
     return (
       <table className='table table-striped' aria-labelledby="tabelLabel">
         <thead>
@@ -45,7 +45,7 @@ export class FetchCategories extends Component {
   render() {
     let contents = this.state.loading
       ? <p><em>Loading...</em></p>
-      : FetchCategories.renderForecastsTable(this.state.categories);
+      : FetchCategories.renderCategoriesTable(this.state.categories);
 
     return (
       <div>

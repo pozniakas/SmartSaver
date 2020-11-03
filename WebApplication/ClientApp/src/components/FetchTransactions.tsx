@@ -22,7 +22,7 @@ export class FetchTransactions extends Component {
     this.populateWeatherData();
   }
 
-    static renderForecastsTable(transaction: Transaction[]) {
+    static renderTransactionsTable(transaction: Transaction[]) {
     return (
       <table className='table table-striped' aria-labelledby="tabelLabel">
         <thead>
@@ -50,7 +50,7 @@ export class FetchTransactions extends Component {
   render() {
     let contents = this.state.loading
       ? <p><em>Loading...</em></p>
-      : FetchTransactions.renderForecastsTable(this.state.transactions);
+      : FetchTransactions.renderTransactionsTable(this.state.transactions);
 
     return (
       <div>

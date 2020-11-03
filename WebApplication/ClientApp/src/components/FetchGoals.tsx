@@ -21,7 +21,7 @@ export class FetchGoals extends Component {
     this.populateWeatherData();
   }
 
-    static renderForecastsTable(goal: Goal[]) {
+    static renderGoalsTable(goal: Goal[]) {
     return (
       <table className='table table-striped' aria-labelledby="tabelLabel">
         <thead>
@@ -51,7 +51,7 @@ export class FetchGoals extends Component {
   render() {
     let contents = this.state.loading
       ? <p><em>Loading...</em></p>
-      : FetchGoals.renderForecastsTable(this.state.goals);
+      : FetchGoals.renderGoalsTable(this.state.goals);
 
     return (
       <div>
