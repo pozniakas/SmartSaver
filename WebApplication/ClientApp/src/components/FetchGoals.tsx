@@ -14,14 +14,14 @@ export class FetchGoals extends Component {
     constructor(props: {}) {
         
     super(props);
-      this.state = { category: [], loading: true };
+      this.state = { goals: [], loading: true };
   }
 
   componentDidMount() {
     this.populateWeatherData();
   }
 
-    static renderForecastsTable(category: Goal[]) {
+    static renderForecastsTable(goal: Goal[]) {
     return (
       <table className='table table-striped' aria-labelledby="tabelLabel">
         <thead>
@@ -34,13 +34,13 @@ export class FetchGoals extends Component {
           </tr>
         </thead>
         <tbody>
-          {category.map(category =>
-              <tr key={category.id}>
-                  <td>{category.title}</td>
-                  <td>{category.description}</td>
-                  <td>{category.amount}</td>
-                  <td>{category.creationdate}</td>
-                  <td>{category.deadlinedate}</td>
+          {goal.map(goal =>
+              <tr key={goal.id}>
+                  <td>{goal.title}</td>
+                  <td>{goal.description}</td>
+                  <td>{goal.amount}</td>
+                  <td>{goal.creationdate}</td>
+                  <td>{goal.deadlinedate}</td>
               </tr>
           )}
         </tbody>
