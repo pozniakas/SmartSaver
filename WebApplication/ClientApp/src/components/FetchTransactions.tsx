@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import App from '../App';
+import { Category } from './models/Category';
 import { Transaction } from './models/Transaction';
-import { FetchCategories } from './FetchCategories';
 
 type State = {
     transactions: string;
@@ -19,7 +19,7 @@ export class FetchTransactions extends Component {
   }
 
   componentDidMount() {
-    this.populateWeatherData();
+    this.populateTransactionData();
   }
 
     static renderTransactionsTable(transaction: Transaction[]) {
@@ -55,16 +55,14 @@ export class FetchTransactions extends Component {
     return (
       <div>
         <h1 id="tabelLabel" >Transactions</h1>
-        <p>This component demonstrates fetching data from the server.</p>
         {contents}
       </div>
     );
   }
 
-    async populateWeatherData() {
+    async populateTransactionData() {
         const response = await App.fetchApi('api/Transactions');
         const data = await response.json();
-        console.log(data);
         this.setState({ transactions: data, loading: false });
     }
 }
