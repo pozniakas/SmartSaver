@@ -1,9 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using WebAPI.Models;
+using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
@@ -20,7 +27,7 @@ namespace WebAPI.Controllers
 
         // GET: api/Transactions
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Transaction>>> GetTransaction()
+        public async Task<ActionResult<IEnumerable<Transaction>>> GetTransactions()
         {
             return await _context.Transaction.ToListAsync();
         }
@@ -77,10 +84,57 @@ namespace WebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Transaction>> PostTransaction(Transaction transaction)
         {
-            _context.Transaction.Add(transaction);
-            await _context.SaveChangesAsync();
+            if (!transaction.IsValid() || transaction.Id != 0)
+            {
+                return BadRequest();
+            }
 
-            return CreatedAtAction("GetTransaction", new { id = transaction.Id }, transaction);
+            try
+            {
+                _context.Transaction.Add(transaction);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction("GetTransaction", new { id = transaction.Id }, transaction);
+            }
+            catch (DbUpdateException ex)
+            {
+                Log.Error(ex, "POST: api/Transactions");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+            catch(Exception ex)
+            {
+                Log.Error(ex, $"POST: api/Transactions {transaction}");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPost("file")]
+        //[ActionName("TransactionsFromFile")]
+        public async Task<IActionResult> TransactionsFromFile([FromForm(Name = "file")] IFormFile file)
+        {
+            try
+            {
+                var streamReader = new StreamReader(file.OpenReadStream());
+                var bankStatmentReader = new BankStatmentReader(streamReader);
+                var transactions = bankStatmentReader.Read();
+
+                transactions = transactions.Where(tr => tr != null);
+
+                _context.Transaction.AddRange(transactions);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction("GetTransactions", transactions);
+            }
+            catch (DbUpdateException ex)
+            {
+                Log.Error(ex, "POST: api/Transactions");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"POST: api/Transactions");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
         }
 
         // DELETE: api/Transactions/5
