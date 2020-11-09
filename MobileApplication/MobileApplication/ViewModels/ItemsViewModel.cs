@@ -7,6 +7,7 @@ using Xamarin.Forms;
 
 using MobileApplication.Models;
 using MobileApplication.Views;
+using MobileApplication.Services;
 
 namespace MobileApplication.ViewModels
 {
@@ -36,11 +37,25 @@ namespace MobileApplication.ViewModels
 
             try
             {
-                Items.Clear();
-                var items = await DataStore.GetItemsAsync(true);
+                //Items.Clear();
+
+                //var items = await DataStore.GetItemsAsync(true);
+                //foreach (var item in items)
+                //{
+                //    Items.Add(item);
+                //}
+
+                var items = await new RestService().RefreshDataAsync();
+
                 foreach (var item in items)
                 {
-                    Items.Add(item);
+                    var todo = new Item
+                    {
+                        Id = item.Id.ToString(),
+                        Text = item.TrTime.ToString(),
+                        Description = item.Details
+                    };
+                    Items.Add(todo);
                 }
             }
             catch (Exception ex)

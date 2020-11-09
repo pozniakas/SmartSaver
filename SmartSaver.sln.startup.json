@@ -57,6 +57,12 @@
         "WebAPI": {},
         "WebApplication": {}
       }
+    },
+    "WebAPI + Mobile.Android (Ext)": {
+      "Projects": {
+        "WebAPI": {},
+        "MobileApplication.Android": {}
+      }
     }
   }
 }
