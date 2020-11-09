@@ -22,7 +22,7 @@ namespace MobileApplication.ViewModels
 
         public ItemsViewModel()
         {
-            Title = "Browse";
+            Title = "Transactions";
             Items = new ObservableCollection<Item>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
