@@ -1,5 +1,5 @@
 ﻿using MobileApplication.Models;
-using Models;
+using DbEntities.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -7,37 +7,29 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using MobileApplication.Configuration;
 
 namespace MobileApplication.Services
 {
     public class RestService : IRestService
     {
         HttpClient client;
-        string RestUrl = "http://192.168.1.54:45455/api/Transactions";
-
         public List<Transaction> Items { get; private set; }
+        private string TransactionsUrl = "api/Transactions";
 
         public RestService()
         {
-            client = new HttpClient();
             client = new HttpClient(new HttpClientHandler());
-            //#if DEBUG
-            //            client = new HttpClient(DependencyService.Get<IHttpClientHandlerService>().GetInsecureHandler());
-            //#else
-            //            client = new HttpClient();
-            //#endif
+            client.BaseAddress = new Uri(AppSettingsManager.Settings["ApiBaseAddress"]);
         }
 
         public async Task<List<Transaction>> RefreshDataAsync()
         {
             Items = new List<Transaction>();
 
-            Uri uri = new Uri(string.Format(RestUrl, string.Empty));
-            Debug.WriteLine($"Getting: {RestUrl}");
             try
             {
-                HttpResponseMessage response = await client.GetAsync(uri);
-                Debug.WriteLine($"Response Status: {response.StatusCode}");
+                HttpResponseMessage response = await client.GetAsync(TransactionsUrl);
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
@@ -54,8 +46,6 @@ namespace MobileApplication.Services
 
         public async Task SaveTodoItemAsync(TodoItem item, bool isNewItem = false)
         {
-            Uri uri = new Uri(string.Format(RestUrl, string.Empty));
-
             try
             {
                 string json = JsonConvert.SerializeObject(item);
@@ -64,11 +54,11 @@ namespace MobileApplication.Services
                 HttpResponseMessage response = null;
                 if (isNewItem)
                 {
-                    response = await client.PostAsync(uri, content);
+                    response = await client.PostAsync(TransactionsUrl, content);
                 }
                 else
                 {
-                    response = await client.PutAsync(uri, content);
+                    response = await client.PutAsync(TransactionsUrl, content);
                 }
 
                 if (response.IsSuccessStatusCode)
@@ -85,11 +75,9 @@ namespace MobileApplication.Services
 
         public async Task DeleteTodoItemAsync(string id)
         {
-            Uri uri = new Uri(string.Format(RestUrl, id));
-
             try
             {
-                HttpResponseMessage response = await client.DeleteAsync(uri);
+                HttpResponseMessage response = await client.DeleteAsync(TransactionsUrl);
 
                 if (response.IsSuccessStatusCode)
                 {
