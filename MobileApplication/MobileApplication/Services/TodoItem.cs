@@ -1,5 +1,5 @@
 ﻿using MobileApplication.Models;
-using Models;
+using DbEntities.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;

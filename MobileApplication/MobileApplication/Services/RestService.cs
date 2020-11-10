@@ -1,5 +1,5 @@
 ﻿using MobileApplication.Models;
-using Models;
+using DbEntities.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -7,37 +7,28 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using MobileApplication.Configuration;
 
 namespace MobileApplication.Services
 {
     public class RestService : IRestService
     {
         HttpClient client;
-        string RestUrl = "http://192.168.1.54:45455/api/Transactions";
-
         public List<Transaction> Items { get; private set; }
 
         public RestService()
         {
-            client = new HttpClient();
             client = new HttpClient(new HttpClientHandler());
-            //#if DEBUG
-            //            client = new HttpClient(DependencyService.Get<IHttpClientHandlerService>().GetInsecureHandler());
-            //#else
-            //            client = new HttpClient();
-            //#endif
+            client.BaseAddress = new Uri(AppSettingsManager.Settings["ApiBaseAddress"]);
         }
 
         public async Task<List<Transaction>> RefreshDataAsync()
         {
             Items = new List<Transaction>();
 
-            Uri uri = new Uri(string.Format(RestUrl, string.Empty));
-            Debug.WriteLine($"Getting: {RestUrl}");
             try
             {
-                HttpResponseMessage response = await client.GetAsync(uri);
-                Debug.WriteLine($"Response Status: {response.StatusCode}");
+                HttpResponseMessage response = await client.GetAsync("api/Transactions");
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
