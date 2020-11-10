@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Models
+namespace DbEntities.Models
 {
     public partial class Goal
     {
