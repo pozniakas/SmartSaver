@@ -1,8 +1,7 @@
-﻿using Serilog;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace WebAPI.Models
+namespace DbEntities.Models
 {
     public partial class Transaction
     {
