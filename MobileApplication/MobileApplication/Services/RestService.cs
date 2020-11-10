@@ -15,6 +15,7 @@ namespace MobileApplication.Services
     {
         HttpClient client;
         public List<Transaction> Items { get; private set; }
+        private string TransactionsUrl = "api/Transactions";
 
         public RestService()
         {
@@ -28,7 +29,7 @@ namespace MobileApplication.Services
 
             try
             {
-                HttpResponseMessage response = await client.GetAsync("api/Transactions");
+                HttpResponseMessage response = await client.GetAsync(TransactionsUrl);
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
@@ -45,8 +46,6 @@ namespace MobileApplication.Services
 
         public async Task SaveTodoItemAsync(TodoItem item, bool isNewItem = false)
         {
-            Uri uri = new Uri(string.Format(RestUrl, string.Empty));
-
             try
             {
                 string json = JsonConvert.SerializeObject(item);
@@ -55,11 +54,11 @@ namespace MobileApplication.Services
                 HttpResponseMessage response = null;
                 if (isNewItem)
                 {
-                    response = await client.PostAsync(uri, content);
+                    response = await client.PostAsync(TransactionsUrl, content);
                 }
                 else
                 {
-                    response = await client.PutAsync(uri, content);
+                    response = await client.PutAsync(TransactionsUrl, content);
                 }
 
                 if (response.IsSuccessStatusCode)
@@ -76,11 +75,9 @@ namespace MobileApplication.Services
 
         public async Task DeleteTodoItemAsync(string id)
         {
-            Uri uri = new Uri(string.Format(RestUrl, id));
-
             try
             {
-                HttpResponseMessage response = await client.DeleteAsync(uri);
+                HttpResponseMessage response = await client.DeleteAsync(TransactionsUrl);
 
                 if (response.IsSuccessStatusCode)
                 {
