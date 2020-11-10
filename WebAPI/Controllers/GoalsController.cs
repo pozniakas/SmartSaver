@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Services;
 using DbEntities.Models;
+using WebAPI.DTOModels;
 
 namespace WebAPI.Controllers
 {
@@ -41,15 +42,16 @@ namespace WebAPI.Controllers
         }
 
         // PUT: api/Goals/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutGoal(long id, Goal goal)
+        public async Task<IActionResult> PutGoal(long id, GoalDTO dtoGoal)
         {
-            if (id != goal.Id)
+            if (id != dtoGoal.Id || !GoalExists(id) || dtoGoal.Amount <= 0)
             {
                 return BadRequest();
             }
+
+            var goal = await _context.Goal.FindAsync(id);
+            goal.Update(dtoGoal);
 
             _context.Entry(goal).State = EntityState.Modified;
 
@@ -76,8 +78,11 @@ namespace WebAPI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Goal>> PostGoal(Goal goal)
+        public async Task<ActionResult<Goal>> PostGoal(GoalDTO dtoGoal)
         {
+            // What if Server and Client time differ
+            var goal = dtoGoal.ToEntity();
+
             _context.Goal.Add(goal);
             await _context.SaveChangesAsync();
 
