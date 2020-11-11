@@ -11,7 +11,7 @@ using MobileApplication.Configuration;
 
 namespace MobileApplication.Services
 {
-    public class GoalsRestService : IRestServiceGoals
+    public class GoalsRestService : IRestService<Goal>
     {
         HttpClient client;
         public List<Goal> Items { get; private set; }

@@ -9,9 +9,9 @@ namespace MobileApplication.Services
 {
 	public class TodoGoalManager
 	{
-		IRestServiceGoals restService;
+		IRestService<Goal> restService;
 
-		public TodoGoalManager(IRestServiceGoals service)
+		public TodoGoalManager(IRestService<Goal> service)
 		{
 			restService = service;
 		}

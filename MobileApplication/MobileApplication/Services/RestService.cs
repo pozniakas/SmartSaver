@@ -11,7 +11,7 @@ using MobileApplication.Configuration;
 
 namespace MobileApplication.Services
 {
-    public class RestService : IRestService
+    public class RestService : IRestService<Transaction>
     {
         HttpClient client;
         public List<Transaction> Items { get; private set; }
