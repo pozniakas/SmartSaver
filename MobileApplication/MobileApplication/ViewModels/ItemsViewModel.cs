@@ -1,14 +1,12 @@
-﻿using System;
+﻿using DbEntities.Models;
+using MobileApplication.Models;
+using MobileApplication.Services.Rest;
+using MobileApplication.Views;
+using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
-
-using MobileApplication.Models;
-using MobileApplication.Views;
-using MobileApplication.Services;
-using MobileApplication.Services.Rest;
 
 namespace MobileApplication.ViewModels
 {
@@ -16,48 +14,35 @@ namespace MobileApplication.ViewModels
     {
         private Item _selectedItem;
 
-        public ObservableCollection<Item> Items { get; }
+        public ObservableCollection<Transaction> Items { get; }
         public Command LoadItemsCommand { get; }
         public Command AddItemCommand { get; }
         public Command<Item> ItemTapped { get; }
 
+        private readonly IRestService<Transaction> RestService;
+
         public ItemsViewModel()
         {
+            RestService = new RestService<Transaction>("api/Transactions");
+
             Title = "Transactions";
-            Items = new ObservableCollection<Item>();
+            Items = new ObservableCollection<Transaction>();
+
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-
             ItemTapped = new Command<Item>(OnItemSelected);
-
             AddItemCommand = new Command(OnAddItem);
         }
 
         async Task ExecuteLoadItemsCommand()
         {
             IsBusy = true;
+            Items.Clear();
 
             try
             {
-                //Items.Clear();
+                var items = await RestService.RefreshDataAsync();
 
-                //var items = await DataStore.GetItemsAsync(true);
-                //foreach (var item in items)
-                //{
-                //    Items.Add(item);
-                //}
-
-                var items = await new TransactionService().RefreshDataAsync();
-
-                foreach (var item in items)
-                {
-                    var todo = new Item
-                    {
-                        Id = item.Id.ToString(),
-                        Text = item.TrTime.ToString(),
-                        Description = item.Details
-                    };
-                    Items.Add(todo);
-                }
+                items.ForEach(transaction => Items.Add(transaction));
             }
             catch (Exception ex)
             {

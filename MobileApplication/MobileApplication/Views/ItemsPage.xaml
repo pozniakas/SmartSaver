@@ -1,11 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--xmlns:model="clr-namespace:MobileApplication.Models"-->
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileApplication.Views.ItemsPage"
-             Title="{Binding Title}"
+             x:Name="BrowseItemsPage"
              xmlns:local="clr-namespace:MobileApplication.ViewModels"  
-             xmlns:model="clr-namespace:MobileApplication.Models"  
-             x:Name="BrowseItemsPage">
+             xmlns:model="clr-namespace:DbEntities.Models;assembly=DbEntities"
+             Title="{Binding Title}"
+             >
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Command="{Binding AddItemCommand}" />
@@ -20,12 +22,12 @@
                 SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout Padding="10" x:DataType="model:Item">
-                        <Label Text="{Binding Text}" 
+                    <StackLayout Padding="10" x:DataType="model:Transaction">
+                        <Label Text="{Binding Amount}" 
                             LineBreakMode="NoWrap" 
                             Style="{DynamicResource ListItemTextStyle}" 
                             FontSize="16" />
-                        <Label Text="{Binding Description}" 
+                        <Label Text="{Binding Details}" 
                             LineBreakMode="NoWrap"
                             Style="{DynamicResource ListItemDetailTextStyle}"
                             FontSize="13" />
