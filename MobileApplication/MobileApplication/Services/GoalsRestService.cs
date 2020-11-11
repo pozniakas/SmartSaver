@@ -14,31 +14,22 @@ namespace MobileApplication.Services
     public class GoalsRestService : IRestServiceGoals
     {
         HttpClient client;
-        string RestUrl = "http://192.168.0.163:45455/api/Goals";
-
         public List<Goal> Items { get; private set; }
+        private string GoalsUrl = "api/Goals";
 
         public GoalsRestService()
         {
-            client = new HttpClient();
             client = new HttpClient(new HttpClientHandler());
-            //#if DEBUG
-            //            client = new HttpClient(DependencyService.Get<IHttpClientHandlerService>().GetInsecureHandler());
-            //#else
-            //            client = new HttpClient();
-            //#endif
+            client.BaseAddress = new Uri(AppSettingsManager.Settings["ApiBaseAddress"]);
         }
 
         public async Task<List<Goal>> RefreshDataAsync()
         {
             Items = new List<Goal>();
 
-            Uri uri = new Uri(string.Format(RestUrl, string.Empty));
-            Debug.WriteLine($"Getting: {RestUrl}");
             try
             {
-                HttpResponseMessage response = await client.GetAsync(uri);
-                Debug.WriteLine($"Response Status: {response.StatusCode}");
+                HttpResponseMessage response = await client.GetAsync(GoalsUrl);
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
@@ -55,8 +46,6 @@ namespace MobileApplication.Services
 
         public async Task SaveTodoItemAsync(TodoItem item, bool isNewItem = false)
         {
-            Uri uri = new Uri(string.Format(RestUrl, string.Empty));
-
             try
             {
                 string json = JsonConvert.SerializeObject(item);
@@ -65,11 +54,11 @@ namespace MobileApplication.Services
                 HttpResponseMessage response = null;
                 if (isNewItem)
                 {
-                    response = await client.PostAsync(uri, content);
+                    response = await client.PostAsync(GoalsUrl, content);
                 }
                 else
                 {
-                    response = await client.PutAsync(uri, content);
+                    response = await client.PutAsync(GoalsUrl, content);
                 }
 
                 if (response.IsSuccessStatusCode)
@@ -86,11 +75,9 @@ namespace MobileApplication.Services
 
         public async Task DeleteTodoItemAsync(string id)
         {
-            Uri uri = new Uri(string.Format(RestUrl, id));
-
             try
             {
-                HttpResponseMessage response = await client.DeleteAsync(uri);
+                HttpResponseMessage response = await client.DeleteAsync(GoalsUrl);
 
                 if (response.IsSuccessStatusCode)
                 {
