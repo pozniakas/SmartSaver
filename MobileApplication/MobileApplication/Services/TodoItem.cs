@@ -9,9 +9,9 @@ namespace MobileApplication.Services
 {
 	public class TodoItemManager
 	{
-		IRestService restService;
+		IRestService<Transaction> restService;
 
-		public TodoItemManager(IRestService service)
+		public TodoItemManager(IRestService<Transaction> service)
 		{
 			restService = service;
 		}

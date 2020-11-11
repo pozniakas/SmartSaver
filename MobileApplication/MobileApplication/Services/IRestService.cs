@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace MobileApplication.Services
 {
-	public interface IRestService
+	public interface IRestService<T>
 	{
-		Task<List<Transaction>> RefreshDataAsync();
+		Task<List<T>> RefreshDataAsync();
 
 		Task SaveTodoItemAsync(TodoItem item, bool isNewItem);
 
