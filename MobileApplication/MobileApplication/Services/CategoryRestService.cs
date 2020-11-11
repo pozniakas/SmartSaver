@@ -11,7 +11,7 @@ using MobileApplication.Configuration;
 
 namespace MobileApplication.Services
 {
-    public class CategoryRestService : IRestServiceCategory
+    public class CategoryRestService : IRestService <Category>
     {
         HttpClient client;
         public List<Category> Items { get; private set; }
