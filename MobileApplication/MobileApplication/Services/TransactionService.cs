@@ -1,5 +1,4 @@
-﻿using MobileApplication.Models;
-using DbEntities.Models;
+﻿using DbEntities.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -9,15 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using MobileApplication.Configuration;
 
-namespace MobileApplication.Services
+namespace MobileApplication.Services.Rest
 {
-    public class RestService : IRestService<Transaction>
+    public class TransactionService : IRestService<Transaction>
     {
         HttpClient client;
         public List<Transaction> Items { get; private set; }
         private string TransactionsUrl = "api/Transactions";
 
-        public RestService()
+        public TransactionService()
         {
             client = new HttpClient(new HttpClientHandler());
             client.BaseAddress = new Uri(AppSettingsManager.Settings["ApiBaseAddress"]);
@@ -44,7 +43,7 @@ namespace MobileApplication.Services
             return Items;
         }
 
-        public async Task SaveTodoItemAsync(TodoItem item, bool isNewItem = false)
+        public async Task SaveTodoItemAsync(Transaction item, bool isNewItem = false)
         {
             try
             {

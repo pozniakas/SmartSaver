@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using MobileApplication.Configuration;
+using MobileApplication.Services.Rest;
 
 namespace MobileApplication.Services
 {
@@ -44,7 +45,7 @@ namespace MobileApplication.Services
             return Items;
         }
 
-        public async Task SaveTodoItemAsync(TodoItem item, bool isNewItem = false)
+        public async Task SaveTodoItemAsync(Category item, bool isNewItem = false)
         {
             try
             {

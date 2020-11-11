@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using MobileApplication.Services.Rest;
 
 namespace MobileApplication.Services
 {
@@ -21,14 +22,14 @@ namespace MobileApplication.Services
 			return restService.RefreshDataAsync();
 		}
 
-		public Task SaveTaskAsync(TodoItem item, bool isNewItem = false)
+		public Task SaveTaskAsync(Goal item, bool isNewItem = false)
 		{
 			return restService.SaveTodoItemAsync(item, isNewItem);
 		}
 
-		public Task DeleteTaskAsync(TodoItem item)
+		public Task DeleteTaskAsync(Goal item)
 		{
-			return restService.DeleteTodoItemAsync(item.ID);
+			return restService.DeleteTodoItemAsync(item.Id.ToString());
 		}
 	}
 }

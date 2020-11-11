@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using MobileApplication.Models;
 using MobileApplication.Views;
 using MobileApplication.Services;
+using MobileApplication.Services.Rest;
 
 namespace MobileApplication.ViewModels
 {
@@ -45,7 +46,7 @@ namespace MobileApplication.ViewModels
                 //    Items.Add(item);
                 //}
 
-                var items = await new RestService().RefreshDataAsync();
+                var items = await new TransactionService().RefreshDataAsync();
 
                 foreach (var item in items)
                 {
