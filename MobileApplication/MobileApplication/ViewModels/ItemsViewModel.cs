@@ -20,7 +20,7 @@ namespace MobileApplication.ViewModels
         public Command<Item> ItemTapped { get; }
 
         private readonly IRestService<Transaction> RestService;
-
+    
         public ItemsViewModel()
         {
             RestService = new RestService<Transaction>("api/Transactions");

@@ -7,7 +7,13 @@ namespace MobileApplication.ViewModels
 {
     public class AboutViewModel : BaseViewModel
     {
-
+        public ImageSource Image
+        {
+            get
+            {
+                return ImageSource.FromResource("MobileApplication.Resources.LOGO2.png"); 
+            }
+        }
 
         public AboutViewModel()
         {

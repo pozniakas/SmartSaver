@@ -6,10 +6,12 @@
 
   <ItemGroup>
     <None Remove="appsettings.json" />
+    <None Remove="Resources\LOGO2.png" />
   </ItemGroup>  
 
   <ItemGroup>
     <EmbeddedResource Include="appsettings.json" />
+    <EmbeddedResource Include="Resources\LOGO2.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +23,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\DbEntities\DbEntities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\LOGO2.png" />
   </ItemGroup>
 
   <ItemGroup>
