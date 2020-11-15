@@ -78,7 +78,10 @@ namespace WebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Transaction>> PostTransaction(Transaction transaction)
         {
-            if (!transaction.IsValid())
+            var transactionExists = await _context.Transaction.FirstOrDefaultAsync(
+                x => x.TrTime == transaction.TrTime && x.Amount == transaction.Amount) != null;
+
+            if (!transaction.IsValid() || transactionExists)
             {
                 return BadRequest();
             }
