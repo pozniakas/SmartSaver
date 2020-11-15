@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <UserSecretsId>c1f9bd86-6e9b-416c-9870-52ca4d05ca0f</UserSecretsId>
   </PropertyGroup>  
 
   <ItemGroup>
