@@ -4,10 +4,11 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
-
+using DbEntities.Models;
 using MobileApplication.Models;
 using MobileApplication.Views;
 using MobileApplication.Services;
+using MobileApplication.Services.Rest;
 
 namespace MobileApplication.ViewModels
 {
@@ -15,15 +16,18 @@ namespace MobileApplication.ViewModels
     {
         private Item _selectedItem;
 
-        public ObservableCollection<Item> Items { get; }
+        public ObservableCollection<Category> Items { get; }
         public Command LoadItemsCommand { get; }
         public Command AddItemCommand { get; }
         public Command<Item> ItemTapped { get; }
 
+        private readonly IRestService<Category> RestService;
+
         public CategoryViewModel()
         {
+            RestService = new RestService<Category>("api/Categories");
             Title = "Categories";
-            Items = new ObservableCollection<Item>();
+            Items = new ObservableCollection<Category>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
             ItemTapped = new Command<Item>(OnItemSelected);
@@ -34,23 +38,13 @@ namespace MobileApplication.ViewModels
         async Task ExecuteLoadItemsCommand()
         {
             IsBusy = true;
+            Items.Clear();
 
             try
             {
-                Items.Clear();
+                var items = await RestService.RefreshDataAsync();
 
-                var items = await new CategoryRestService().RefreshDataAsync();
-
-                foreach (var item in items)
-                {
-                    var todo = new Item
-                    {
-                        Id = item.Id.ToString(),
-                        Text = item.Title,
-                        Description = item.DedicatedAmount.ToString()
-                    };
-                    Items.Add(todo);
-                }
+                items.ForEach(category => Items.Add(category));
             }
             catch (Exception ex)
             {

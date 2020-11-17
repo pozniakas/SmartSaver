@@ -4,7 +4,7 @@
              x:Class="MobileApplication.Views.CategoryPage"
              Title="{Binding Title}"
              xmlns:local="clr-namespace:MobileApplication.ViewModels"  
-             xmlns:model="clr-namespace:MobileApplication.Models"  
+             xmlns:model="clr-namespace:DbEntities.Models;assembly=DbEntities"
              x:Name="BrowseItemsPage">
 
     <ContentPage.ToolbarItems>
@@ -20,12 +20,12 @@
                 SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout Padding="10" x:DataType="model:Item">
-                        <Label Text="{Binding Text}" 
+                    <StackLayout Padding="10" x:DataType="model:Category">
+                        <Label Text="{Binding Title}" 
                             LineBreakMode="NoWrap" 
                             Style="{DynamicResource ListItemTextStyle}" 
                             FontSize="16" />
-                        <Label Text="{Binding Description}" 
+                        <Label Text="{Binding DedicatedAmount}" 
                             LineBreakMode="NoWrap"
                             Style="{DynamicResource ListItemDetailTextStyle}"
                             FontSize="13" />
