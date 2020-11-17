@@ -2,6 +2,7 @@
 <Shell xmlns="http://xamarin.com/schemas/2014/forms" 
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:local="clr-namespace:MobileApplication.Views"
+       xmlns:localTransactions="clr-namespace:MobileApplication.Views.Transactions"
        Title="MobileApplication"
        x:Class="MobileApplication.AppShell">
 
@@ -84,6 +85,7 @@
         <ShellContent Title="Transactions" Icon="tab_feed.png" ContentTemplate="{DataTemplate local:ItemsPage}" />
         <ShellContent Title="Goals" Icon="tab_feed.png" ContentTemplate="{DataTemplate local:GoalsPage}" />
         <ShellContent Title="Budget" Icon ="tab_feed.png" ContentTemplate="{DataTemplate local:CategoryPage}" />
+        <ShellContent Title="Trs" Icon ="tab_feed.png" ContentTemplate="{DataTemplate localTransactions:ListPage}" />
     </FlyoutItem>
 
     <!-- When the Flyout is visible this will be a menu item you can tie a click behavior to  -->
