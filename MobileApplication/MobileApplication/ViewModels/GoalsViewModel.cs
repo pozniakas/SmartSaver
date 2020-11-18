@@ -4,29 +4,32 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
-
+using DbEntities.Models;
 using MobileApplication.Models;
 using MobileApplication.Views;
-using MobileApplication.Services;
+using MobileApplication.Services.Rest;
 
 namespace MobileApplication.ViewModels
 {
     public class GoalsViewModel : BaseViewModel
     {
-        private Item _selectedItem;
+        private Goal _selectedItem;
 
-        public ObservableCollection<Item> Items { get; }
+        public ObservableCollection<Goal> Items { get; }
         public Command LoadItemsCommand { get; }
         public Command AddItemCommand { get; }
-        public Command<Item> ItemTapped { get; }
+        public Command<Goal> ItemTapped { get; }
+
+        private readonly IRestService<Goal> RestService;
 
         public GoalsViewModel()
         {
+            RestService = new RestService<Goal>("api/Goals");
             Title = "Goals";
-            Items = new ObservableCollection<Item>();
+            Items = new ObservableCollection<Goal>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
-            ItemTapped = new Command<Item>(OnItemSelected);
+            ItemTapped = new Command<Goal>(OnItemSelected);
 
             AddItemCommand = new Command(OnAddItem);
         }
@@ -34,23 +37,13 @@ namespace MobileApplication.ViewModels
         async Task ExecuteLoadItemsCommand()
         {
             IsBusy = true;
+            Items.Clear();
 
             try
             {
-                Items.Clear();
+                var items = await RestService.RefreshDataAsync();
 
-                var items = await new GoalsRestService().RefreshDataAsync();
-
-                foreach (var item in items)
-                {
-                    var todo = new Item
-                    {
-                        Id = item.Id.ToString(),
-                        Text = item.Title,
-                        Description = item.Description
-                    };
-                    Items.Add(todo);
-                }
+                items.ForEach(category => Items.Add(category));
             }
             catch (Exception ex)
             {
@@ -68,7 +61,7 @@ namespace MobileApplication.ViewModels
             SelectedItem = null;
         }
 
-        public Item SelectedItem
+        public Goal SelectedItem
         {
             get => _selectedItem;
             set
@@ -83,7 +76,7 @@ namespace MobileApplication.ViewModels
             await Shell.Current.GoToAsync(nameof(NewItemPage));
         }
 
-        async void OnItemSelected(Item item)
+        async void OnItemSelected(Goal item)
         {
             if (item == null)
                 return;
