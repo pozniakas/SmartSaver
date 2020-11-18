@@ -14,12 +14,12 @@ namespace MobileApplication.ViewModels
 {
     public class CategoryViewModel : BaseViewModel
     {
-        private Item _selectedItem;
+        private Category _selectedItem;
 
         public ObservableCollection<Category> Items { get; }
         public Command LoadItemsCommand { get; }
         public Command AddItemCommand { get; }
-        public Command<Item> ItemTapped { get; }
+        public Command<Category> ItemTapped { get; }
 
         private readonly IRestService<Category> RestService;
 
@@ -30,7 +30,7 @@ namespace MobileApplication.ViewModels
             Items = new ObservableCollection<Category>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
-            ItemTapped = new Command<Item>(OnItemSelected);
+            ItemTapped = new Command<Category>(OnItemSelected);
 
             AddItemCommand = new Command(OnAddItem);
         }
@@ -62,7 +62,7 @@ namespace MobileApplication.ViewModels
             SelectedItem = null;
         }
 
-        public Item SelectedItem
+        public Category SelectedItem
         {
             get => _selectedItem;
             set
@@ -77,7 +77,7 @@ namespace MobileApplication.ViewModels
             await Shell.Current.GoToAsync(nameof(NewItemPage));
         }
 
-        async void OnItemSelected(Item item)
+        async void OnItemSelected(Category item)
         {
             if (item == null)
                 return;
