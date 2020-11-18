@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileApplication.Views.NewTransactionPage"
+             Shell.PresentationMode="ModalAnimated"
+             Title="New Transation">
+    
+    <ContentPage.Content>
+        <StackLayout Spacing="3" Padding="15">
+            <Label Text="Transaction date" FontSize="Medium"/>
+
+            <DatePicker x:Name="transactionDate"
+                    Format="yyyy-MM-dd"
+                    Margin="30, 0, 0, 30" />
+            
+            <Label Text="Amount" FontSize="Medium"/>
+            <Entry FontSize="Medium"/>
+            
+            <Label Text="Details" FontSize="Medium"/>
+            <Entry FontSize="Medium"/>
+            
+            <Label Text="Counter Party" FontSize="Medium"/>
+            <Editor AutoSize ="TextChanges"  FontSize="Medium" Margin="0"/>
+            
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Cancel" HorizontalOptions="FillAndExpand"></Button>
+                <Button Text="Save" HorizontalOptions="FillAndExpand"></Button>
+            </StackLayout>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

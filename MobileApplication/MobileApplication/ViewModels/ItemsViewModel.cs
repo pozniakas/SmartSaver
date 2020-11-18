@@ -72,7 +72,7 @@ namespace MobileApplication.ViewModels
 
         private async void OnAddItem(object obj)
         {
-            await Shell.Current.GoToAsync(nameof(NewItemPage));
+            await Shell.Current.GoToAsync(nameof(NewTransactionPage));
         }
 
         async void OnItemSelected(Transaction item)
