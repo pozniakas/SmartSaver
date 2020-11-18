@@ -1,8 +1,9 @@
 ﻿using System;
+using DbEntities.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace WebAPI.Models
+namespace WebAPI.Services
 {
     public partial class postgresContext : DbContext
     {

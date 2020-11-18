@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using WebAPI.Models;
+using DbEntities.Models;
 using WebAPI.Services;
 
 namespace WebAPI.Controllers
@@ -47,12 +45,10 @@ namespace WebAPI.Controllers
         }
 
         // PUT: api/Transactions/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTransaction(long id, Transaction transaction)
         {
-            if (id != transaction.Id)
+            if (id != transaction.Id || !transaction.IsValid())
             {
                 return BadRequest();
             }
@@ -79,15 +75,18 @@ namespace WebAPI.Controllers
         }
 
         // POST: api/Transactions
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         public async Task<ActionResult<Transaction>> PostTransaction(Transaction transaction)
         {
-            if (!transaction.IsValid() || transaction.Id != 0)
+            var transactionExists = await _context.Transaction.FirstOrDefaultAsync(
+                x => x.TrTime == transaction.TrTime && x.Amount == transaction.Amount) != null;
+
+            if (!transaction.IsValid() || transactionExists)
             {
                 return BadRequest();
             }
+
+            transaction.Id = 0;
 
             try
             {
@@ -109,7 +108,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("file")]
-        //[ActionName("TransactionsFromFile")]
+        // POST: api/Transactions/file
         public async Task<IActionResult> TransactionsFromFile([FromForm(Name = "file")] IFormFile file)
         {
             try
