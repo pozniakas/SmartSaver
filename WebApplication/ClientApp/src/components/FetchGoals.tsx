@@ -18,7 +18,7 @@ export class FetchGoals extends Component {
   }
 
   componentDidMount() {
-    this.populateWeatherData();
+    this.populateGoalData();
   }
 
     static renderGoalsTable(goal: Goal[]) {
@@ -56,16 +56,14 @@ export class FetchGoals extends Component {
     return (
       <div>
         <h1 id="tabelLabel" >Goals</h1>
-        <p>This component demonstrates fetching data from the server.</p>
         {contents}
       </div>
     );
   }
 
-    async populateWeatherData() {
+    async populateGoalData() {
         const response = await App.fetchApi('api/Goals');
         const data = await response.json();
-        console.log(data);
         this.setState({ goals: data, loading: false });
     }
 }

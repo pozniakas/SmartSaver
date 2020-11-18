@@ -2,14 +2,17 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <UserSecretsId>c1f9bd86-6e9b-416c-9870-52ca4d05ca0f</UserSecretsId>
   </PropertyGroup>  
 
   <ItemGroup>
     <None Remove="appsettings.json" />
+    <None Remove="Resources\LOGO2.png" />
   </ItemGroup>  
 
   <ItemGroup>
     <EmbeddedResource Include="appsettings.json" />
+    <EmbeddedResource Include="Resources\LOGO2.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,5 +24,18 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\DbEntities\DbEntities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\LOGO2.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Views\CategoryPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Transactions\ListPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

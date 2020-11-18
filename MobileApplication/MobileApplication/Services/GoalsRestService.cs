@@ -8,32 +8,33 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using MobileApplication.Configuration;
+using MobileApplication.Services.Rest;
 
 namespace MobileApplication.Services
 {
-    public class RestService : IRestService
+    public class GoalsRestService : IRestService<Goal>
     {
         HttpClient client;
-        public List<Transaction> Items { get; private set; }
-        private string TransactionsUrl = "api/Transactions";
+        public List<Goal> Items { get; private set; }
+        private string GoalsUrl = "api/Goals";
 
-        public RestService()
+        public GoalsRestService()
         {
             client = new HttpClient(new HttpClientHandler());
             client.BaseAddress = new Uri(AppSettingsManager.Settings["ApiBaseAddress"]);
         }
 
-        public async Task<List<Transaction>> RefreshDataAsync()
+        public async Task<List<Goal>> RefreshDataAsync()
         {
-            Items = new List<Transaction>();
+            Items = new List<Goal>();
 
             try
             {
-                HttpResponseMessage response = await client.GetAsync(TransactionsUrl);
+                HttpResponseMessage response = await client.GetAsync(GoalsUrl);
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
-                    Items = JsonConvert.DeserializeObject<List<Transaction>>(content);
+                    Items = JsonConvert.DeserializeObject<List<Goal>>(content);
                 }
             }
             catch (Exception ex)
@@ -44,7 +45,7 @@ namespace MobileApplication.Services
             return Items;
         }
 
-        public async Task SaveTodoItemAsync(TodoItem item, bool isNewItem = false)
+        public async Task SaveTodoItemAsync(Goal item, bool isNewItem = false)
         {
             try
             {
@@ -54,11 +55,11 @@ namespace MobileApplication.Services
                 HttpResponseMessage response = null;
                 if (isNewItem)
                 {
-                    response = await client.PostAsync(TransactionsUrl, content);
+                    response = await client.PostAsync(GoalsUrl, content);
                 }
                 else
                 {
-                    response = await client.PutAsync(TransactionsUrl, content);
+                    response = await client.PutAsync(GoalsUrl, content);
                 }
 
                 if (response.IsSuccessStatusCode)
@@ -77,7 +78,7 @@ namespace MobileApplication.Services
         {
             try
             {
-                HttpResponseMessage response = await client.DeleteAsync(TransactionsUrl);
+                HttpResponseMessage response = await client.DeleteAsync(GoalsUrl);
 
                 if (response.IsSuccessStatusCode)
                 {

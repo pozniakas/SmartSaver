@@ -1,13 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<!--xmlns:model="clr-namespace:MobileApplication.Models"-->
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MobileApplication.Views.ItemsPage"
-             x:Name="BrowseItemsPage"
+             x:Class="MobileApplication.Views.CategoryPage"
+             Title="{Binding Title}"
              xmlns:local="clr-namespace:MobileApplication.ViewModels"  
              xmlns:model="clr-namespace:DbEntities.Models;assembly=DbEntities"
-             Title="{Binding Title}"
-             >
+             x:Name="BrowseItemsPage">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Command="{Binding AddItemCommand}" />
@@ -16,25 +14,25 @@
       x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
       https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
     -->
-    <RefreshView x:DataType="local:ItemsViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-        <CollectionView x:Name="ItemsListView"
+    <RefreshView x:DataType="local:CategoryViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <CollectionView x:Name="CategoryListView"
                 ItemsSource="{Binding Items}"
                 SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout Padding="10" x:DataType="model:Transaction">
-                        <Label Text="{Binding Amount}" 
+                    <StackLayout Padding="10" x:DataType="model:Category">
+                        <Label Text="{Binding Title}" 
                             LineBreakMode="NoWrap" 
                             Style="{DynamicResource ListItemTextStyle}" 
                             FontSize="16" />
-                        <Label Text="{Binding Details}" 
+                        <Label Text="{Binding DedicatedAmount}" 
                             LineBreakMode="NoWrap"
                             Style="{DynamicResource ListItemDetailTextStyle}"
                             FontSize="13" />
                         <StackLayout.GestureRecognizers>
                             <TapGestureRecognizer 
                                 NumberOfTapsRequired="1"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=ItemTapped}"		
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:CategoryViewModel}}, Path=ItemTapped}"		
                                 CommandParameter="{Binding .}">
                             </TapGestureRecognizer>
                         </StackLayout.GestureRecognizers>

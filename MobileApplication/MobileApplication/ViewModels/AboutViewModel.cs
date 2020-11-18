@@ -7,11 +7,17 @@ namespace MobileApplication.ViewModels
 {
     public class AboutViewModel : BaseViewModel
     {
-
+        public ImageSource Image
+        {
+            get
+            {
+                return ImageSource.FromResource("MobileApplication.Resources.LOGO2.png"); 
+            }
+        }
 
         public AboutViewModel()
         {
-            Title = "About";
+            Title = "Main";
             OpenWebCommand = new Command(async () => await Browser.OpenAsync("https://aka.ms/xamain-quickstart"));
         }
 

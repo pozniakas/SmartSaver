@@ -1,6 +1,4 @@
-﻿using DbEntities.Models;
-using MobileApplication.Models;
-using MobileApplication.Services.Rest;
+﻿using MobileApplication.Services.Rest;
 using MobileApplication.Views;
 using System;
 using System.Collections.ObjectModel;
@@ -10,18 +8,18 @@ using Xamarin.Forms;
 
 namespace MobileApplication.ViewModels
 {
-    public class ItemsViewModel : BaseViewModel
+    public class ListViewModel<Transaction> : BaseViewModel
     {
         private Transaction _selectedItem;
-
         public ObservableCollection<Transaction> Items { get; }
+        private readonly IRestService<Transaction> RestService;
+
         public Command LoadItemsCommand { get; }
         public Command AddItemCommand { get; }
         public Command<Transaction> ItemTapped { get; }
+        private Task<Action<Transaction>> OnItemClick { get; }
 
-        private readonly IRestService<Transaction> RestService;
-    
-        public ItemsViewModel()
+        public ListViewModel()
         {
             RestService = new RestService<Transaction>("api/Transactions");
 
@@ -41,7 +39,6 @@ namespace MobileApplication.ViewModels
             try
             {
                 var items = await RestService.RefreshDataAsync();
-
                 items.ForEach(transaction => Items.Add(transaction));
             }
             catch (Exception ex)
@@ -57,7 +54,7 @@ namespace MobileApplication.ViewModels
         public void OnAppearing()
         {
             IsBusy = true;
-            SelectedItem = null;
+            SelectedItem = default;
         }
 
         public Transaction SelectedItem
@@ -81,7 +78,7 @@ namespace MobileApplication.ViewModels
                 return;
 
             // This will push the ItemDetailPage onto the navigation stack
-            await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.ItemId)}={item.Id}");
+            await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.ItemId)}={item.ToString()}");
         }
     }
 }

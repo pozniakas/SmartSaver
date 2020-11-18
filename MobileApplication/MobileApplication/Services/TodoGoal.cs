@@ -8,26 +8,26 @@ using MobileApplication.Services.Rest;
 
 namespace MobileApplication.Services
 {
-	public class TodoItemManager
+	public class TodoGoalManager
 	{
-		IRestService<Transaction> restService;
+		IRestService<Goal> restService;
 
-		public TodoItemManager(IRestService<Transaction> service)
+		public TodoGoalManager(IRestService<Goal> service)
 		{
 			restService = service;
 		}
 
-		public Task<List<Transaction>> GetTasksAsync()
+		public Task<List<Goal>> GetTasksAsync()
 		{
 			return restService.RefreshDataAsync();
 		}
 
-		public Task SaveTaskAsync(Transaction item, bool isNewItem = false)
+		public Task SaveTaskAsync(Goal item, bool isNewItem = false)
 		{
 			return restService.SaveTodoItemAsync(item, isNewItem);
 		}
 
-		public Task DeleteTaskAsync(Transaction item)
+		public Task DeleteTaskAsync(Goal item)
 		{
 			return restService.DeleteTodoItemAsync(item.Id.ToString());
 		}
