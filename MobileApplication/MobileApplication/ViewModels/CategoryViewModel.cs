@@ -74,7 +74,7 @@ namespace MobileApplication.ViewModels
 
         private async void OnAddItem(object obj)
         {
-            await Shell.Current.GoToAsync(nameof(NewItemPage));
+            await Shell.Current.GoToAsync(nameof(NewCategoryPage));
         }
 
         async void OnItemSelected(Category category)
