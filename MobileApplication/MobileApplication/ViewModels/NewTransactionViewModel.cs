@@ -76,11 +76,13 @@ namespace MobileApplication.ViewModels
                 CounterParty = CounterParty
             };
 
+            IsBusy = true;
+
             await RestService.SaveTodoItemAsync(newTransaction, true);
 
             await Shell.Current.GoToAsync("..");
 
-            IsBusy = true;
+            IsBusy = false;
         }
     }
 }

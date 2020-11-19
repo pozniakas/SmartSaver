@@ -58,12 +58,13 @@ namespace MobileApplication.ViewModels
                 DedicatedAmount = amountInDecimal
             };
 
-           
+            IsBusy = true;
+
             await  RestService.SaveTodoItemAsync(newCategory, true);
 
             await Shell.Current.GoToAsync("..");
 
-            IsBusy = true;
+            IsBusy = false;
         }
     }
 }
