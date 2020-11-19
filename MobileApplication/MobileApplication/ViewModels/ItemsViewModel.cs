@@ -12,12 +12,12 @@ namespace MobileApplication.ViewModels
 {
     public class ItemsViewModel : BaseViewModel
     {
-        private Item _selectedItem;
+        private Transaction _selectedItem;
 
         public ObservableCollection<Transaction> Items { get; }
         public Command LoadItemsCommand { get; }
         public Command AddItemCommand { get; }
-        public Command<Item> ItemTapped { get; }
+        public Command<Transaction> ItemTapped { get; }
 
         private readonly IRestService<Transaction> RestService;
     
@@ -29,7 +29,7 @@ namespace MobileApplication.ViewModels
             Items = new ObservableCollection<Transaction>();
 
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            ItemTapped = new Command<Item>(OnItemSelected);
+            ItemTapped = new Command<Transaction>(OnItemSelected);
             AddItemCommand = new Command(OnAddItem);
         }
 
@@ -60,7 +60,7 @@ namespace MobileApplication.ViewModels
             SelectedItem = null;
         }
 
-        public Item SelectedItem
+        public Transaction SelectedItem
         {
             get => _selectedItem;
             set
@@ -75,13 +75,19 @@ namespace MobileApplication.ViewModels
             await Shell.Current.GoToAsync(nameof(NewItemPage));
         }
 
-        async void OnItemSelected(Item item)
+        async void OnItemSelected(Transaction transaction)
         {
-            if (item == null)
+            if (transaction == null)
                 return;
 
             // This will push the ItemDetailPage onto the navigation stack
-            await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.ItemId)}={item.Id}");
+            Item item = new Item(transaction.Id.ToString(), transaction.Details,
+                                            string.Concat(transaction.Amount.ToString(), '\n',
+                                            transaction.CounterParty, '\n',
+                                            transaction.TrTime.ToString()));
+            var itemDetailPage = new ItemDetailPage();
+            itemDetailPage.BindingContext = item;
+            await Shell.Current.Navigation.PushAsync(itemDetailPage);
         }
     }
 }
