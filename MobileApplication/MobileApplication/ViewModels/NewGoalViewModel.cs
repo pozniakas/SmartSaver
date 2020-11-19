@@ -82,10 +82,11 @@ namespace MobileApplication.ViewModels
                 Creationdate = CreationDate
             };
 
-            IsBusy = true;
             await RestService.SaveTodoItemAsync(newGoal, true);
 
             await Shell.Current.GoToAsync("..");
+
+            IsBusy = true;
         }
     }
 }
