@@ -3,8 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebAPI.Services;
-using DbEntities.Models;
+using DbEntities.Entities;
 
 namespace WebAPI.Controllers
 {
@@ -12,9 +11,9 @@ namespace WebAPI.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private readonly postgresContext _context;
+        private readonly DatabaseContext _context;
 
-        public CategoriesController(postgresContext context)
+        public CategoriesController(DatabaseContext context)
         {
             _context = context;
         }

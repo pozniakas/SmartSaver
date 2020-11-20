@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using DbEntities.Models;
+using DbEntities.Entities;
 using WebAPI.Services;
+using System.Linq.Expressions;
 
 namespace WebAPI.Controllers
 {
@@ -16,9 +17,9 @@ namespace WebAPI.Controllers
     [ApiController]
     public class TransactionsController : ControllerBase
     {
-        private readonly postgresContext _context;
+        private readonly DatabaseContext _context;
 
-        public TransactionsController(postgresContext context)
+        public TransactionsController(DatabaseContext context)
         {
             _context = context;
         }
@@ -78,8 +79,7 @@ namespace WebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Transaction>> PostTransaction(Transaction transaction)
         {
-            var transactionExists = await _context.Transaction.FirstOrDefaultAsync(
-                x => x.TrTime == transaction.TrTime && x.Amount == transaction.Amount) != null;
+            var transactionExists = await _context.Transaction.FirstOrDefaultAsync(IsNew(transaction)) != null;
 
             if (!transaction.IsValid() || transactionExists)
             {
@@ -107,34 +107,34 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpPost("file")]
+        //[HttpPost("file")]
         // POST: api/Transactions/file
-        public async Task<IActionResult> TransactionsFromFile([FromForm(Name = "file")] IFormFile file)
-        {
-            try
-            {
-                var streamReader = new StreamReader(file.OpenReadStream());
-                var bankStatmentReader = new BankStatmentReader(streamReader);
-                var transactions = bankStatmentReader.Read();
+        //public async Task<IActionResult> TransactionsFromFile([FromForm(Name = "file")] IFormFile file)
+        //{
+        //    try
+        //    {
+        //        var streamReader = new StreamReader(file.OpenReadStream());
+        //        var bankStatmentReader = new BankStatmentReader(streamReader);
+        //        var transactions = bankStatmentReader.Read();
 
-                transactions = transactions.Where(tr => tr != null);
+        //        transactions = transactions.Where(tr => tr != null);
 
-                _context.Transaction.AddRange(transactions);
-                await _context.SaveChangesAsync();
+        //        _context.Transaction.AddRange(transactions);
+        //        await _context.SaveChangesAsync();
 
-                return CreatedAtAction("GetTransactions", transactions);
-            }
-            catch (DbUpdateException ex)
-            {
-                Log.Error(ex, "POST: api/Transactions");
-                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, $"POST: api/Transactions");
-                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
-            }
-        }
+        //        return CreatedAtAction("GetTransactions", transactions);
+        //    }
+        //    catch (DbUpdateException ex)
+        //    {
+        //        Log.Error(ex, "POST: api/Transactions");
+        //        return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Log.Error(ex, $"POST: api/Transactions");
+        //        return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+        //    }
+        //}
 
         // DELETE: api/Transactions/5
         [HttpDelete("{id}")]
@@ -155,6 +155,11 @@ namespace WebAPI.Controllers
         private bool TransactionExists(long id)
         {
             return _context.Transaction.Any(e => e.Id == id);
+        }
+
+        public Expression<Func<Transaction, bool>> IsNew(Transaction transaction)
+        {
+            return x => x.TrTime == transaction.TrTime && x.Amount == transaction.Amount;
         }
     }
 }

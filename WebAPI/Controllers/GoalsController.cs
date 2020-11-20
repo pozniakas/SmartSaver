@@ -3,8 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebAPI.Services;
-using DbEntities.Models;
+using DbEntities.Entities;
 using WebAPI.DTOModels;
 
 namespace WebAPI.Controllers
@@ -13,9 +12,9 @@ namespace WebAPI.Controllers
     [ApiController]
     public class GoalsController : ControllerBase
     {
-        private readonly postgresContext _context;
+        private readonly DatabaseContext _context;
 
-        public GoalsController(postgresContext context)
+        public GoalsController(DatabaseContext context)
         {
             _context = context;
         }
@@ -51,7 +50,7 @@ namespace WebAPI.Controllers
             }
 
             var goal = await _context.Goal.FindAsync(id);
-            goal.Update(dtoGoal);
+            //goal.Update(dtoGoal);
 
             _context.Entry(goal).State = EntityState.Modified;
 
