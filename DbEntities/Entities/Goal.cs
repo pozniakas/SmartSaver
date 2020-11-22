@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
-namespace DbEntities.Models
+namespace DbEntities.Entities
 {
-    public partial class Goal
+    public class Goal
     {
         public long Id { get; set; }
         public string Title { get; set; }
@@ -11,5 +12,7 @@ namespace DbEntities.Models
         public decimal Amount { get; set; }
         public DateTime? Deadlinedate { get; set; }
         public DateTime Creationdate { get; set; }
+
+        public User User { get; set; }
     }
 }
