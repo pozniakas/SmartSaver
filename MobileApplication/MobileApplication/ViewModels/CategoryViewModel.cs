@@ -77,13 +77,16 @@ namespace MobileApplication.ViewModels
             await Shell.Current.GoToAsync(nameof(NewCategoryPage));
         }
 
-        async void OnItemSelected(Category item)
+        async void OnItemSelected(Category category)
         {
-            if (item == null)
+            if (category == null)
                 return;
 
             // This will push the ItemDetailPage onto the navigation stack
-            await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.ItemId)}={item.Id}");
+            Item item = new Item(category.Id.ToString(),category.Title,category.DedicatedAmount.ToString());
+            var itemDetailPage = new ItemDetailPage();
+            itemDetailPage.BindingContext = item;
+            await Shell.Current.Navigation.PushAsync(itemDetailPage);
         }
     }
 }
