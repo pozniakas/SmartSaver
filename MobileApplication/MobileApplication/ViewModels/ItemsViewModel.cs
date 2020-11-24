@@ -1,4 +1,4 @@
-﻿using DbEntities.Models;
+﻿using DbEntities.Entities;
 using MobileApplication.Models;
 using MobileApplication.Services.Rest;
 using MobileApplication.Views;

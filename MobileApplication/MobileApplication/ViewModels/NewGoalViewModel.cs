@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using MobileApplication.Services.Rest;
 using Xamarin.Forms;
-using DbEntities.Models;
+using DbEntities.Entities;
 namespace MobileApplication.ViewModels
 {
     public class NewGoalViewModel : BaseViewModel

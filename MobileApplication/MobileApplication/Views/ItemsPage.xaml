@@ -5,7 +5,7 @@
              x:Class="MobileApplication.Views.ItemsPage"
              x:Name="BrowseItemsPage"
              xmlns:local="clr-namespace:MobileApplication.ViewModels"  
-             xmlns:model="clr-namespace:DbEntities.Models;assembly=DbEntities"
+             xmlns:model="clr-namespace:DbEntities.Entities;assembly=DbEntities"
              Title="{Binding Title}"
              >
 
