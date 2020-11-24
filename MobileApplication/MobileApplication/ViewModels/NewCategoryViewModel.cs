@@ -60,7 +60,7 @@ namespace MobileApplication.ViewModels
 
             IsBusy = true;
 
-            await  RestService.SaveTodoItemAsync(newCategory, true);
+            await  RestService.SaveItemAsync(newCategory, true);
 
             await Shell.Current.GoToAsync("..");
 

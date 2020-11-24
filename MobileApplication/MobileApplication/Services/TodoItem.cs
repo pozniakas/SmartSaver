@@ -24,12 +24,12 @@ namespace MobileApplication.Services
 
 		public Task SaveTaskAsync(Transaction item, bool isNewItem = false)
 		{
-			return restService.SaveTodoItemAsync(item, isNewItem);
+			return restService.SaveItemAsync(item, isNewItem);
 		}
 
 		public Task DeleteTaskAsync(Transaction item)
 		{
-			return restService.DeleteTodoItemAsync(item.Id.ToString());
+			return restService.DeleteItemAsync(item.Id);
 		}
 	}
 }

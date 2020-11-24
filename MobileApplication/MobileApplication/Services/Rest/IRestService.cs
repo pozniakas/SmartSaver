@@ -7,8 +7,8 @@ namespace MobileApplication.Services.Rest
 	{
 		Task<List<T>> RefreshDataAsync();
 
-		Task SaveTodoItemAsync(T item, bool isNewItem);
+		Task SaveItemAsync(T item, bool isNewItem);
 
-		Task DeleteTodoItemAsync(string id);
+		Task DeleteItemAsync(long id);
 	}
 }

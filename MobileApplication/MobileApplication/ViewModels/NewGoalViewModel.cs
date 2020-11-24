@@ -84,7 +84,7 @@ namespace MobileApplication.ViewModels
 
             IsBusy = true;
 
-            await RestService.SaveTodoItemAsync(newGoal, true);
+            await RestService.SaveItemAsync(newGoal, true);
 
             await Shell.Current.GoToAsync("..");
 
