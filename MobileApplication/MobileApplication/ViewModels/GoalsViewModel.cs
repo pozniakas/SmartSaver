@@ -73,16 +73,23 @@ namespace MobileApplication.ViewModels
 
         private async void OnAddItem(object obj)
         {
-            await Shell.Current.GoToAsync(nameof(NewItemPage));
+            await Shell.Current.GoToAsync(nameof(NewGoalPage));
         }
 
-        async void OnItemSelected(Goal item)
+        async void OnItemSelected(Goal goal)
         {
-            if (item == null)
+            if (goal == null)
                 return;
 
             // This will push the ItemDetailPage onto the navigation stack
-            await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.ItemId)}={item.Id}");
+            Item item = new Item(goal.Id.ToString(), goal.Title,
+                                string.Concat(goal.Amount.ToString(), '\n',
+                                goal.Description, '\n',
+                                goal.Creationdate.ToString(), '\n',
+                                goal.Deadlinedate.ToString()));
+            var itemDetailPage = new ItemDetailPage();
+            itemDetailPage.BindingContext = item;
+            await Shell.Current.Navigation.PushAsync(itemDetailPage);
         }
     }
 }
