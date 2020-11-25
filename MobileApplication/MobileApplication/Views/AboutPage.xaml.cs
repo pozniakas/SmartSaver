@@ -23,6 +23,18 @@ namespace MobileApplication.Views
         private readonly IRestService<Category> RestServiceCategory;
         private readonly IRestService<Transaction> RestServiceTransaction;
 
+        public AboutPage()
+        {
+            RestServiceCategory = new RestService<Category>("api/Categories");
+            ItemsCategory = new ObservableCollection<Category>();
+
+            _ = ExecuteLoadCategoryItemsCommand();
+
+            RestServiceTransaction = new RestService<Transaction>("api/Transactions");
+            ItemsTrancations = new ObservableCollection<Transaction>();
+            _ = ExecuteLoadTransactionItemsCommand();
+            InitializeComponent();
+        }
         void PresentBudgetChart(IEnumerable<Category> categories)
         {
             List<ChartEntry> entries = new List<ChartEntry>();
@@ -42,14 +54,12 @@ namespace MobileApplication.Views
                         }
                     );
                     }
-                    
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
             }
-
 
             chartViewDonut.Chart = new DonutChart
             {
@@ -83,20 +93,7 @@ namespace MobileApplication.Views
             };
         }
 
-        public AboutPage()
-        {
-            RestServiceCategory = new RestService<Category>("api/Categories");
-            ItemsCategory = new ObservableCollection<Category>();
 
-            _ = ExecuteLoadCategoryItemsCommand();
-
-            RestServiceTransaction = new RestService<Transaction>("api/Transactions");
-            ItemsTrancations = new ObservableCollection<Transaction>();
-            _ = ExecuteLoadTransactionItemsCommand();
-            InitializeComponent();
-
-
-        }
         async Task ExecuteLoadCategoryItemsCommand()
         {
             IsBusy = true;
