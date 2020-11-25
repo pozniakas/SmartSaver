@@ -10,6 +10,7 @@ namespace MobileApplication.ViewModels
     {
         private string title;
         private string dedicatedAmount;
+        private decimal decimalDedicatedAmount;
 
         private readonly IRestService<Category> RestService;
         public NewCategoryViewModel()
@@ -25,7 +26,8 @@ namespace MobileApplication.ViewModels
         private bool ValidateSave()
         {
             return !String.IsNullOrEmpty(title)
-                && !String.IsNullOrEmpty(dedicatedAmount);
+                && !String.IsNullOrEmpty(dedicatedAmount)
+                && Decimal.TryParse(dedicatedAmount, out decimalDedicatedAmount);
         }
 
         public string CategoryTitle
@@ -50,12 +52,10 @@ namespace MobileApplication.ViewModels
 
         private async void OnSave()
         {
-            var amountInDecimal = decimal.Parse(DedicatedAmount);
-
             Category newCategory = new Category()
             {
                 Title = CategoryTitle,
-                DedicatedAmount = amountInDecimal
+                DedicatedAmount = decimalDedicatedAmount
             };
 
             IsBusy = true;

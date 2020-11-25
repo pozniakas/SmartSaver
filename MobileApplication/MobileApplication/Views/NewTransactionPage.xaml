@@ -3,15 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileApplication.Views.NewTransactionPage"
              Shell.PresentationMode="ModalAnimated"
+             xmlns:local="clr-namespace:MobileApplication.ViewModels"  
+             xmlns:model="clr-namespace:DbEntities.Models;assembly=DbEntities"
              Title="New Transation">
     
     <ContentPage.Content>
-        <StackLayout Spacing="3" Padding="15">
-            <Label Text="Transaction date" FontSize="Medium"/>
 
-            <DatePicker x:Name="transactionDate"
+
+        <StackLayout Spacing="3" Padding="15">
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Upload File" HorizontalOptions="FillAndExpand"></Button>
+                <Button Text="Take Photo"  HorizontalOptions="FillAndExpand"></Button>
+            </StackLayout>
+
+            <Label Text="Transaction date" FontSize="Medium" />
+
+            <DatePicker
+                    x:Name="transactionDate"
                     Format="yyyy-MM-dd"
-                    Margin="30, 0, 0, 30" />
+                    Margin="30, 0, 0, 30"        
+              />
             
             <Label Text="Amount" FontSize="Medium"/>
             <Entry Text="{Binding Amount, Mode=TwoWay}" FontSize="Medium"/>
@@ -21,12 +32,33 @@
             
             <Label Text="Counter Party" FontSize="Medium"/>
             <Editor Text="{Binding CounterParty, Mode=TwoWay}" AutoSize ="TextChanges"  FontSize="Medium" Margin="0"/>
+
+            <Picker x:Name="picker"
+                    Title="Select Category"
+                    TitleColor="Red"
+                    ItemsSource="{Binding Items}"
+                    ItemDisplayBinding="{Binding Title}"
+                    >
+                <!--<Picker.ItemsSource ItemsSource="{Binding Category}" ItemDisplayBinding="{Binding Title}" Command ="{Binding LoadItemsCommand}">
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Baboon</x:String>
+                        <x:String>Capuchin Monkey</x:String>
+                        <x:String>Blue Monkey</x:String>
+                        <x:String>Squirrel Monkey</x:String>
+                        <x:String>Golden Lion Tamarin</x:String>
+                        <x:String>Howler Monkey</x:String>
+                        <x:String>Japanese Macaque</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>-->
+            </Picker>
+            
             
             <StackLayout Orientation="Horizontal">
                 <Button Text="Cancel"  Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
                 <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
             </StackLayout>
 
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -11,8 +11,9 @@ namespace MobileApplication.ViewModels
         private string title;
         private string description;
         private string amount;
-        private DateTime deadlinedate;
-        private DateTime creationdate;
+        private decimal decimalAmount;
+        private DateTime deadlinedate = DateTime.Today;
+        private DateTime creationdate = DateTime.Today;
 
         private readonly IRestService<Goal> RestService;
 
@@ -29,8 +30,8 @@ namespace MobileApplication.ViewModels
         private bool ValidateSave()
         {
             return !String.IsNullOrEmpty(title)
-                && !String.IsNullOrEmpty(description)
-                && !String.IsNullOrEmpty(amount);
+                && !String.IsNullOrEmpty(amount)
+                && Decimal.TryParse(amount, out decimalAmount);
         }
 
         public string GoalTitle
@@ -71,13 +72,11 @@ namespace MobileApplication.ViewModels
 
         private async void OnSave()
         {
-            var amountInDecimal = decimal.Parse(Amount);
-
             Goal newGoal = new Goal()
             {
                 Title = GoalTitle,
                 Description = Description,
-                Amount = amountInDecimal,
+                Amount = decimalAmount,
                 Deadlinedate = DeadlineDate,
                 Creationdate = CreationDate
             };
