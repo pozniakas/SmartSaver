@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DbEntities.Entities;
+using ReceiptRecognizer.TextRecognizer;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -44,18 +46,47 @@ namespace ReceiptRecognizer
 
                     cropped.Save(fileName);
 
-                    //var text = Recognize(cropped);
+                    var text = Recognize(cropped);
 
-                    //var destPath = imgPath.Directory.Parent.FullName + @"\receiptsTxt\" + imgPath.Name + ".txt";
-                    //Debug.WriteLine(destPath);
+                    var destPath = imgPath.Directory.Parent.FullName + @"\Result\" + imgPath.Name + ".txt";
+                    Debug.WriteLine(destPath);
 
-                    //File.WriteAllText(destPath, res);
+                    File.WriteAllText(destPath, text);
                 }
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e);
             }
+        }
+
+        private string Recognize(Bitmap image)
+        {
+            try
+            {
+                string text = _textRecognizer.GetText(image);
+                return text;
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x.Message);
+            }
+            return "";
+        }
+
+        public Transaction RecognizeTransaction(Bitmap image)
+        {
+            try
+            {
+                string text = _textRecognizer.GetText(image);
+
+                return new Transaction();
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x.Message);
+            }
+            return null;
         }
 
         private Bitmap Crop(Bitmap initialImage)
@@ -70,7 +101,6 @@ namespace ReceiptRecognizer
             catch (Exception x)
             {
                 Console.WriteLine(x.Message);
-                //throw;
             }
             return croppedImage;
         }
