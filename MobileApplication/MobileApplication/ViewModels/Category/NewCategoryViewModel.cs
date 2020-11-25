@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using MobileApplication.Services.Rest;
 using Xamarin.Forms;
-using DbEntities.Models;
+using DbEntities.Entities;
 namespace MobileApplication.ViewModels
 {
     public class NewCategoryViewModel : BaseViewModel
@@ -60,7 +60,7 @@ namespace MobileApplication.ViewModels
 
             IsBusy = true;
 
-            await  RestService.SaveTodoItemAsync(newCategory, true);
+            await  RestService.SaveItemAsync(newCategory, true);
 
             await Shell.Current.GoToAsync("..");
 

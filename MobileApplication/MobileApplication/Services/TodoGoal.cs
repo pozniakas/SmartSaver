@@ -1,5 +1,5 @@
 ﻿using MobileApplication.Models;
-using DbEntities.Models;
+using DbEntities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,12 +24,12 @@ namespace MobileApplication.Services
 
 		public Task SaveTaskAsync(Goal item, bool isNewItem = false)
 		{
-			return restService.SaveTodoItemAsync(item, isNewItem);
+			return restService.SaveItemAsync(item, isNewItem);
 		}
 
 		public Task DeleteTaskAsync(Goal item)
 		{
-			return restService.DeleteTodoItemAsync(item.Id.ToString());
+			return restService.DeleteItemAsync(item.Id);
 		}
 	}
 }

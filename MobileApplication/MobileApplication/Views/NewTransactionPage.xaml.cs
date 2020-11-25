@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using DbEntities.Entities;
-using Xamarin.Forms;
 using MobileApplication.ViewModels;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace MobileApplication.Views
 {
-    public partial class NewGoalPage : ContentPage
+    public partial class NewTransactionPage : ContentPage
     {
-        public Goal Goal { get; set; }
-        public NewGoalPage()
+        public Transaction Transaction { get; set; }
+        public NewTransactionPage()
         {
             InitializeComponent();
-            BindingContext = new NewGoalViewModel();
+            BindingContext = new NewTransactionViewModel();
         }
     }
 }

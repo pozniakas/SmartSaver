@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using MobileApplication.Services.Rest;
 using Xamarin.Forms;
-using DbEntities.Models;
+using DbEntities.Entities;
 
 namespace MobileApplication.ViewModels
 {
@@ -78,7 +78,7 @@ namespace MobileApplication.ViewModels
 
             IsBusy = true;
 
-            await RestService.SaveTodoItemAsync(newTransaction, true);
+            await RestService.SaveItemAsync(newTransaction, true);
 
             await Shell.Current.GoToAsync("..");
 

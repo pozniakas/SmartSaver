@@ -1,4 +1,4 @@
-﻿using DbEntities.Models;
+﻿using DbEntities.Entities;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -46,7 +46,7 @@ namespace MobileApplication.Services.Rest
             return Items;
         }
 
-        public async Task SaveTodoItemAsync(T item, bool isNewItem = false)
+        public async Task SaveItemAsync(T item, bool isNewItem = false)
         {
             try
             {
@@ -75,7 +75,7 @@ namespace MobileApplication.Services.Rest
             }
         }
 
-        public async Task DeleteTodoItemAsync(long id)
+        public async Task DeleteItemAsync(long id)
         {
             try
             {
@@ -95,6 +95,6 @@ namespace MobileApplication.Services.Rest
         }
 
         // To remove
-        public async Task DeleteTodoItemAsync(string id) { }
+        //public async Task DeleteTodoItemAsync(string id) { }
     }
 }

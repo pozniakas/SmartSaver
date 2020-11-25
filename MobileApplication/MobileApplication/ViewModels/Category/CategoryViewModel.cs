@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
-using DbEntities.Models;
+using DbEntities.Entities;
 using MobileApplication.Models;
 using MobileApplication.Views;
 using MobileApplication.Services;

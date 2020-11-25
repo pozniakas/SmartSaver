@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using WebAPI.Models;
+using DbEntities.Entities;
 using WebAPI.Services;
+using System.Linq.Expressions;
 
 namespace WebAPI.Controllers
 {
@@ -18,9 +17,9 @@ namespace WebAPI.Controllers
     [ApiController]
     public class TransactionsController : ControllerBase
     {
-        private readonly postgresContext _context;
+        private readonly DatabaseContext _context;
 
-        public TransactionsController(postgresContext context)
+        public TransactionsController(DatabaseContext context)
         {
             _context = context;
         }
@@ -47,12 +46,10 @@ namespace WebAPI.Controllers
         }
 
         // PUT: api/Transactions/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTransaction(long id, Transaction transaction)
         {
-            if (id != transaction.Id)
+            if (id != transaction.Id || !transaction.IsValid())
             {
                 return BadRequest();
             }
@@ -79,15 +76,17 @@ namespace WebAPI.Controllers
         }
 
         // POST: api/Transactions
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         public async Task<ActionResult<Transaction>> PostTransaction(Transaction transaction)
         {
-            if (!transaction.IsValid() || transaction.Id != 0)
+            var transactionExists = await _context.Transaction.FirstOrDefaultAsync(IsNew(transaction)) != null;
+
+            if (!transaction.IsValid() || transactionExists)
             {
                 return BadRequest();
             }
+
+            transaction.Id = 0;
 
             try
             {
@@ -108,34 +107,34 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpPost("file")]
-        //[ActionName("TransactionsFromFile")]
-        public async Task<IActionResult> TransactionsFromFile([FromForm(Name = "file")] IFormFile file)
-        {
-            try
-            {
-                var streamReader = new StreamReader(file.OpenReadStream());
-                var bankStatmentReader = new BankStatmentReader(streamReader);
-                var transactions = bankStatmentReader.Read();
+        //[HttpPost("file")]
+        // POST: api/Transactions/file
+        //public async Task<IActionResult> TransactionsFromFile([FromForm(Name = "file")] IFormFile file)
+        //{
+        //    try
+        //    {
+        //        var streamReader = new StreamReader(file.OpenReadStream());
+        //        var bankStatmentReader = new BankStatmentReader(streamReader);
+        //        var transactions = bankStatmentReader.Read();
 
-                transactions = transactions.Where(tr => tr != null);
+        //        transactions = transactions.Where(tr => tr != null);
 
-                _context.Transaction.AddRange(transactions);
-                await _context.SaveChangesAsync();
+        //        _context.Transaction.AddRange(transactions);
+        //        await _context.SaveChangesAsync();
 
-                return CreatedAtAction("GetTransactions", transactions);
-            }
-            catch (DbUpdateException ex)
-            {
-                Log.Error(ex, "POST: api/Transactions");
-                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, $"POST: api/Transactions");
-                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
-            }
-        }
+        //        return CreatedAtAction("GetTransactions", transactions);
+        //    }
+        //    catch (DbUpdateException ex)
+        //    {
+        //        Log.Error(ex, "POST: api/Transactions");
+        //        return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Log.Error(ex, $"POST: api/Transactions");
+        //        return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+        //    }
+        //}
 
         // DELETE: api/Transactions/5
         [HttpDelete("{id}")]
@@ -156,6 +155,11 @@ namespace WebAPI.Controllers
         private bool TransactionExists(long id)
         {
             return _context.Transaction.Any(e => e.Id == id);
+        }
+
+        public Expression<Func<Transaction, bool>> IsNew(Transaction transaction)
+        {
+            return x => x.TrTime == transaction.TrTime && x.Amount == transaction.Amount;
         }
     }
 }

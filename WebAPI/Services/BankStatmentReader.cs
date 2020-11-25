@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using WebAPI.Models;
+using DbEntities.Entities;
 
 namespace WebAPI.Services
 {
@@ -116,6 +116,8 @@ namespace WebAPI.Services
         {
             return debitOrCredit.ToLower() == "d" ? -sum : sum;
         }
+
+#nullable enable
         private Transaction? LuminorLtReadRecord()
         {
             /// Operacijos/Balanso Tipas,Data,Laikas,Suma,Ekvivalentas,C/D,Orig. suma,Orig. valiuta,
@@ -134,7 +136,7 @@ namespace WebAPI.Services
                 : null;
         }
 
-        private Transaction LuminorEnReadRecord()
+        private Transaction? LuminorEnReadRecord()
         {
             ///Transaction type,Date,Time,Amount,Equivalent,C/D,Orig. amount,Orig. currency,Document number,Transaction ID,
             ///Customer‘s code in beneficiary IS,Payment code,Payment details,Counterparty BIC,Counterparty Designation of counterparties credit institution,
@@ -166,7 +168,7 @@ namespace WebAPI.Services
                 : null;
         }
 
-        private Transaction SebEnReadRecord()
+        private Transaction? SebEnReadRecord()
         {
 
             /// INSTRUCTION ID,DATE,CURRENCY,AMOUNT,COUNTERPARTY,DEBTOR/CREDITOR ID,ACCOUNT NO,
@@ -182,7 +184,7 @@ namespace WebAPI.Services
                 }
                 : null;
         }
-        private Transaction SebLtReadRecord()
+        private Transaction? SebLtReadRecord()
         {
             ///DOK NR.,DATA,VALIUTA,SUMA,MOKĖTOJO ARBA GAVĖJO PAVADINIMAS,MOKĖTOJO ARBA GAVĖJO IDENTIFIKACINIS KODAS,SĄSKAITA,
             ///KREDITO ĮSTAIGOS PAVADINIMAS,KREDITO ĮSTAIGOS SWIFT KODAS,MOKĖJIMO PASKIRTIS,TRANSAKCIJOS KODAS,
@@ -198,6 +200,6 @@ namespace WebAPI.Services
                 }
                 : null;
         }
-
+#nullable disable
     }
 }

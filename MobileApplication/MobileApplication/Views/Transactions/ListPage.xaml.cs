@@ -1,4 +1,4 @@
-﻿using DbEntities.Models;
+﻿using DbEntities.Entities;
 using System;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;

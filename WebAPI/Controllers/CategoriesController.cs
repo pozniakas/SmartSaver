@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebAPI.Models;
+using DbEntities.Entities;
 
 namespace WebAPI.Controllers
 {
@@ -13,9 +11,9 @@ namespace WebAPI.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private readonly postgresContext _context;
+        private readonly DatabaseContext _context;
 
-        public CategoriesController(postgresContext context)
+        public CategoriesController(DatabaseContext context)
         {
             _context = context;
         }
