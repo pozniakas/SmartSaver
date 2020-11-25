@@ -21,7 +21,8 @@
             <DatePicker
                     x:Name="transactionDate"
                     Format="yyyy-MM-dd"
-                    Margin="30, 0, 0, 30"        
+                    Margin="30, 0, 0, 30"    
+                    Date="{Binding TrTime}"
               />
             
             <Label Text="Amount" FontSize="Medium"/>

@@ -13,31 +13,20 @@
             <Label Text="Amount" FontSize="Medium"/>
             <Editor Text="{Binding Amount, Mode=TwoWay}" AutoSize ="TextChanges"  FontSize="Medium" Margin="0"/>
             <Label Text="Creation date" FontSize="Medium"/>
-            
+
             <DatePicker x:Name="creationDate"
                     Format="yyyy-MM-dd"
-                    Margin="30, 0, 0, 30"/>
-                    <!--DateSelected="{Binding Path = CreationDate,
-                                   Mode=TwoWay
-                                  }"-->
-
-                    <!--SelectedDate="{Binding
-                     Path=AvailableFrom,
-                     Mode=TwoWay,
-                     TargetNullValue={x:Static System:DateTime.Now}}"-->
+                    Margin="30, 0, 0, 30"
+                    Date="{Binding CreationDate}"/>
 
             <Label Text="Deadline date" FontSize="Medium"/>
-            
+
             <DatePicker x:Name="deadlineDate"
-                    MinimumDate="{Binding Source={x:Reference creationDate},
-                                          Path=Date}"
+                    MinimumDate="{Binding Source={x:Reference creationDate}, Path=Date}"
                     Format="yyyy-MM-dd"
-                    Margin="30, 0, 0, 30"  />
-                    <!--DateSelected="{Binding Path = DeadlineDate,
-                                   Mode=TwoWay
-                                   }"-->
-                       
-            
+                    Margin="30, 0, 0, 30"  
+                    Date="{Binding DeadlineDate}" />
+
             <StackLayout Orientation="Horizontal">
                 <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
                 <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
