@@ -32,16 +32,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Views\CategoryPage.xaml">
+    <EmbeddedResource Update="Views\Category\CategoryPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\NewCategoryPage.xaml">
+    <EmbeddedResource Update="Views\Category\NewCategoryPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\NewGoalPage.xaml">
+    <EmbeddedResource Update="Views\Goal\NewGoalPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\NewTransactionPage.xaml">
+    <EmbeddedResource Update="Views\Transaction\NewTransactionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Transactions\ListPage.xaml">
