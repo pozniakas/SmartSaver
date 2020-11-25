@@ -12,10 +12,20 @@
 
         <StackLayout Spacing="3" Padding="15">
             <StackLayout Orientation="Horizontal">
-                <Button Text="Upload File" HorizontalOptions="FillAndExpand"></Button>
-                <Button Text="Take Photo"  HorizontalOptions="FillAndExpand"></Button>
+                <Button Text="Upload File" Clicked="Button_Clicked" HorizontalOptions="FillAndExpand"></Button>
+                <Button Text="Upload Files" Clicked="Button1_Clicked" HorizontalOptions="FillAndExpand"></Button>
             </StackLayout>
 
+            <Image x:Name="resultImage"/>
+            
+            <CollectionView x:Name="collectionView">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding .}"/>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            
             <Label Text="Transaction date" FontSize="Medium" />
 
             <DatePicker

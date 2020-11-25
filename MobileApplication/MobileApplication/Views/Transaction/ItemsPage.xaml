@@ -25,6 +25,7 @@
                     <StackLayout Padding="10" x:DataType="model:Transaction">
                         <Label Text="{Binding Amount}" 
                             LineBreakMode="NoWrap" 
+                            FontAttributes="Bold"
                             Style="{DynamicResource ListItemTextStyle}" 
                             FontSize="16" />
                         <Label Text="{Binding Details}" 
