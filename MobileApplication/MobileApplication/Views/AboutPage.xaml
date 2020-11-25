@@ -48,6 +48,7 @@
             </ScrollView>
         </Grid>
         <microcharts:ChartView x:Name="chartViewDonut" HeightRequest ="150"/>
+        <microcharts:ChartView x:Name="chartViewLine" HeightRequest ="150"/>
     </StackLayout>
 
 </ContentPage>
