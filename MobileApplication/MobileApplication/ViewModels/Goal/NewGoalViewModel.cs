@@ -29,8 +29,8 @@ namespace MobileApplication.ViewModels
 
         private bool ValidateSave()
         {
-            return !String.IsNullOrEmpty(title)
-                && !String.IsNullOrEmpty(amount)
+            return !string.IsNullOrEmpty(title)
+                && !string.IsNullOrEmpty(amount)
                 && Decimal.TryParse(amount, out decimalAmount);
         }
 

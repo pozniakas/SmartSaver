@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microcharts.Forms" Version="0.9.5.9" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.6.0-pre4" />
   </ItemGroup>
 
 </Project>

@@ -21,7 +21,7 @@ namespace MobileApplication.Views
             BindingContext = new NewTransactionViewModel();
         }
 
-        async void Button_Clicked(object sender, EventArgs e)
+        async void UploadFileButton_Clicked(object sender, EventArgs e)
         {
             var pickResult = await FilePicker.PickAsync(new PickOptions
             {
@@ -37,7 +37,7 @@ namespace MobileApplication.Views
             }
         }
 
-        async void Button1_Clicked(object sender, EventArgs e)
+        async void UploadFilesButton_Clicked(object sender, EventArgs e)
         {
             var pickResult = await FilePicker.PickMultipleAsync(new PickOptions
             {
