@@ -52,12 +52,6 @@
         }
     */
   "MultiProjectConfigurations": {
-    "WebAPI + WebApplication (Ext)": {
-      "Projects": {
-        "WebAPI": {},
-        "WebApplication": {}
-      }
-    },
     "WebAPI + Mobile.Android (Ext)": {
       "Projects": {
         "WebAPI": {},
