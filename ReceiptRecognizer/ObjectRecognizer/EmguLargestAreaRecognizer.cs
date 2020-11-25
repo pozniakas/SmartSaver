@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,9 +33,13 @@ namespace ReceiptRecognizer.ObjectRecognizer
 
             // Applying Canny algorithm
             using var cannyImage = new UMat();
-            CvInvoke.Canny(blurredImage, cannyImage, CannyThreshold.Item1, CannyThreshold.Item2);
+            CvInvoke.Canny(blurredImage, cannyImage, 50, 100);
 
-            // Finding largest contours
+            //var name = @"C:\Users\aleks\Workspace\SmartSaver\ReceiptRecognizer\assets\Result\"
+            //             + DateTime.Now.ToString("mm.ss.ff") + "canny.jpg";
+            //cannyImage.ToBitmap().Save(name, ImageFormat.Jpeg);
+
+            // Finding contours
             var contours = new VectorOfVectorOfPoint();
             CvInvoke.FindContours(cannyImage, contours, null, RetrType.Tree, ChainApproxMethod.ChainApproxSimple);
 
@@ -55,7 +60,7 @@ namespace ReceiptRecognizer.ObjectRecognizer
                 var area = CvInvoke.ContourArea(contourVector);
                 CvInvoke.ApproxPolyDP(contourVector, contour, 0.1 * peri, true);
 
-                if (contour != null && contour.ToArray().Length == 4 && CvInvoke.IsContourConvex(contour))
+                if (contour != null) // && contour.ToArray().Length == 4 && CvInvoke.IsContourConvex(contour)
                 {
                     if (peri > maxPeri)
                     {
@@ -70,34 +75,15 @@ namespace ReceiptRecognizer.ObjectRecognizer
 
         public Rectangle FindCropRectangle(Point[] points)
         {
-            var lastPoint = points[points.Length - 1];
-            var upperLeft = new Coordinate<int> { X = lastPoint.X, Y = lastPoint.Y };
-            var downRight = new Coordinate<int> { X = 0, Y = 0 };
+            var listOfPoints = new List<Point>(points);
 
-            foreach (var point in points)
-            {
-                if (point.X < upperLeft.X)
-                {
-                    upperLeft.X = point.X;
-                }
-                else if (point.Y < upperLeft.Y)
-                {
-                    upperLeft.Y = point.Y;
-                }
+            var minX = listOfPoints.Min(p => p.X);
+            var minY = listOfPoints.Min(p => p.Y);
 
-                if (point.X > downRight.X)
-                {
-                    downRight.X = point.X;
-                }
-                else if (point.Y > downRight.Y)
-                {
-                    downRight.Y = point.Y;
-                }
-            }
+            var maxX = listOfPoints.Max(p => p.X);
+            var maxY = listOfPoints.Max(p => p.Y);
 
-            return downRight.X - upperLeft.X != 0 && downRight.Y - upperLeft.Y != 0
-                ? new Rectangle(upperLeft.X, upperLeft.Y, downRight.X - upperLeft.X, downRight.Y - upperLeft.Y)
-                : new Rectangle(upperLeft.X, upperLeft.Y, downRight.X, downRight.Y);
+            return new Rectangle(new Point(minX, minY), new Size(maxX - minX, maxY - minY));
         }
 
         public Bitmap GetRecognizedImage(Bitmap image)
@@ -108,7 +94,7 @@ namespace ReceiptRecognizer.ObjectRecognizer
             var largestContour = GetLargestContour(getContours.Result);
             var cropRectangle = FindCropRectangle(largestContour);
 
-            return null;// image.Clone(cropRectangle, PixelFormat.Format32bppArgb);
+            return image.Clone(cropRectangle, PixelFormat.Format32bppArgb);
         }
     }
 }

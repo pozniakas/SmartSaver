@@ -1,25 +1,18 @@
-﻿using Emgu.CV;
-using Emgu.CV.CvEnum;
-using Emgu.CV.Structure;
-using Emgu.CV.Util;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-using Tesseract;
+using System.Linq;
 
 namespace ReceiptRecognizer
 {
     public class ReceiptRecognizer
     {
-        private const string TessDataPath = @".\assets\tessdata\best";
+        // To be removed
         private FileInfo currentImageFile;
-
 
         private IObjectRecognizer _objectRecognizer;
         private ITextRecognizer _textRecognizer;
@@ -42,13 +35,13 @@ namespace ReceiptRecognizer
                 var dir = new DirectoryInfo(@"..\..\..\assets\Receipts");
                 foreach (var imgPath in dir.GetFiles("*.jpg"))
                 {
-                    currentImageFile = imgPath;
-                    var resizedImage = GetResizedImage(imgPath);
-                    //var fileWithTresholds = currentImageFile.Directory.Parent.FullName + @"\Resized\" + currentImageFile.Name + ".jpg";
-                    //resizedImage.Save(fileWithTresholds);
+                    //currentImageFile = imgPath;
+                    var fileName = imgPath.Directory.Parent.FullName + @"\Result\" + imgPath.Name + "cropped.jpg";
+                    //fileName = imgPath.Directory.Parent.FullName + @"\Result\" + DateTime.Now.ToString("mm.ss.ff") + "cropped.jpg";
 
+                    var resizedImage = GetResizedImage(imgPath);
                     var cropped = Crop(resizedImage);
-                    var fileName = currentImageFile.Directory.Parent.FullName + @"\Resized\" + currentImageFile.Name + ".jpg";
+
                     cropped.Save(fileName);
 
                     //var text = Recognize(cropped);
@@ -85,28 +78,32 @@ namespace ReceiptRecognizer
         private Bitmap GetResizedImage(FileInfo imagePath)
         {
             using var originalImage = Image.FromFile(imagePath.FullName);
-            //FixImageOrientation(originalImage);
+            FixImageOrientation(originalImage);
 
             double aspectRatio = (double)originalImage.Width / originalImage.Height;
-
-            //var res =  ResizeImage(originalImage, 500, (int)(500 / aspectRatio));
-            //resizedImage.Save(@"C:\Users\aleks\Workspace\SmartSaver\ReceiptRecognizer\assets\resized.jpg");
             return new Bitmap(originalImage, 500, (int)(500 / aspectRatio));
         }
 
-        static void FixImageOrientation(Image srce)
+        private void FixImageOrientation(Image src)
         {
             const int ExifOrientationId = 0x112;
-            var properties = new List<int>(srce.PropertyIdList);
-            // Read orientation tag
-            if (!properties.Contains(ExifOrientationId)) return;
+            PropertyItem pi = src.PropertyItems.Select(x => x).FirstOrDefault(x => x.Id == ExifOrientationId);
+            if (pi == null) return;
 
-            var prop = srce.GetPropertyItem(ExifOrientationId);
-            var orient = BitConverter.ToInt16(prop.Value, 0);
-            // Force value to 1
-            prop.Value = BitConverter.GetBytes((short)1);
-            //srce.SetPropertyItem(prop);
-            srce.RemovePropertyItem(ExifOrientationId);
+            byte orientation = pi.Value[0];
+            switch (orientation)
+            {
+                case 2: src.RotateFlip(RotateFlipType.RotateNoneFlipX);   break;
+                case 3: src.RotateFlip(RotateFlipType.RotateNoneFlipXY);  break;
+                case 4: src.RotateFlip(RotateFlipType.RotateNoneFlipY);   break;
+                case 5: src.RotateFlip(RotateFlipType.Rotate90FlipX);     break;
+                case 6: src.RotateFlip(RotateFlipType.Rotate90FlipNone);  break;
+                case 7: src.RotateFlip(RotateFlipType.Rotate90FlipY);     break;
+                case 8: src.RotateFlip(RotateFlipType.Rotate90FlipXY);    break;
+                default: break;
+            }
+
+            src.RemovePropertyItem(ExifOrientationId);
         }
 
         /// <summary>
@@ -131,29 +128,12 @@ namespace ReceiptRecognizer
                 graphics.SmoothingMode = SmoothingMode.HighQuality;
                 graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-                using (var wrapMode = new ImageAttributes())
-                {
-                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
-                    graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
-                }
+                using var wrapMode = new ImageAttributes();
+                wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+                graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
             }
 
             return destImage;
-        }
-
-        private string ProcessImage(Image image)
-        {
-            using var ocrEngineBest = new TesseractEngine(TessDataPath, "lit", EngineMode.Default);
-            using var img = Pix.LoadFromMemory(ImageToByte(image));
-            var imgGray = img.ConvertRGBToGray();
-
-            return ocrEngineBest.Process(imgGray).GetText();
-        }
-
-        private byte[] ImageToByte(Image img)
-        {
-            var converter = new ImageConverter();
-            return (byte[])converter.ConvertTo(img, typeof(byte[]));
         }
     }
 }
