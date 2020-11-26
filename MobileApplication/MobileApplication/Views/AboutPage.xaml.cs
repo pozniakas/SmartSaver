@@ -1,4 +1,4 @@
-﻿using DbEntities.Models;
+﻿using DbEntities.Entities;
 using Microcharts;
 using MobileApplication.Services.Rest;
 using SkiaSharp;
