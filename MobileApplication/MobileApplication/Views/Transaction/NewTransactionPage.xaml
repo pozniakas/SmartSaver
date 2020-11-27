@@ -4,7 +4,7 @@
              x:Class="MobileApplication.Views.NewTransactionPage"
              Shell.PresentationMode="ModalAnimated"
              xmlns:local="clr-namespace:MobileApplication.ViewModels"  
-             xmlns:model="clr-namespace:DbEntities.Models;assembly=DbEntities"
+             xmlns:model="clr-namespace:DbEntities.Entities;assembly=DbEntities"
              Title="New Transation">
     
     <ContentPage.Content>
