@@ -3,55 +3,62 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using MobileApplication.Models;
 using Xamarin.Forms;
+using DbEntities.Entities;
 
 namespace MobileApplication.ViewModels
 {
-    [QueryProperty(nameof(ItemId), nameof(ItemId))]
     public class ItemDetailViewModel : BaseViewModel
     {
-        private string itemId;
-        private string text;
-        private string description;
+        public ItemDetailViewModel(Transaction transaction) {
+            Id = transaction.Id.ToString();
+            Amount = transaction.Amount.ToString();
+            Details = transaction.Details;
+            TrTime = transaction.TrTime.ToString();
+            if (transaction.Category != null)
+            {
+                Category = transaction.Category.Title;
+            }
+            else
+            {
+                Category = "not set";
+            }
+            CounterParty = transaction.CounterParty;
+        }
+
+        private string amount;
+        private string details;
+        private string trTime;
+        private string category;
+        private string counterParty;
         public string Id { get; set; }
 
-        public string Text
+        public string Amount
         {
-            get => text;
-            set => SetProperty(ref text, value);
+            get => amount;
+            set => SetProperty(ref amount, value);
         }
 
-        public string Description
+        public string Details
         {
-            get => description;
-            set => SetProperty(ref description, value);
+            get => details;
+            set => SetProperty(ref details, value);
         }
 
-        public string ItemId
+        public string TrTime
         {
-            get
-            {
-                return itemId;
-            }
-            set
-            {
-                itemId = value;
-                LoadItemId(value);
-            }
+            get => trTime;
+            set => SetProperty(ref trTime, value);
         }
 
-        public async void LoadItemId(string itemId)
+        public string Category
         {
-            try
-            {
-                var item = await DataStore.GetItemAsync(itemId);
-                Id = item.Id;
-                Text = item.Text;
-                Description = item.Description;
-            }
-            catch (Exception)
-            {
-                Debug.WriteLine("Failed to Load Item");
-            }
+            get => category;
+            set => SetProperty(ref category, value);
+        }
+        public string CounterParty
+        {
+            get => counterParty;
+            set => SetProperty(ref counterParty, value);
         }
     }
 }

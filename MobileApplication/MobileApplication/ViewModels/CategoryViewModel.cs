@@ -83,10 +83,10 @@ namespace MobileApplication.ViewModels
                 return;
 
             // This will push the ItemDetailPage onto the navigation stack
-            Item item = new Item(category.Id.ToString(),category.Title,category.DedicatedAmount.ToString());
+            /*Item item = new Item(category.Id.ToString(),category.Title,category.DedicatedAmount.ToString());
             var itemDetailPage = new ItemDetailPage();
             itemDetailPage.BindingContext = item;
-            await Shell.Current.Navigation.PushAsync(itemDetailPage);
+            await Shell.Current.Navigation.PushAsync(itemDetailPage);*/
         }
     }
 }
