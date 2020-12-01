@@ -86,12 +86,12 @@ namespace ReceiptRecognizer.ObjectRecognizer
             return new Rectangle(new Point(minX, minY), new Size(maxX - minX, maxY - minY));
         }
 
-        public Bitmap GetRecognizedImage(Bitmap image)
+        public async Task<Bitmap> GetRecognizedImage(Bitmap image)
         {
             var getContours = new Task<VectorOfVectorOfPoint>(() => GetContours(image));
             getContours.Start();
 
-            var largestContour = GetLargestContour(getContours.Result);
+            var largestContour = GetLargestContour(await getContours);
             var cropRectangle = FindCropRectangle(largestContour);
 
             return image.Clone(cropRectangle, PixelFormat.Format32bppArgb);

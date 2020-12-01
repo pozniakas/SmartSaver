@@ -1,5 +1,6 @@
 ﻿using Emgu.CV.Util;
 using System.Drawing;
+using System.Threading.Tasks;
 
 namespace ReceiptRecognizer
 {
@@ -7,6 +8,6 @@ namespace ReceiptRecognizer
     {
         public VectorOfVectorOfPoint GetContours(Bitmap bitmap);
         public Rectangle FindCropRectangle(Point[] points);
-        public Bitmap GetRecognizedImage(Bitmap image);
+        public Task<Bitmap> GetRecognizedImage(Bitmap image);
     }
 }

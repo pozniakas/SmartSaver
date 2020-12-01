@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
+using System.Threading.Tasks;
 using Tesseract;
 
 namespace ReceiptRecognizer.TextRecognizer
@@ -10,13 +11,16 @@ namespace ReceiptRecognizer.TextRecognizer
     {
         private const string TessDataPath = @".\assets\tessdata\best";
 
-        public string GetText(Bitmap image)
+        public async Task<string> GetText(Bitmap image)
         {
             using var ocrEngineBest = new TesseractEngine(TessDataPath, "lit", EngineMode.Default);
             using var img = Pix.LoadFromMemory(ImageToByte(image));
             var imgGray = img.ConvertRGBToGray();
 
-            return ocrEngineBest.Process(imgGray).GetText();
+            var extractText = new Task<string>(() => ocrEngineBest.Process(imgGray).GetText());
+            extractText.Start();
+
+            return await extractText;
         }
 
         private byte[] ImageToByte(Image img)

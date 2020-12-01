@@ -8,21 +8,15 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace ReceiptRecognizer
 {
     public class ReceiptRecognizer
     {
-        // To be removed
-        private FileInfo currentImageFile;
-
         private IObjectRecognizer _objectRecognizer;
         private ITextRecognizer _textRecognizer;
-
-        public ReceiptRecognizer(IObjectRecognizer objectRecognizer)
-        {
-            _objectRecognizer = objectRecognizer;
-        }
 
         public ReceiptRecognizer(IObjectRecognizer objectRecognizer, ITextRecognizer textRecognizer)
         {
@@ -30,29 +24,20 @@ namespace ReceiptRecognizer
             _textRecognizer = textRecognizer;
         }
 
-        public void RecognizeTestImages()
+        public async Task RecognizeTestImages()
         {
             try
             {
+                var tasks = new List<Task<Transaction>>();
+
                 var dir = new DirectoryInfo(@"..\..\..\assets\Receipts");
                 foreach (var imgPath in dir.GetFiles("*.jpg"))
                 {
-                    //currentImageFile = imgPath;
-                    var fileName = imgPath.Directory.Parent.FullName + @"\Result\" + imgPath.Name + "cropped.jpg";
-                    //fileName = imgPath.Directory.Parent.FullName + @"\Result\" + DateTime.Now.ToString("mm.ss.ff") + "cropped.jpg";
-
-                    var resizedImage = GetResizedImage(imgPath);
-                    var cropped = Crop(resizedImage);
-
-                    cropped.Save(fileName);
-
-                    var text = Recognize(cropped);
-
-                    var destPath = imgPath.Directory.Parent.FullName + @"\Result\" + imgPath.Name + ".txt";
-                    Debug.WriteLine(destPath);
-
-                    File.WriteAllText(destPath, text);
+                    using var originalImage = Image.FromFile(imgPath.FullName);
+                    tasks.Add( Recognize(originalImage, imgPath) );
                 }
+
+                await Task.WhenAll(tasks);
             }
             catch (Exception e)
             {
@@ -60,58 +45,75 @@ namespace ReceiptRecognizer
             }
         }
 
-        private string Recognize(Bitmap image)
+        public async Task<Transaction> Recognize(Image originalImage, FileInfo file = null)
         {
+            if (file != null)
+            {
+                Console.WriteLine(file.Name);
+            }
+
             try
             {
-                string text = _textRecognizer.GetText(image);
-                return text;
+                Statistics.AddRecognizingImage();
+
+                var resizedImage = GetResizedImage(originalImage);
+
+                Console.WriteLine($"{file.Name} Cropping...");
+                var croppedImage = await _objectRecognizer.GetRecognizedImage(resizedImage);
+
+                Console.WriteLine($"{file.Name} Getting text...");
+                var receiptText = await _textRecognizer.GetText(croppedImage);
+                var transaction = TextToTransaction(receiptText);
+
+                if (file != null)
+                {
+                    var fileName = file.Directory.Parent.FullName + @"\Result\" + file.Name + "cropped.jpg";
+                    croppedImage.Save(fileName);
+                }
+                Console.WriteLine($"{file.Name} Completed successfully. Amount = {transaction.Amount}");
+
+                return transaction;
             }
-            catch (Exception x)
+            catch (Exception exception)
             {
-                Console.WriteLine(x.Message);
+                Console.WriteLine($"EXCEPTION: {exception}");
+                throw exception;
             }
-            return "";
         }
 
-        public Transaction RecognizeTransaction(Bitmap image)
+        public Transaction TextToTransaction(string text)
         {
-            try
-            {
-                string text = _textRecognizer.GetText(image);
+            var match = Regex.Match(text, "^.*(moketi|mokėti|suma).*", RegexOptions.Multiline | RegexOptions.IgnoreCase);
+            var amount = Regex.Match(match.Value, @"((0(\.|,)\d\d)|([1-9]\d*((\.|,)\d\d)?))", RegexOptions.IgnoreCase);
 
-                return new Transaction();
-            }
-            catch (Exception x)
+            return new Transaction
             {
-                Console.WriteLine(x.Message);
-            }
-            return null;
+                Amount = decimal.TryParse(amount.Value, out decimal parsedAmount) ? parsedAmount : 0
+            };
         }
 
-        private Bitmap Crop(Bitmap initialImage)
+        private async Task<string> ReadFromImage(Bitmap image)
         {
-            var croppedImage = initialImage;
-            try
-            {
-                croppedImage = _objectRecognizer.GetRecognizedImage(initialImage);
+            return await _textRecognizer.GetText(image);
+        }
 
-                return croppedImage;
-            }
-            catch (Exception x)
-            {
-                Console.WriteLine(x.Message);
-            }
-            return croppedImage;
+        private async Task<Bitmap> Crop(Bitmap initialImage)
+        {
+            return await _objectRecognizer.GetRecognizedImage(initialImage);
         }
 
         private Bitmap GetResizedImage(FileInfo imagePath)
         {
             using var originalImage = Image.FromFile(imagePath.FullName);
-            FixImageOrientation(originalImage);
+            return GetResizedImage(originalImage);
+        }
 
-            double aspectRatio = (double)originalImage.Width / originalImage.Height;
-            return new Bitmap(originalImage, 500, (int)(500 / aspectRatio));
+        private Bitmap GetResizedImage(Image image)
+        {
+            FixImageOrientation(image);
+
+            double aspectRatio = (double)image.Width / image.Height;
+            return new Bitmap(image, 500, (int)(500 / aspectRatio));
         }
 
         private void FixImageOrientation(Image src)
@@ -134,36 +136,6 @@ namespace ReceiptRecognizer
             }
 
             src.RemovePropertyItem(ExifOrientationId);
-        }
-
-        /// <summary>
-        /// Resize the image to the specified width and height.
-        /// </summary>
-        /// <param name="image">The image to resize.</param>
-        /// <param name="width">The width to resize to.</param>
-        /// <param name="height">The height to resize to.</param>
-        /// <returns>The resized image.</returns>
-        public static Bitmap ResizeImage(Image image, int width, int height)
-        {
-            var destRect = new Rectangle(0, 0, width, height);
-            var destImage = new Bitmap(width, height);
-
-            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
-
-            using (var graphics = Graphics.FromImage(destImage))
-            {
-                graphics.CompositingMode = CompositingMode.SourceCopy;
-                graphics.CompositingQuality = CompositingQuality.HighQuality;
-                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                graphics.SmoothingMode = SmoothingMode.HighQuality;
-                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-                using var wrapMode = new ImageAttributes();
-                wrapMode.SetWrapMode(WrapMode.TileFlipXY);
-                graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
-            }
-
-            return destImage;
         }
     }
 }

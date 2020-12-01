@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ReceiptRecognizer.TextRecognizer
 {
     public interface ITextRecognizer
     {
-        public string GetText(Bitmap image);
+        public Task<string> GetText(Bitmap image);
     }
 }
