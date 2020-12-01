@@ -13,9 +13,12 @@ using Xamarin.Forms.Xaml;
 
 namespace MobileApplication.Views
 {
+    public delegate void EventDelegate(object sender, EventArgs e);
 
     public partial class AboutPage : ContentPage
     {
+        //public Command EventRefresh { get; }
+        //public event EventDelegate Refresh;
 
         public ObservableCollection<Category> ItemsCategory { get; }
         public ObservableCollection<Transaction> ItemsTrancations { get; }
@@ -23,8 +26,11 @@ namespace MobileApplication.Views
         private readonly IRestService<Category> RestServiceCategory;
         private readonly IRestService<Transaction> RestServiceTransaction;
 
+
         public AboutPage()
         {
+            // EventRefresh = new Command(OnRefresh);
+
             RestServiceCategory = new RestService<Category>("api/Categories");
             ItemsCategory = new ObservableCollection<Category>();
 
@@ -34,6 +40,13 @@ namespace MobileApplication.Views
             ItemsTrancations = new ObservableCollection<Transaction>();
             _ = ExecuteLoadTransactionItemsCommand();
             InitializeComponent();
+            ToolRefresh.Clicked += ToolRefresh_Clicked;
+        }
+
+        private void ToolRefresh_Clicked(object sender, EventArgs e)
+        {
+            _ = ExecuteLoadCategoryItemsCommand();
+            _ = ExecuteLoadTransactionItemsCommand();
         }
         void PresentBudgetChart(IEnumerable<Category> categories)
         {

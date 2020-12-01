@@ -9,6 +9,10 @@
         <vm:AboutViewModel />
     </ContentPage.BindingContext>
     
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Refresh" Order="Primary" Priority="0" x:Name ="ToolRefresh" />
+    </ContentPage.ToolbarItems>
+    
     <ContentPage.Resources>
         <ResourceDictionary>
             <Color x:Key="Accent">#0000</Color>
