@@ -10,6 +10,9 @@ using Serilog;
 using DbEntities.Entities;
 using WebAPI.Services;
 using System.Linq.Expressions;
+using Recognizer.ObjectRecognizer;
+using Recognizer.TextRecognizer;
+using Recognizer;
 
 namespace WebAPI.Controllers
 {
@@ -107,34 +110,53 @@ namespace WebAPI.Controllers
             }
         }
 
-        //[HttpPost("file")]
+        [HttpPost("file")]
         // POST: api/Transactions/file
-        //public async Task<IActionResult> TransactionsFromFile([FromForm(Name = "file")] IFormFile file)
-        //{
-        //    try
-        //    {
-        //        var streamReader = new StreamReader(file.OpenReadStream());
-        //        var bankStatmentReader = new BankStatmentReader(streamReader);
-        //        var transactions = bankStatmentReader.Read();
+        public async Task<IActionResult> TransactionsFromFile([FromForm(Name = "file")] IFormFile file)
+        {
+            try
+            {
+                var streamReader = new StreamReader(file.OpenReadStream());
+                var bankStatmentReader = new BankStatmentReader(streamReader);
+                var transactions = bankStatmentReader.Read();
 
-        //        transactions = transactions.Where(tr => tr != null);
+                transactions = transactions.Where(tr => tr != null);
 
-        //        _context.Transaction.AddRange(transactions);
-        //        await _context.SaveChangesAsync();
+                _context.Transaction.AddRange(transactions);
+                await _context.SaveChangesAsync();
 
-        //        return CreatedAtAction("GetTransactions", transactions);
-        //    }
-        //    catch (DbUpdateException ex)
-        //    {
-        //        Log.Error(ex, "POST: api/Transactions");
-        //        return new StatusCodeResult(StatusCodes.Status500InternalServerError);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Log.Error(ex, $"POST: api/Transactions");
-        //        return new StatusCodeResult(StatusCodes.Status500InternalServerError);
-        //    }
-        //}
+                return CreatedAtAction("GetTransactions", transactions);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"POST: api/Transactions");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPost("receiptImage")]
+        // POST: api/Transactions/file
+        public async Task<IActionResult> TransactionsFromReceipt([FromForm(Name = "image")] IFormFile image)
+        {
+            try
+            {
+                var recognizer = new ReceiptRecognizer(new EmguLargestAreaRecognizer(), new TesseractRecognizer());
+                using var memoryStream = new MemoryStream();
+                await image.CopyToAsync(memoryStream);
+
+                var transaction = await recognizer.Recognize(memoryStream);
+
+                _context.Transaction.Add(transaction);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction("GetTransaction", new { id = transaction.Id }, transaction);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"POST: api/Transactions");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
 
         // DELETE: api/Transactions/5
         [HttpDelete("{id}")]

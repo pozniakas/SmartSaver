@@ -1,5 +1,5 @@
 ﻿using DbEntities.Entities;
-using ReceiptRecognizer.TextRecognizer;
+using Recognizer.TextRecognizer;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace ReceiptRecognizer
+namespace Recognizer
 {
     public class ReceiptRecognizer
     {
@@ -43,6 +43,12 @@ namespace ReceiptRecognizer
             {
                 Debug.WriteLine(e);
             }
+        }
+
+        public async Task<Transaction> Recognize(Stream stream)
+        {
+            using var originalImage = Image.FromStream(stream);
+            return await Recognize(originalImage);
         }
 
         public async Task<Transaction> Recognize(Image originalImage, FileInfo file = null)

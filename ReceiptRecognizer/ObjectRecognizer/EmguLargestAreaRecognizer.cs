@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReceiptRecognizer.ObjectRecognizer
+namespace Recognizer.ObjectRecognizer
 {
     public class EmguLargestAreaRecognizer : IObjectRecognizer
     {
