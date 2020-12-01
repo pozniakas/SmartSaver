@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
 using DbEntities.Entities;
+using MobileApplication.Configuration;
 using MobileApplication.ViewModels;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -14,48 +16,45 @@ namespace MobileApplication.Views
 {
     public partial class NewTransactionPage : ContentPage
     {
+        private Lazy<string> _baseUrl = new Lazy<string>(() => AppSettingsManager.Settings["ApiBaseAddress"]);
         public Transaction Transaction { get; set; }
+
         public NewTransactionPage()
         {
             InitializeComponent();
             BindingContext = new NewTransactionViewModel();
         }
 
-        async void UploadFileButton_Clicked(object sender, EventArgs e)
+        async void UploadImageButton_Clicked(object sender, EventArgs e)
         {
-            var pickResult = await FilePicker.PickAsync(new PickOptions
-            {
-                FileTypes = FilePickerFileType.Images,
-                PickerTitle = "Pick transaction receipt"
-            });
+            var file = await MediaPicker.PickPhotoAsync();
 
-            if (pickResult != null)
-            {
-                var stream = await pickResult.OpenReadAsync();
+            if (file == null)
+                return;
 
-                resultImage.Source = ImageSource.FromStream(() => stream);
-            }
+            var content = new MultipartFormDataContent();
+            content.Add(new StreamContent(await file.OpenReadAsync()), "file", file.FileName);
+
+            var httpClient = new HttpClient();
+            var response = await httpClient.PostAsync("http://192.168.8.106:45455/api/Transactions/file", content);
+            //var response = await httpClient.PostAsync(_baseUrl + "api/Transactions/file", content);
+
         }
 
-        async void UploadFilesButton_Clicked(object sender, EventArgs e)
+        async void UploadCSVButton_Clicked(object sender, EventArgs e)
         {
-            var pickResult = await FilePicker.PickMultipleAsync(new PickOptions
-            {
-                FileTypes = FilePickerFileType.Images,
-                PickerTitle = "Pick transaction receipts"
-            });
+            var file = await FilePicker.PickAsync();
 
-            if (pickResult != null)
-            {
-                var imageList = new List<ImageSource>();
+            if (file == null)
+                return;
 
-                foreach(var image in pickResult)
-                {
-                    var stream = await image.OpenReadAsync();
-                    imageList.Add(ImageSource.FromStream(() => stream));
-                }
-                collectionView.ItemsSource = imageList;
-            }
+            var content = new MultipartFormDataContent();
+            content.Add(new StreamContent(await file.OpenReadAsync()), "file", file.FileName);
+
+            var httpClient = new HttpClient();
+            var response = await httpClient.PostAsync("http://192.168.8.106:45455/api/Transactions/file", content);
+            //var response = await httpClient.PostAsync(_baseUrl + "api/Transactions/file", content);
         }
+
     }
 }
