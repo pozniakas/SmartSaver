@@ -17,8 +17,7 @@ namespace MobileApplication.Views
 
     public partial class AboutPage : ContentPage
     {
-        //public Command EventRefresh { get; }
-        //public event EventDelegate Refresh;
+        public event EventHandler Refresh;
 
         public ObservableCollection<Category> ItemsCategory { get; }
         public ObservableCollection<Transaction> ItemsTrancations { get; }
@@ -29,8 +28,6 @@ namespace MobileApplication.Views
 
         public AboutPage()
         {
-            // EventRefresh = new Command(OnRefresh);
-
             RestServiceCategory = new RestService<Category>("api/Categories");
             ItemsCategory = new ObservableCollection<Category>();
 
@@ -41,12 +38,19 @@ namespace MobileApplication.Views
             _ = ExecuteLoadTransactionItemsCommand();
             InitializeComponent();
             ToolRefresh.Clicked += ToolRefresh_Clicked;
+            Refresh += new EventHandler(HandelEvent);
+        }
+
+        private void HandelEvent(object sender, EventArgs e)
+        {
+            _ = ExecuteLoadCategoryItemsCommand();
+            _ = ExecuteLoadTransactionItemsCommand();
         }
 
         private void ToolRefresh_Clicked(object sender, EventArgs e)
         {
-            _ = ExecuteLoadCategoryItemsCommand();
-            _ = ExecuteLoadTransactionItemsCommand();
+            Refresh(this, null);
+
         }
         void PresentBudgetChart(IEnumerable<Category> categories)
         {
