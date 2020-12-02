@@ -36,9 +36,8 @@
                     Title="Select Category"
                     ItemsSource="{Binding Items}"
                     ItemDisplayBinding="{Binding Title}"
-                    >
+                    SelectedItem="{Binding Categor, Mode=TwoWay}" >
             </Picker>
-            
             
             <StackLayout Orientation="Horizontal">
                 <Button Text="Cancel"  Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
