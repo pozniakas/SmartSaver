@@ -12,7 +12,8 @@ namespace MobileApplication.ViewModels
         private string details;
         private string counterParty;
         private string amount;
-        private DateTime trTime;
+        private DateTime trTime = DateTime.Today;
+        private decimal decimalAmount;
 
         private readonly IRestService<Transaction> RestService;
 
@@ -28,9 +29,10 @@ namespace MobileApplication.ViewModels
 
         private bool ValidateSave()
         {
-            return !String.IsNullOrEmpty(details)
-                && !String.IsNullOrEmpty(counterParty)
-                && !String.IsNullOrEmpty(amount);
+
+            return !string.IsNullOrEmpty(counterParty)
+                && !string.IsNullOrEmpty(amount)
+                && Decimal.TryParse(amount, out decimalAmount);
         }
 
         public string Details
@@ -63,17 +65,15 @@ namespace MobileApplication.ViewModels
         {
             await Shell.Current.GoToAsync("..");
         }
-
+ 
         private async void OnSave()
         {
-            var amountInDecimal = decimal.Parse(Amount);
-
             Transaction newTransaction = new Transaction()
             {
                 TrTime = TrTime,
-                Amount = amountInDecimal,
+                Amount = decimalAmount,
                 Details = Details,
-                CounterParty = CounterParty
+                CounterParty = CounterParty             
             };
 
             IsBusy = true;

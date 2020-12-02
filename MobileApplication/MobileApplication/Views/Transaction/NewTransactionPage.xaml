@@ -3,15 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileApplication.Views.NewTransactionPage"
              Shell.PresentationMode="ModalAnimated"
+             xmlns:local="clr-namespace:MobileApplication.ViewModels"  
+             xmlns:model="clr-namespace:DbEntities.Entities;assembly=DbEntities"
              Title="New Transation">
-    
-    <ContentPage.Content>
-        <StackLayout Spacing="3" Padding="15">
-            <Label Text="Transaction date" FontSize="Medium"/>
 
-            <DatePicker x:Name="transactionDate"
+    <ContentPage.Content>
+        
+        <StackLayout Spacing="3" Padding="15">
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Upload CSV" Clicked="UploadCSVButton_Clicked" HorizontalOptions="FillAndExpand"></Button>
+                <Button Text="Upload Photo" Clicked="UploadImageButton_Clicked" HorizontalOptions="FillAndExpand"></Button>
+            </StackLayout>
+            
+            <Label Text="Transaction date" FontSize="Medium" />
+
+            <DatePicker
+                    x:Name="transactionDate"
                     Format="yyyy-MM-dd"
-                    Margin="30, 0, 0, 30" />
+                    Margin="30, 0, 0, 30"    
+                    Date="{Binding TrTime}" />
             
             <Label Text="Amount" FontSize="Medium"/>
             <Entry Text="{Binding Amount, Mode=TwoWay}" FontSize="Medium"/>
@@ -21,12 +31,21 @@
             
             <Label Text="Counter Party" FontSize="Medium"/>
             <Editor Text="{Binding CounterParty, Mode=TwoWay}" AutoSize ="TextChanges"  FontSize="Medium" Margin="0"/>
+
+            <Picker x:Name="picker"
+                    Title="Select Category"
+                    ItemsSource="{Binding Items}"
+                    ItemDisplayBinding="{Binding Title}"
+                    >
+            </Picker>
+            
             
             <StackLayout Orientation="Horizontal">
                 <Button Text="Cancel"  Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
                 <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
             </StackLayout>
 
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
