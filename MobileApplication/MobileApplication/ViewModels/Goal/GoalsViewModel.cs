@@ -81,15 +81,7 @@ namespace MobileApplication.ViewModels
             if (goal == null)
                 return;
 
-            // This will push the ItemDetailPage onto the navigation stack
-            Item item = new Item(goal.Id.ToString(), goal.Title,
-                                string.Concat(goal.Amount.ToString(), '\n',
-                                goal.Description, '\n',
-                                goal.Creationdate.ToString(), '\n',
-                                goal.Deadlinedate.ToString()));
-            var itemDetailPage = new ItemDetailPage();
-            itemDetailPage.BindingContext = item;
-            await Shell.Current.Navigation.PushAsync(itemDetailPage);
+            await Shell.Current.Navigation.PushAsync(new GoalDetailPage(goal));
         }
     }
 }

@@ -81,13 +81,7 @@ namespace MobileApplication.ViewModels
                 return;
 
             // This will push the ItemDetailPage onto the navigation stack
-            Item item = new Item(transaction.Id.ToString(), transaction.Details,
-                                            string.Concat(transaction.Amount.ToString(), '\n',
-                                            transaction.CounterParty, '\n',
-                                            transaction.TrTime.ToString()));
-            var itemDetailPage = new ItemDetailPage();
-            itemDetailPage.BindingContext = item;
-            await Shell.Current.Navigation.PushAsync(itemDetailPage);
+            await Shell.Current.Navigation.PushAsync(new ItemDetailPage(transaction));
         }
     }
 }
