@@ -12,6 +12,8 @@ namespace MobileApplication
         {
             InitializeComponent();
             Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
+            Routing.RegisterRoute(nameof(GoalDetailPage), typeof(GoalDetailPage));
+            Routing.RegisterRoute(nameof(CategoryDetailPage), typeof(CategoryDetailPage));
             Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
             Routing.RegisterRoute(nameof(NewCategoryPage), typeof(NewCategoryPage));
             Routing.RegisterRoute(nameof(NewGoalPage), typeof(NewGoalPage));

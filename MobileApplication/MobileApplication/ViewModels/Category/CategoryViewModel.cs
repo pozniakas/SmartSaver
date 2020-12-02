@@ -82,11 +82,7 @@ namespace MobileApplication.ViewModels
             if (category == null)
                 return;
 
-            // This will push the ItemDetailPage onto the navigation stack
-            /*Item item = new Item(category.Id.ToString(),category.Title,category.DedicatedAmount.ToString());
-            var itemDetailPage = new ItemDetailPage();
-            itemDetailPage.BindingContext = item;
-            await Shell.Current.Navigation.PushAsync(itemDetailPage);*/
+            await Shell.Current.Navigation.PushAsync(new CategoryDetailPage(category));
         }
     }
 }
