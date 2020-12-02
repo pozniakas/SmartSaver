@@ -50,7 +50,7 @@ namespace WebAPI.Controllers
             }
 
             var goal = await _context.Goal.FindAsync(id);
-            //goal.Update(dtoGoal);
+            goal.Update(dtoGoal);
 
             _context.Entry(goal).State = EntityState.Modified;
 
