@@ -25,7 +25,7 @@ namespace MobileApplication.ViewModels
 
             SaveCommand = new Command(OnSave, ValidateSave);
             DeleteCommand = new Command(OnDelete);
-            this.PropertyChanged +=
+            PropertyChanged +=
                 (_, __) => SaveCommand.ChangeCanExecute();
         }
 
@@ -78,9 +78,9 @@ namespace MobileApplication.ViewModels
 
         private bool ValidateSave()
         {
-            return !String.IsNullOrEmpty(description)
-                && !String.IsNullOrEmpty(title)
-                && !String.IsNullOrEmpty(amount)
+            return !string.IsNullOrEmpty(description)
+                && !string.IsNullOrEmpty(title)
+                && !string.IsNullOrEmpty(amount)
                 && decimal.TryParse(amount, out _)
                 && (CreationDate.Date <= DeadlineDate.Date);
         }

@@ -60,13 +60,11 @@ namespace MobileApplication.ViewModels
                         .Select(tr => tr.Amount)
                         .Sum();
 
-                    CategoryViews.Add(new CategoryView()
-                    {
-                        Title = category.Title,
-                        DedicatedAmount = category.DedicatedAmount,
-                        CurrentlySpent = Math.Abs(sum),
-                        AvailableAmount = category.DedicatedAmount - Math.Abs(sum)
-                    });
+                    var categoryView = new CategoryView(category);
+                    categoryView.CurrentlySpent = Math.Abs(sum);
+                    categoryView.AvailableAmount = category.DedicatedAmount - Math.Abs(sum);
+
+                    CategoryViews.Add(categoryView);
                 });
             }
             catch (Exception ex)
