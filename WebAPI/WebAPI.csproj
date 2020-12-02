@@ -3,6 +3,7 @@
   <PropertyGroup>
 	  <TargetFramework>net5.0</TargetFramework>
     <StartupObject></StartupObject>
+    <UserSecretsId>18e9c204-2e40-4655-a4c5-99968e51a430</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,6 +34,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DbEntities\DbEntities.csproj" />
+    <ProjectReference Include="..\ReceiptRecognizer\Recognizer.csproj" />
   </ItemGroup>
 
 

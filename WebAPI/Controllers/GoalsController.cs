@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using DbEntities.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using DbEntities.Entities;
+using Serilog;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 using WebAPI.DTOModels;
 
 namespace WebAPI.Controllers
@@ -73,19 +76,39 @@ namespace WebAPI.Controllers
             return NoContent();
         }
 
+
+
         // POST: api/Goals
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         public async Task<ActionResult<Goal>> PostGoal(GoalDTO dtoGoal)
         {
-            // What if Server and Client time differ
             var goal = dtoGoal.ToEntity();
 
-            _context.Goal.Add(goal);
-            await _context.SaveChangesAsync();
+            try
+            {
+                var deadline = new DateTime(goal.Deadlinedate.Value.Ticks);
+                
+                if (goal.IsValid())
+                {
+                    return BadRequest();
+                }
 
-            return CreatedAtAction("GetGoal", new { id = goal.Id }, goal);
+                _context.Goal.Add(goal);
+                await _context.SaveChangesAsync();
+                return CreatedAtAction("GetGoal", new { id = goal.Id }, goal);
+            }
+            catch (InvalidOperationException)
+            {
+                dtoGoal.Deadlinedate = goal.Creationdate.AddMonths(1);
+
+                return await PostGoal(dtoGoal);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, ex.Message);
+            }
+
+            return NoContent();
         }
 
         // DELETE: api/Goals/5

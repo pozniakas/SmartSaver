@@ -16,7 +16,7 @@ namespace DbEntities.Entities
 
         public bool IsValid()
         {
-            return true;
+            return Amount != 0;
         }
     }
 }
