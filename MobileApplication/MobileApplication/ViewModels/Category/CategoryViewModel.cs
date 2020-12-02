@@ -10,6 +10,7 @@ using MobileApplication.Views;
 using MobileApplication.Services;
 using MobileApplication.Services.Rest;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MobileApplication.ViewModels
 {
@@ -17,9 +18,11 @@ namespace MobileApplication.ViewModels
     {
         private Category _selectedItem;
 
+        public delegate void SumValues<T>(int value);
         private List<Category> _items { get; set; }
+        private List<Transaction> _transactions { get; set; }
+
         public ObservableCollection<CategoryView> CategoryViews { get; }
-        private List<Transaction> _transactions { get; }
         public Command LoadItemsCommand { get; }
         public Command AddItemCommand { get; }
         public Command<Category> ItemTapped { get; }
@@ -48,32 +51,23 @@ namespace MobileApplication.ViewModels
 
             try
             {
-                var items = await RestService.RefreshDataAsync();
-                var transactions = await TransactionRestService.RefreshDataAsync();
+                _items = await RestService.RefreshDataAsync();
+                _transactions = await TransactionRestService.RefreshDataAsync();
 
-                foreach (var category in items)
-                {
-                    decimal calc = 0;
-                    foreach (var transaction in transactions)
-                    {
+                _items.ForEach(category => {
+                    var sum = _transactions
+                        .Where(delegate (Transaction tr) { return tr.Category != null && category.Title == tr.Category.Title; })
+                        .Select(tr => tr.Amount)
+                        .Sum();
 
-                        if (transaction.Category != null && category.Title == transaction.Category.Title)
-                        {
-                            calc += transaction.Amount;
-                        }
-                    }
-
-                    var newcategoryview = new CategoryView()
+                    CategoryViews.Add(new CategoryView()
                     {
                         Title = category.Title,
                         DedicatedAmount = category.DedicatedAmount,
-                        BudgetedAmount = Math.Abs(calc),
-                        AvailableAmount = category.DedicatedAmount - Math.Abs(calc)
-                    };
-
-                    CategoryViews.Add(newcategoryview);
-
-                }
+                        CurrentlySpent = Math.Abs(sum),
+                        AvailableAmount = category.DedicatedAmount - Math.Abs(sum)
+                    });
+                });
             }
             catch (Exception ex)
             {

@@ -76,8 +76,6 @@ namespace WebAPI.Controllers
             return NoContent();
         }
 
-
-
         // POST: api/Goals
         [HttpPost]
         public async Task<ActionResult<Goal>> PostGoal(GoalDTO dtoGoal)

@@ -7,7 +7,7 @@ namespace MobileApplication.ViewModels
 {
     public class CategoryView : Category
     {
-        public decimal? BudgetedAmount { get; set; }
+        public decimal? CurrentlySpent { get; set; }
         public decimal? AvailableAmount { get; set; }
     }
 }
