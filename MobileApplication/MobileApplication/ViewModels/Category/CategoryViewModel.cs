@@ -40,31 +40,7 @@ namespace MobileApplication.ViewModels
 
             AddItemCommand = new Command(OnAddItem);
         }
-        //public void Calculation(List<Category> items, List<Transaction> transactions)
-        //{
-        //    foreach (var category in items)
-        //    {
-        //        decimal calc = 0;
-        //        foreach (var transaction in transactions)
-        //        {
-        //            if (category.Title == transaction.Category.Title)
-        //            {
-        //                calc += transaction.Amount;
-        //            }
-        //        }
 
-        //        var newcategoryview = new CategoryView()
-        //        {
-        //            Title = category.Title,
-        //            DedicatedAmount = category.DedicatedAmount,
-        //            BudgetedAmount = Math.Abs(calc),
-        //            AvailableAmount = category.DedicatedAmount - Math.Abs(calc)
-        //        };
-
-        //        CategoryViews.Add(newcategoryview);
-                
-        //    }
-        //}
         public async Task ExecuteLoadItemsCommand()
         {
             IsBusy = true;
