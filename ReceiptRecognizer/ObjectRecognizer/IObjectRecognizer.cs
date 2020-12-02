@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Threading.Tasks;
 
-namespace ReceiptRecognizer
+namespace Recognizer
 {
     public interface IObjectRecognizer
     {

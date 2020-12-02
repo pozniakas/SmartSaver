@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReceiptRecognizer.ObjectRecognizer
+namespace Recognizer.ObjectRecognizer
 {
     public struct Coordinate<T>
     {

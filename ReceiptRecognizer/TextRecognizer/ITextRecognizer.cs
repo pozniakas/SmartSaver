@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReceiptRecognizer.TextRecognizer
+namespace Recognizer.TextRecognizer
 {
     public interface ITextRecognizer
     {

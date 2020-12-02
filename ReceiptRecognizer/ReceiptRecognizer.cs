@@ -1,16 +1,17 @@
 ﻿using DbEntities.Entities;
-using ReceiptRecognizer.TextRecognizer;
+using Recognizer.TextRecognizer;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace ReceiptRecognizer
+namespace Recognizer
 {
     public class ReceiptRecognizer
     {
@@ -33,7 +34,7 @@ namespace ReceiptRecognizer
                 foreach (var imgPath in dir.GetFiles("*.jpg"))
                 {
                     using var originalImage = Image.FromFile(imgPath.FullName);
-                    tasks.Add( Recognize(originalImage, file: imgPath, language: "lit") );
+                    tasks.Add( Recognize(originalImage, imgPath) );
                 }
 
                 await Task.WhenAll(tasks);
@@ -44,7 +45,13 @@ namespace ReceiptRecognizer
             }
         }
 
-        public async Task<Transaction> Recognize(Image originalImage, FileInfo file = null, string language = "lit")
+        public async Task<Transaction> Recognize(Stream stream)
+        {
+            using var originalImage = Image.FromStream(stream);
+            return await Recognize(originalImage);
+        }
+
+        public async Task<Transaction> Recognize(Image originalImage, FileInfo file = null)
         {
             if (file != null)
             {
@@ -61,7 +68,7 @@ namespace ReceiptRecognizer
                 var croppedImage = await _objectRecognizer.GetRecognizedImage(resizedImage);
 
                 Console.WriteLine($"{file.Name} Getting text...");
-                var receiptText = await _textRecognizer.GetText(croppedImage, language);
+                var receiptText = await _textRecognizer.GetText(croppedImage);
                 var transaction = TextToTransaction(receiptText);
 
                 if (file != null)
@@ -89,6 +96,22 @@ namespace ReceiptRecognizer
             {
                 Amount = decimal.TryParse(amount.Value, out decimal parsedAmount) ? parsedAmount : 0
             };
+        }
+
+        private async Task<string> ReadFromImage(Bitmap image)
+        {
+            return await _textRecognizer.GetText(image);
+        }
+
+        private async Task<Bitmap> Crop(Bitmap initialImage)
+        {
+            return await _objectRecognizer.GetRecognizedImage(initialImage);
+        }
+
+        private Bitmap GetResizedImage(FileInfo imagePath)
+        {
+            using var originalImage = Image.FromFile(imagePath.FullName);
+            return GetResizedImage(originalImage);
         }
 
         private Bitmap GetResizedImage(Image image)

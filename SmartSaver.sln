@@ -20,7 +20,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MobileApplication", "Mobile
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbEntities", "DbEntities\DbEntities.csproj", "{6AC1D994-2691-4B7C-8F06-2A429C73A051}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReceiptRecognizer", "ReceiptRecognizer\ReceiptRecognizer.csproj", "{D0AFE92A-3B9E-4F3F-AF9F-EF9490159D34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recognizer", "ReceiptRecognizer\Recognizer.csproj", "{D0AFE92A-3B9E-4F3F-AF9F-EF9490159D34}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

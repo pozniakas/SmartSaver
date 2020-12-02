@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tesseract;
 
-namespace ReceiptRecognizer.TextRecognizer
+namespace Recognizer.TextRecognizer
 {
     public class TesseractRecognizer : ITextRecognizer
     {
