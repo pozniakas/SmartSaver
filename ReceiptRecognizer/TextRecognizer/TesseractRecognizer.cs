@@ -11,16 +11,24 @@ namespace ReceiptRecognizer.TextRecognizer
     {
         private const string TessDataPath = @".\assets\tessdata\best";
 
-        public async Task<string> GetText(Bitmap image)
+        public async Task<string> GetText(Bitmap image, string language)
         {
-            using var ocrEngineBest = new TesseractEngine(TessDataPath, "lit", EngineMode.Default);
-            using var img = Pix.LoadFromMemory(ImageToByte(image));
-            var imgGray = img.ConvertRGBToGray();
+            try
+            {
+                using var ocrEngineBest = new TesseractEngine(TessDataPath, language, EngineMode.Default);
+                using var img = Pix.LoadFromMemory(ImageToByte(image));
+                var imgGray = img.ConvertRGBToGray();
 
-            var extractText = new Task<string>(() => ocrEngineBest.Process(imgGray).GetText());
-            extractText.Start();
+                var extractText = new Task<string>(() =>
+                    ocrEngineBest.Process(imgGray).GetText());
+                extractText.Start();
 
-            return await extractText;
+                return await extractText;
+            } 
+            catch (TesseractException)
+            {
+                return await GetText(image, "lit");
+            }
         }
 
         private byte[] ImageToByte(Image img)
