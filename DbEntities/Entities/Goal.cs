@@ -14,5 +14,12 @@ namespace DbEntities.Entities
         public DateTime Creationdate { get; set; }
 
         public User User { get; set; }
+
+        public bool IsValid()
+        {
+            return Deadlinedate.HasValue
+                ? Creationdate < Deadlinedate && string.IsNullOrEmpty(Title) && Amount > 0
+                : string.IsNullOrEmpty(Title) && Amount > 0;
+        }
     }
 }
