@@ -1,8 +1,8 @@
-﻿using ReceiptRecognizer.ObjectRecognizer;
-using ReceiptRecognizer.TextRecognizer;
+﻿using Recognizer.ObjectRecognizer;
+using Recognizer.TextRecognizer;
 using System.Threading.Tasks;
 
-namespace ReceiptRecognizer
+namespace Recognizer
 {
     class Program
     {

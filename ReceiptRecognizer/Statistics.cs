@@ -1,4 +1,4 @@
-﻿namespace ReceiptRecognizer
+﻿namespace Recognizer
 {
     public static class Statistics
     {
