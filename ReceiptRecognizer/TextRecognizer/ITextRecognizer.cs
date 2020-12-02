@@ -8,6 +8,6 @@ namespace Recognizer.TextRecognizer
 {
     public interface ITextRecognizer
     {
-        public Task<string> GetText(Bitmap image);
+        public Task<string> GetText(Bitmap image, string language);
     }
 }
