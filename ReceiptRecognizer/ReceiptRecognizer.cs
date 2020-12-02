@@ -51,7 +51,7 @@ namespace Recognizer
             return await Recognize(originalImage);
         }
 
-        public async Task<Transaction> Recognize(Image originalImage, FileInfo file = null)
+        public async Task<Transaction> Recognize(Image originalImage, FileInfo file = null, string language = "lit")
         {
             if (file != null)
             {
@@ -63,26 +63,21 @@ namespace Recognizer
                 Statistics.AddRecognizingImage();
 
                 var resizedImage = GetResizedImage(originalImage);
-
-                Console.WriteLine($"{file.Name} Cropping...");
                 var croppedImage = await _objectRecognizer.GetRecognizedImage(resizedImage);
-
-                Console.WriteLine($"{file.Name} Getting text...");
-                var receiptText = await _textRecognizer.GetText(croppedImage);
+                var receiptText = await _textRecognizer.GetText(croppedImage, language);
                 var transaction = TextToTransaction(receiptText);
 
                 if (file != null)
                 {
                     var fileName = file.Directory.Parent.FullName + @"\Result\" + file.Name + "cropped.jpg";
-                    croppedImage.Save(fileName);
+                    Console.WriteLine($"{file.Name} Completed successfully. Amount = {transaction.Amount}");
+                    //croppedImage.Save(fileName);
                 }
-                Console.WriteLine($"{file.Name} Completed successfully. Amount = {transaction.Amount}");
 
                 return transaction;
             }
             catch (Exception exception)
             {
-                Console.WriteLine($"EXCEPTION: {exception}");
                 throw exception;
             }
         }
@@ -96,22 +91,6 @@ namespace Recognizer
             {
                 Amount = decimal.TryParse(amount.Value, out decimal parsedAmount) ? parsedAmount : 0
             };
-        }
-
-        private async Task<string> ReadFromImage(Bitmap image)
-        {
-            return await _textRecognizer.GetText(image);
-        }
-
-        private async Task<Bitmap> Crop(Bitmap initialImage)
-        {
-            return await _objectRecognizer.GetRecognizedImage(initialImage);
-        }
-
-        private Bitmap GetResizedImage(FileInfo imagePath)
-        {
-            using var originalImage = Image.FromFile(imagePath.FullName);
-            return GetResizedImage(originalImage);
         }
 
         private Bitmap GetResizedImage(Image image)
