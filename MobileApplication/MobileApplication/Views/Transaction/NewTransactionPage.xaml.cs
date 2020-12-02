@@ -36,8 +36,8 @@ namespace MobileApplication.Views
             content.Add(new StreamContent(await file.OpenReadAsync()), "file", file.FileName);
 
             var httpClient = new HttpClient();
-            var response = await httpClient.PostAsync("http://192.168.8.106:45455/api/Transactions/file", content);
-            //var response = await httpClient.PostAsync(_baseUrl + "api/Transactions/file", content);
+            var url = _baseUrl.Value + "api/Transactions/file";
+            var response = await httpClient.PostAsync(url, content);
 
         }
 
@@ -52,8 +52,8 @@ namespace MobileApplication.Views
             content.Add(new StreamContent(await file.OpenReadAsync()), "file", file.FileName);
 
             var httpClient = new HttpClient();
-            var response = await httpClient.PostAsync("http://192.168.8.106:45455/api/Transactions/file", content);
-            //var response = await httpClient.PostAsync(_baseUrl + "api/Transactions/file", content);
+            var url = _baseUrl.Value + "api/Transactions/file";
+            var response = await httpClient.PostAsync(url, content);
         }
 
     }
