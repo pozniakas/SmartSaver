@@ -22,9 +22,9 @@ namespace MobileApplication.Services
 			return restService.RefreshDataAsync();
 		}
 
-		public Task SaveTaskAsync(Transaction item, bool isNewItem = false)
+		public Task SaveTaskAsync(Transaction item)
 		{
-			return restService.SaveItemAsync(item, isNewItem);
+			return restService.SaveItemAsync(item);
 		}
 
 		public Task DeleteTaskAsync(Transaction item)

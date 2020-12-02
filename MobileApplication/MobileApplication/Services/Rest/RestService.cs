@@ -46,27 +46,19 @@ namespace MobileApplication.Services.Rest
             return Items;
         }
 
-        public async Task SaveItemAsync(T item, bool isNewItem = false)
+        public async Task DeleteItemAsync(long id)
         {
+            Debug.WriteLine("deleting");
             try
             {
-                string json = JsonConvert.SerializeObject(item);
-                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                HttpResponseMessage response = null;
-                if (isNewItem)
-                {
-                    response = await client.PostAsync(Url, content);
-                }
-                else
-                {
-                    response = await client.PutAsync(Url, content);
-                }
+                HttpResponseMessage response = await client.DeleteAsync(Url + id);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    Debug.WriteLine($"Item \"{json}\" successfully saved.");
+                    var deletedItem = await response.Content.ReadAsStringAsync();
+                    Debug.WriteLine($"Item \"{deletedItem}\" uccessfully deleted.");
                 }
+                else Debug.WriteLine($"Item  not deleted.");
 
             }
             catch (Exception ex)
@@ -75,17 +67,43 @@ namespace MobileApplication.Services.Rest
             }
         }
 
-        public async Task DeleteItemAsync(long id)
+        public async Task SaveItemAsync(T item)
         {
             try
             {
-                HttpResponseMessage response = await client.DeleteAsync(Url);
+                string json = JsonConvert.SerializeObject(item);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = null;
+                response = await client.PostAsync(Url, content);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var deletedItem = await response.Content.ReadAsStringAsync();
-                    Debug.WriteLine($"Item \"{deletedItem}\" uccessfully deleted.");
+                    Debug.WriteLine($"Item \"{json}\" successfully saved.");
                 }
+                else Debug.WriteLine("not saved");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"ERROR: {ex.Message}");
+            }
+        }
+
+        public async Task UpdateItemAsync(T item, long id)
+        {
+            try
+            {
+                string json = JsonConvert.SerializeObject(item);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = null;
+                response = await client.PutAsync(Url + id, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine($"Item \"{json}\" successfully saved.");
+                }
+                else Debug.WriteLine("not saved");
 
             }
             catch (Exception ex)
