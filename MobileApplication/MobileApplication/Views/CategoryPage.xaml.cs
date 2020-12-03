@@ -10,6 +10,7 @@ using Xamarin.Forms.Xaml;
 using MobileApplication.Models;
 using MobileApplication.Views;
 using MobileApplication.ViewModels;
+using static MobileApplication.Views.NewCategoryPage;
 
 namespace MobileApplication.Views
 {

@@ -10,6 +10,8 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using static MobileApplication.Views.NewCategoryPage;
+using static MobileApplication.Views.NewTransactionPage;
 
 namespace MobileApplication.Views
 {
@@ -17,6 +19,8 @@ namespace MobileApplication.Views
 
     public partial class AboutPage : ContentPage
     {
+        private NewCategoryPage _newCategory;
+        public CategoryPage categoryPageNew;
         public event EventHandler Refresh;
 
         public ObservableCollection<Category> ItemsCategory { get; }
@@ -39,11 +43,23 @@ namespace MobileApplication.Views
             InitializeComponent();
             ToolRefresh.Clicked += ToolRefresh_Clicked;
             Refresh += new EventHandler(HandelEvent);
+            OnUpdateStatusCategory += new StatusUpdateHandlerCategory(UpdateStatus);
+            OnUpdateStatusTransaction += new StatusUpdateHandler(UpdateStatus);
+        }
+// Updating charts
+        public async void UpdateStatus(object sender, ProgressEventArgs e)
+        { 
+            await Task.Delay(1000);
+            if(e.Status == "category")
+                await ExecuteLoadCategoryItemsCommand();
+            if (e.Status == "transaction")
+                await ExecuteLoadTransactionItemsCommand();
+
         }
 
-        private void HandelEvent(object sender, EventArgs e)
+        private async void HandelEvent(object sender, EventArgs e)
         {
-            _ = ExecuteLoadCategoryItemsCommand();
+            await ExecuteLoadCategoryItemsCommand();
             _ = ExecuteLoadTransactionItemsCommand();
         }
 
