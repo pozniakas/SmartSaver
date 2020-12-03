@@ -111,8 +111,8 @@ namespace MobileApplication.ViewModels
                 TrTime = TrTime,
                 Amount = decimalAmount,
                 Details = Details,
-                CounterParty = CounterParty
-               // Category = Categor
+                CounterParty = CounterParty,
+                Category = Categor
             };
 
             IsBusy = true;
