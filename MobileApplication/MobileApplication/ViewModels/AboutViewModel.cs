@@ -17,6 +17,7 @@ namespace MobileApplication.ViewModels
 
         public AboutViewModel()
         {
+
             Title = "Main";
             OpenWebCommand = new Command(async () => await Browser.OpenAsync("https://aka.ms/xamain-quickstart"));
         }

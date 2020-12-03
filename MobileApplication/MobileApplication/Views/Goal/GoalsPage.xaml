@@ -4,7 +4,7 @@
              x:Class="MobileApplication.Views.GoalsPage"
              Title="{Binding Title}"
              xmlns:local="clr-namespace:MobileApplication.ViewModels"  
-             xmlns:model="clr-namespace:DbEntities.Models;assembly=DbEntities"
+             xmlns:model="clr-namespace:DbEntities.Entities;assembly=DbEntities"
              x:Name="BrowseItemsPage">
 
     <ContentPage.ToolbarItems>

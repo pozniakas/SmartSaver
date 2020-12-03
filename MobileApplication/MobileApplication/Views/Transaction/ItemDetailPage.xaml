@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileApplication.Views.ItemDetailPage"
+             Title="Transaction">
+
+    <ScrollView>
+    <StackLayout Spacing="20" Padding="15">
+            <Label Text="Counter Party:" FontSize="Medium" />
+            <Editor Text="{Binding CounterParty, Mode=TwoWay}" FontSize="Small"/>
+            <Label Text="Amount:" FontSize="Medium" />
+            <Editor Text="{Binding Amount, Mode=TwoWay}" FontSize="Small"/>
+            <Label Text="Details:" FontSize="Medium" />
+            <Editor Text="{Binding Details, Mode=TwoWay}" FontSize="Small"/>
+            <Label Text="Time:" FontSize="Medium" />
+            <DatePicker x:Name="creationDate"
+                    Date="{Binding TrTime, Mode=TwoWay}"
+                    Format="yyyy-MM-dd"
+                    Margin="30, 0, 0, 30"/>
+            <Label Text="Category:" FontSize="Medium" />
+            <Label Text="{Binding Category, Mode=OneWay}" FontSize="Small"/>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Delete"  Command="{Binding DeleteCommand}" HorizontalOptions="FillAndExpand"></Button>
+                <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>

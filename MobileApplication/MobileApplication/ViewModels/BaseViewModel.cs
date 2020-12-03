@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using DbEntities.Entities;
 
 using Xamarin.Forms;
 
@@ -12,7 +13,7 @@ namespace MobileApplication.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
+        public IDataStore<Transaction> DataStore => DependencyService.Get<IDataStore<Transaction>>();
 
         bool isBusy = false;
         public bool IsBusy
