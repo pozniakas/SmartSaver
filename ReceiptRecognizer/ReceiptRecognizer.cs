@@ -68,7 +68,7 @@ namespace Recognizer
                 var croppedImage = await _objectRecognizer.GetRecognizedImage(resizedImage);
 
                 Console.WriteLine($"{file.Name} Getting text...");
-                var receiptText = await _textRecognizer.GetText(croppedImage);
+                var receiptText = await _textRecognizer.GetText(croppedImage, "lit");
                 var transaction = TextToTransaction(receiptText);
 
                 if (file != null)
@@ -96,22 +96,6 @@ namespace Recognizer
             {
                 Amount = decimal.TryParse(amount.Value, out decimal parsedAmount) ? parsedAmount : 0
             };
-        }
-
-        private async Task<string> ReadFromImage(Bitmap image)
-        {
-            return await _textRecognizer.GetText(image);
-        }
-
-        private async Task<Bitmap> Crop(Bitmap initialImage)
-        {
-            return await _objectRecognizer.GetRecognizedImage(initialImage);
-        }
-
-        private Bitmap GetResizedImage(FileInfo imagePath)
-        {
-            using var originalImage = Image.FromFile(imagePath.FullName);
-            return GetResizedImage(originalImage);
         }
 
         private Bitmap GetResizedImage(Image image)

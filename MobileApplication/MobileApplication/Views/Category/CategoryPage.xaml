@@ -39,7 +39,7 @@
                             <Label.FormattedText>
                                 <FormattedString>
                                     <Span Text="Budgeted Amount:  "/>
-                                    <Span Text="{Binding BudgetedAmount}" FontAttributes="Bold"/>
+                                    <Span Text="{Binding CurrentlySpent}" FontAttributes="Bold"/>
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
