@@ -12,7 +12,7 @@
             <Editor Text="{Binding DedicatedAmount, Mode=TwoWay}" AutoSize ="TextChanges"  FontSize="Medium" Margin="0"/>
             <StackLayout Orientation="Horizontal">
                 <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
-                <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
+                <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand" x:Name="SaveButton"></Button>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

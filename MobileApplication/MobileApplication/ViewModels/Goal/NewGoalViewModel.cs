@@ -31,7 +31,7 @@ namespace MobileApplication.ViewModels
         {
             return !string.IsNullOrEmpty(title)
                 && !string.IsNullOrEmpty(amount)
-                && Decimal.TryParse(amount, out decimalAmount);
+                && decimal.TryParse(amount, out decimalAmount);
         }
 
         public string GoalTitle
@@ -72,7 +72,7 @@ namespace MobileApplication.ViewModels
 
         private async void OnSave()
         {
-            Goal newGoal = new Goal()
+            var newGoal = new Goal()
             {
                 Title = GoalTitle,
                 Description = Description,

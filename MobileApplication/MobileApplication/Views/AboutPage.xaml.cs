@@ -10,18 +10,25 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using static MobileApplication.Views.NewCategoryPage;
+using static MobileApplication.Views.NewTransactionPage;
 
 namespace MobileApplication.Views
 {
+    public delegate void EventDelegate(object sender, EventArgs e);
 
     public partial class AboutPage : ContentPage
     {
+        private NewCategoryPage _newCategory;
+        public CategoryPage categoryPageNew;
+        public event EventHandler Refresh;
 
         public ObservableCollection<Category> ItemsCategory { get; }
         public ObservableCollection<Transaction> ItemsTrancations { get; }
         public Command LoadItemsCommand { get; }
         private readonly IRestService<Category> RestServiceCategory;
         private readonly IRestService<Transaction> RestServiceTransaction;
+
 
         public AboutPage()
         {
@@ -34,6 +41,32 @@ namespace MobileApplication.Views
             ItemsTrancations = new ObservableCollection<Transaction>();
             _ = ExecuteLoadTransactionItemsCommand();
             InitializeComponent();
+            ToolRefresh.Clicked += ToolRefresh_Clicked;
+            Refresh += new EventHandler(HandelEvent);
+            OnUpdateStatusCategory += new StatusUpdateHandlerCategory(UpdateStatus);
+            OnUpdateStatusTransaction += new StatusUpdateHandler(UpdateStatus);
+        }
+// Updating charts
+        public async void UpdateStatus(object sender, ProgressEventArgs e)
+        { 
+            await Task.Delay(1000);
+            if(e.Status == "category")
+                await ExecuteLoadCategoryItemsCommand();
+            if (e.Status == "transaction")
+                await ExecuteLoadTransactionItemsCommand();
+
+        }
+
+        private async void HandelEvent(object sender, EventArgs e)
+        {
+            await ExecuteLoadCategoryItemsCommand();
+            _ = ExecuteLoadTransactionItemsCommand();
+        }
+
+        private void ToolRefresh_Clicked(object sender, EventArgs e)
+        {
+            Refresh(this, null);
+
         }
         void PresentBudgetChart(IEnumerable<Category> categories)
         {
@@ -43,7 +76,7 @@ namespace MobileApplication.Views
                 var random = new Random();
                 foreach (var iteam in categories)
                 {
-                    var color = String.Format("#{0:X6}", random.Next(0x1000000));
+                    var color = string.Format("#{0:X6}", random.Next(0x1000000));
                     if (iteam.DedicatedAmount != null)
                     {
                         entries.Add(new ChartEntry((float)iteam.DedicatedAmount)

@@ -27,7 +27,7 @@ namespace MobileApplication.ViewModels
         {
             return !string.IsNullOrEmpty(title)
                 && !string.IsNullOrEmpty(dedicatedAmount)
-                && Decimal.TryParse(dedicatedAmount, out decimalDedicatedAmount);
+                && decimal.TryParse(dedicatedAmount, out decimalDedicatedAmount);
         }
 
         public string CategoryTitle
@@ -52,7 +52,7 @@ namespace MobileApplication.ViewModels
 
         private async void OnSave()
         {
-            Category newCategory = new Category()
+            var newCategory = new Category()
             {
                 Title = CategoryTitle,
                 DedicatedAmount = decimalDedicatedAmount

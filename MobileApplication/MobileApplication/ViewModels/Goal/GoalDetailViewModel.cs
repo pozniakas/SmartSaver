@@ -89,7 +89,7 @@ namespace MobileApplication.ViewModels
             var amountInDecimal = decimal.Parse(Amount);
             var longId = long.Parse(Id);
 
-            Goal goal = new Goal()
+            var goal = new Goal()
             {
                 Id = longId,
                 Creationdate = CreationDate,

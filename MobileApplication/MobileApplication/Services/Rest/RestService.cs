@@ -31,10 +31,10 @@ namespace MobileApplication.Services.Rest
 
             try
             {
-                HttpResponseMessage response = await client.GetAsync(Url);
+                var response = await client.GetAsync(Url);
                 if (response.IsSuccessStatusCode)
                 {
-                    string content = await response.Content.ReadAsStringAsync();
+                    var content = await response.Content.ReadAsStringAsync();
                     Items = JsonConvert.DeserializeObject<List<T>>(content);
                 }
             }
@@ -51,7 +51,7 @@ namespace MobileApplication.Services.Rest
             Debug.WriteLine("deleting");
             try
             {
-                HttpResponseMessage response = await client.DeleteAsync(Url + id);
+                var response = await client.DeleteAsync(Url + id);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -71,8 +71,8 @@ namespace MobileApplication.Services.Rest
         {
             try
             {
-                string json = JsonConvert.SerializeObject(item);
-                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                var json = JsonConvert.SerializeObject(item);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = null;
                 response = await client.PostAsync(Url, content);
@@ -93,8 +93,8 @@ namespace MobileApplication.Services.Rest
         {
             try
             {
-                string json = JsonConvert.SerializeObject(item);
-                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                var json = JsonConvert.SerializeObject(item);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = null;
                 response = await client.PutAsync(Url + id, content);
