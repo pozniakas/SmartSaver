@@ -61,7 +61,7 @@ namespace MobileApplication.ViewModels
 
             return !string.IsNullOrEmpty(counterParty)
                 && !string.IsNullOrEmpty(amount)
-                && Decimal.TryParse(amount, out decimalAmount);
+                && decimal.TryParse(amount, out decimalAmount);
         }
 
         public Category Categor
@@ -106,13 +106,13 @@ namespace MobileApplication.ViewModels
  
         private async void OnSave()
         {
-            Transaction newTransaction = new Transaction()
+            var newTransaction = new Transaction()
             {
                 TrTime = TrTime,
                 Amount = decimalAmount,
                 Details = Details,
-                CounterParty = CounterParty,
-                Category = Categor
+                CounterParty = CounterParty
+               // Category = Categor
             };
 
             IsBusy = true;

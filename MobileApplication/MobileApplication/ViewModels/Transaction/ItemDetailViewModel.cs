@@ -75,9 +75,9 @@ namespace MobileApplication.ViewModels
 
         private bool ValidateSave()
         {
-            return !String.IsNullOrEmpty(details)
-                && !String.IsNullOrEmpty(counterParty)
-                && !String.IsNullOrEmpty(amount)
+            return !string.IsNullOrEmpty(details)
+                && !string.IsNullOrEmpty(counterParty)
+                && !string.IsNullOrEmpty(amount)
                 && decimal.TryParse(amount, out _);
         }
         private async void OnSave()
@@ -85,7 +85,7 @@ namespace MobileApplication.ViewModels
             var amountInDecimal = decimal.Parse(Amount);
             var longId = long.Parse(Id);
 
-            Transaction transaction = new Transaction()
+            var transaction = new Transaction()
             {
                 Id = longId,
                 TrTime = TrTime,

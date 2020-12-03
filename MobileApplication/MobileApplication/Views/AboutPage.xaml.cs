@@ -43,7 +43,7 @@ namespace MobileApplication.Views
                 var random = new Random();
                 foreach (var iteam in categories)
                 {
-                    var color = String.Format("#{0:X6}", random.Next(0x1000000));
+                    var color = string.Format("#{0:X6}", random.Next(0x1000000));
                     if (iteam.DedicatedAmount != null)
                     {
                         entries.Add(new ChartEntry((float)iteam.DedicatedAmount)

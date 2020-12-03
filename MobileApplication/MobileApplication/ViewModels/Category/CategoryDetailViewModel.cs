@@ -46,8 +46,8 @@ namespace MobileApplication.ViewModels
 
         private bool ValidateSave()
         {
-            return !String.IsNullOrEmpty(dedicatedAmount)
-                && !String.IsNullOrEmpty(title)
+            return !string.IsNullOrEmpty(dedicatedAmount)
+                && !string.IsNullOrEmpty(title)
                 && decimal.TryParse(dedicatedAmount, out _);
         }
         private async void OnSave()
@@ -55,7 +55,7 @@ namespace MobileApplication.ViewModels
             var amountInDecimal = decimal.Parse(DedicatedAmount);
             var longId = long.Parse(Id);
 
-            Category category = new Category()
+            var category = new Category()
             {
                 Id = longId,
                 DedicatedAmount = amountInDecimal,
