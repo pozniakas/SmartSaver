@@ -28,7 +28,7 @@ namespace WebAPI.DTOModels
                 Description = goal.Description,
                 Amount = goal.Amount,
                 Deadlinedate = goal.Deadlinedate,
-                Creationdate = DateTime.Now
+                Creationdate = DateTime.UtcNow
             };
         }
     }
