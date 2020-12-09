@@ -31,8 +31,7 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Transaction>>> GetTransactions()
         {
-            var trans = await _context.Transaction.ToListAsync();
-            return trans;
+            return await _context.Transaction.ToListAsync();
         }
 
         // GET: api/Transactions/5
@@ -103,7 +102,7 @@ namespace WebAPI.Controllers
                     }
 
                     transaction.Category = category;
-                    category.Transactions.Add(transaction);
+                    //category.Transactions.Add(transaction);
                 }
 
                 _context.Transaction.Add(transaction);
