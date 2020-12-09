@@ -22,7 +22,8 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Category>>> GetCategory()
         {
-            return await _context.Category.ToListAsync();
+            var cats = await _context.Category.ToListAsync();
+            return cats;
         }
 
         // GET: api/Categories/5
