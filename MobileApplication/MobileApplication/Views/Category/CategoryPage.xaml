@@ -14,53 +14,59 @@
       x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
       https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
     -->
-    <RefreshView x:DataType="local:CategoryViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-        <CollectionView x:Name="CategoryListView"
-                ItemsSource="{Binding CategoryViews}"
-                SelectionMode="None">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <StackLayout Padding="10" x:DataType="local:CategoryView">
-                        <Label Text="{Binding Title}" 
-                            LineBreakMode="NoWrap" 
-                            Style="{DynamicResource ListItemTextStyle}" 
-                            FontSize="16"
-                            FontAttributes="Bold"
-                            />
-                        <Label LineBreakMode="NoWrap" FontSize="16">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="Dedicated Amount:  "/>
-                                    <Span Text="{Binding DedicatedAmount}" FontAttributes="Bold"/>
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <Label LineBreakMode="NoWrap" FontSize="16">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="Budgeted Amount:  "/>
-                                    <Span Text="{Binding CurrentlySpent}" FontAttributes="Bold"/>
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <Label LineBreakMode="NoWrap" FontSize="16">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="Available Amount:  "/>
-                                    <Span Text="{Binding AvailableAmount}" FontAttributes="Bold"/>
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer 
-                                NumberOfTapsRequired="1"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:CategoryViewModel}}, Path=ItemTapped}"		
-                                CommandParameter="{Binding .}">
-                            </TapGestureRecognizer>
-                        </StackLayout.GestureRecognizers>
-                    </StackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </RefreshView>
+
+    <ContentPage.Content x:DataType="local:CategoryViewModel">
+        <RefreshView x:DataType="local:CategoryViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+            <StackLayout>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Grid.Row="0" Text="CATEGORY" VerticalTextAlignment="Center"/>
+                    <Label Grid.Column="1" Grid.Row="0" Text="DEDICATED AMOUNT" VerticalTextAlignment="Center"/>
+                    <Label Grid.Column="2" Grid.Row="0" Text="CURRENTLY SPENT" VerticalTextAlignment="Center"/>
+                    <Label Grid.Column="3" Grid.Row="0" Text="AVAILABLE" VerticalTextAlignment="Center"/>
+                </Grid>
+
+                <ListView x:Name="CategoryListView" ItemsSource="{Binding CategoryViews}" SelectionMode="None" >
+                    <ListView.ItemTemplate x:DataType="local:CategoryViewModel">
+                        <DataTemplate>
+                            <ViewCell x:DataType="local:CategoryView">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label  Grid.Column="0" Text="{Binding Title}"/>
+                                    <Label  Grid.Column="1" Text="{Binding DedicatedAmount}"/>
+                                    <Label Grid.Column="2" Text="{Binding CurrentlySpent}"/>
+                                    <Label Grid.Column="3" Text="{Binding AvailableAmount}"/>
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer 
+                                         NumberOfTapsRequired="1"
+                                         Command="{Binding Source={RelativeSource AncestorType={x:Type local:CategoryViewModel}}, Path=ItemTapped}"		
+                                         CommandParameter="{Binding .}">
+                                        </TapGestureRecognizer>
+                                    </Grid.GestureRecognizers>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </RefreshView>
+
+    </ContentPage.Content>
 </ContentPage>

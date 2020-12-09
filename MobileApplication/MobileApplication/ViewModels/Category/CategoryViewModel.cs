@@ -38,7 +38,6 @@ namespace MobileApplication.ViewModels
        
             CategoryViews = new ObservableCollection<CategoryView>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-
             ItemTapped = new Command<Category>(OnItemSelected);
 
             AddItemCommand = new Command(OnAddItem);
