@@ -21,6 +21,10 @@ namespace MobileApplication.Views
     {
         private NewCategoryPage _newCategory;
         public CategoryPage categoryPageNew;
+        private float b;
+        private float income;
+        private float expenses;
+
         public event EventHandler Refresh;
 
         public ObservableCollection<Category> ItemsCategory { get; }
@@ -101,16 +105,21 @@ namespace MobileApplication.Views
                 LabelMode = LabelMode.RightOnly
             };
         }
-        void PresentTransactionChart(IEnumerable<Transaction> transactions)
+void PresentTransactionChart(IEnumerable<Transaction> transactions)
         {
             List<ChartEntry> entries = new List<ChartEntry>();
             try
             {
                 foreach (var iteam in transactions)
                 {
-                        entries.Add(new ChartEntry((float)iteam.Amount)
-                        {
-                        }
+                    b += (float)iteam.Amount;
+                    if ((float)iteam.Amount > 0)
+                        income += (float)iteam.Amount;
+                    else
+                        expenses += (float)iteam.Amount;
+                    entries.Add(new ChartEntry(b)
+                    {
+                    }
                     );
                 }
             }
@@ -124,6 +133,10 @@ namespace MobileApplication.Views
             {
                 Entries = entries,
             };
+            budget.Text = "Income: " + income + "\n" + "Expenses: " + expenses;
+            b = 0;
+            income = 0;
+            expenses = 0;
         }
 
 
