@@ -20,7 +20,7 @@ namespace MobileApplication.Views
     public partial class AboutPage : ContentPage
     {
         public CategoryPage categoryPageNew;
-        private float net;
+        private decimal net;
         private decimal income;
         private decimal expenses;
 
@@ -111,12 +111,12 @@ namespace MobileApplication.Views
             {
                 foreach (var iteam in transactions)
                 {
-                    net += (float)iteam.Amount;
+                    net += iteam.Amount;
                     if ((float)iteam.Amount > 0) { 
                         income += (decimal)iteam.Amount;}
                     else { 
                         expenses += (decimal)iteam.Amount;}
-                    entries.Add(new ChartEntry(net)
+                    entries.Add(new ChartEntry((float)net)
                     {
                     }
                     );
