@@ -7,11 +7,11 @@
     <ContentPage.Content>
         <StackLayout Spacing="3" Padding="15">
             <Label Text="Goal" FontSize="Medium"/>
-            <Entry Text="{Binding GoalTitle, Mode=TwoWay}" FontSize="Medium"/>
+            <Entry Text="{Binding GoalTitle, Mode=TwoWay}" FontSize="Medium" ClearButtonVisibility="WhileEditing" />
             <Label Text="Description" FontSize="Medium"/>
-            <Entry Text="{Binding Description, Mode=TwoWay}" FontSize="Medium"/>
+            <Entry Text="{Binding Description, Mode=TwoWay}" FontSize="Medium" ClearButtonVisibility="WhileEditing"/>
             <Label Text="Amount" FontSize="Medium"/>
-            <Editor Text="{Binding Amount, Mode=TwoWay}" AutoSize ="TextChanges"  FontSize="Medium" Margin="0"/>
+            <Entry Text="{Binding Amount, Mode=TwoWay}" FontSize="Medium" Margin="0" ClearButtonVisibility="WhileEditing" Keyboard="Numeric"/>
             <Label Text="Creation date" FontSize="Medium"/>
 
             <DatePicker x:Name="creationDate"

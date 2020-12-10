@@ -33,12 +33,10 @@
             </StackLayout>
             <ScrollView Grid.Row="1">
                 <StackLayout Orientation="Vertical" Padding="30,24,30,24" Spacing="10">
-                    <Label Text="Smart Saver Xamarin App" FontSize="Title"/>
-                    <Label FontSize="16" Padding="0,24,0,0">
-                    </Label>
                 </StackLayout>
             </ScrollView>
         </Grid>
+        <Label x:Name="budget" FontSize="Title" HorizontalTextAlignment="Center"/>
         <microcharts:ChartView x:Name="chartViewDonut" HeightRequest ="150"/>
         <microcharts:ChartView x:Name="chartViewLine" HeightRequest ="150"/>
     </StackLayout>
