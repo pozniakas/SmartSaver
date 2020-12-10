@@ -104,7 +104,7 @@ namespace MobileApplication.Views
                 LabelMode = LabelMode.RightOnly
             };
         }
-void PresentTransactionChart(IEnumerable<Transaction> transactions)
+        void PresentTransactionChart(IEnumerable<Transaction> transactions)
         {
             List<ChartEntry> entries = new List<ChartEntry>();
             try
@@ -112,10 +112,10 @@ void PresentTransactionChart(IEnumerable<Transaction> transactions)
                 foreach (var iteam in transactions)
                 {
                     net += (float)iteam.Amount;
-                    if ((float)iteam.Amount > 0)
-                        income += (decimal)iteam.Amount;
-                    else
-                        expenses += (decimal)iteam.Amount;
+                    if ((float)iteam.Amount > 0) { 
+                        income += (decimal)iteam.Amount;}
+                    else { 
+                        expenses += (decimal)iteam.Amount;}
                     entries.Add(new ChartEntry(net)
                     {
                     }
@@ -137,8 +137,6 @@ void PresentTransactionChart(IEnumerable<Transaction> transactions)
             income = 0;
             expenses = 0;
         }
-
-
         async Task ExecuteLoadCategoryItemsCommand()
         {
             IsBusy = true;
