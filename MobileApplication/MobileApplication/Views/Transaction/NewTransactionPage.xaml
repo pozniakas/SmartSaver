@@ -24,13 +24,13 @@
                     Date="{Binding TrTime}" />
             
             <Label Text="Amount" FontSize="Medium"/>
-            <Entry Text="{Binding Amount, Mode=TwoWay}" FontSize="Medium"/>
+            <Entry Text="{Binding Amount, Mode=TwoWay}" FontSize="Medium" ClearButtonVisibility="WhileEditing" Keyboard="Numeric"/>
             
             <Label Text="Details" FontSize="Medium"/>
-            <Entry Text="{Binding Details, Mode=TwoWay}" FontSize="Medium"/>
+            <Entry Text="{Binding Details, Mode=TwoWay}" FontSize="Medium" ClearButtonVisibility="WhileEditing"/>
             
             <Label Text="Counter Party" FontSize="Medium"/>
-            <Editor Text="{Binding CounterParty, Mode=TwoWay}" AutoSize ="TextChanges"  FontSize="Medium" Margin="0"/>
+            <Entry Text="{Binding CounterParty, Mode=TwoWay}" FontSize="Medium" Margin="0" ClearButtonVisibility="WhileEditing"/>
 
             <Picker x:Name="picker"
                     Title="Select Category"
