@@ -19,11 +19,10 @@ namespace MobileApplication.Views
 
     public partial class AboutPage : ContentPage
     {
-        private NewCategoryPage _newCategory;
         public CategoryPage categoryPageNew;
-        private float b;
-        private float income;
-        private float expenses;
+        private float net;
+        private decimal income;
+        private decimal expenses;
 
         public event EventHandler Refresh;
 
@@ -112,12 +111,12 @@ void PresentTransactionChart(IEnumerable<Transaction> transactions)
             {
                 foreach (var iteam in transactions)
                 {
-                    b += (float)iteam.Amount;
+                    net += (float)iteam.Amount;
                     if ((float)iteam.Amount > 0)
-                        income += (float)iteam.Amount;
+                        income += (decimal)iteam.Amount;
                     else
-                        expenses += (float)iteam.Amount;
-                    entries.Add(new ChartEntry(b)
+                        expenses += (decimal)iteam.Amount;
+                    entries.Add(new ChartEntry(net)
                     {
                     }
                     );
@@ -134,7 +133,7 @@ void PresentTransactionChart(IEnumerable<Transaction> transactions)
                 Entries = entries,
             };
             budget.Text = "Income: " + income + "\n" + "Expenses: " + expenses;
-            b = 0;
+            net = 0;
             income = 0;
             expenses = 0;
         }
