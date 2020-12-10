@@ -19,8 +19,11 @@ namespace MobileApplication.Views
 
     public partial class AboutPage : ContentPage
     {
-        private NewCategoryPage _newCategory;
         public CategoryPage categoryPageNew;
+        private decimal net;
+        private decimal income;
+        private decimal expenses;
+
         public event EventHandler Refresh;
 
         public ObservableCollection<Category> ItemsCategory { get; }
@@ -108,9 +111,14 @@ namespace MobileApplication.Views
             {
                 foreach (var iteam in transactions)
                 {
-                        entries.Add(new ChartEntry((float)iteam.Amount)
-                        {
-                        }
+                    net += iteam.Amount;
+                    if ((float)iteam.Amount > 0) { 
+                        income += (decimal)iteam.Amount;}
+                    else { 
+                        expenses += (decimal)iteam.Amount;}
+                    entries.Add(new ChartEntry((float)net)
+                    {
+                    }
                     );
                 }
             }
@@ -124,9 +132,11 @@ namespace MobileApplication.Views
             {
                 Entries = entries,
             };
+            budget.Text = "Income: " + income + "\n" + "Expenses: " + expenses;
+            net = 0;
+            income = 0;
+            expenses = 0;
         }
-
-
         async Task ExecuteLoadCategoryItemsCommand()
         {
             IsBusy = true;
