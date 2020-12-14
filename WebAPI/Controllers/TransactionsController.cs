@@ -13,6 +13,8 @@ using System.Linq.Expressions;
 using Recognizer.ObjectRecognizer;
 using Recognizer.TextRecognizer;
 using Recognizer;
+using Microsoft.AspNetCore.Authorization;
+using WebAPI.Filters;
 
 namespace WebAPI.Controllers
 {
@@ -21,17 +23,25 @@ namespace WebAPI.Controllers
     public class TransactionsController : ControllerBase
     {
         private readonly DatabaseContext _context;
+        private readonly ILogger _logger;
 
-        public TransactionsController(DatabaseContext context)
+        public TransactionsController(DatabaseContext context, ILogger logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: api/Transactions
         [HttpGet]
+        //[TokenAuthenticationFilter]
         public async Task<ActionResult<IEnumerable<Transaction>>> GetTransactions()
         {
-            return await _context.Transaction.ToListAsync();
+            //var auth = User.Identity.IsAuthenticated;
+            //var authType = User.Identity.AuthenticationType;
+
+            // Get userId from httpContext
+
+            return await _context.Transaction.Include(x => x.Category).ToListAsync(); //Select(x => x.User == User)
         }
 
         // GET: api/Transactions/5
@@ -112,7 +122,7 @@ namespace WebAPI.Controllers
             }
             catch(Exception ex)
             {
-                Log.Error(ex, $"POST: api/Transactions {transaction}");
+                _logger.Error(ex, $"POST: api/Transactions {transaction}");
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }
@@ -136,7 +146,7 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                Log.Error(ex, $"POST: api/Transactions");
+                _logger.Error(ex, $"POST: api/Transactions");
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }
@@ -160,7 +170,7 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                Log.Error(ex, $"POST: api/Transactions");
+                _logger.Error(ex, $"POST: api/Transactions");
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }
