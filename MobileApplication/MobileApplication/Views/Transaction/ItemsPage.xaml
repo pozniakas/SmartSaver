@@ -17,53 +17,6 @@
       https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
     -->
     <Grid RowSpacing="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-        <!--<Grid.RowDefinitions>
-            <RowDefinition Height="180"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid BackgroundColor="#0e9aa7" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-            <StackLayout Margin="0,-40,0,0" HorizontalOptions="Center" VerticalOptions="Center">
-                <Label TextColor="White" FontSize="40" HorizontalTextAlignment="Center">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <FormattedString.Spans>
-                                <Span Text="TRANSACTIONS" FontSize="40" FontAttributes="Bold"/>
-                            </FormattedString.Spans>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-                <Label Text="Track all your transactions" TextColor="White" FontSize="15" HorizontalTextAlignment="Center"/>
-
-            </StackLayout>
-
-        </Grid>
-        <pv:PancakeView Grid.Row="1" HeightRequest="80" Margin="0,-40,0,0" HorizontalOptions="Center">
-            <Grid ColumnSpacing="0" HorizontalOptions="FillAndExpand">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <BoxView Grid.RowSpan="2" WidthRequest="80" BackgroundColor="#00c6ae"/>
-                <BoxView Grid.Column="1" Grid.RowSpan="2" WidthRequest="80" BackgroundColor="White"/>
-                <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label Text="23" TextColor="White" FontSize="36" HorizontalOptions="Center"/>
-                    <Label Text="MARCH" TextColor="White" FontSize="12" HorizontalOptions="Center" Margin="0,-10,0,0"/>
-                </StackLayout>
-                <StackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label Text="4" TextColor="#455399" FontSize="36" HorizontalOptions="Center"/>
-                    <Label Text="MARCH" TextColor="#455399" FontSize="12" HorizontalOptions="Center" Margin="0,-10,0,0"/>
-                </StackLayout>
-                <BoxView Grid.Row="1" Grid.ColumnSpan="2" WidthRequest="73" HeightRequest="1" BackgroundColor="#F1F3F7" HorizontalOptions="Center" VerticalOptions="Center"/>
-                <pv:PancakeView Grid.Row="1" HeightRequest="7" WidthRequest="7"  CornerRadius="3.5" HorizontalOptions="Center" VerticalOptions="Center" Margin="7"/>
-                <pv:PancakeView Grid.Row="1" Grid.Column="1" HeightRequest="7" WidthRequest="7" CornerRadius="3.5" HorizontalOptions="Center" BackgroundColor="#c9d6ef" VerticalOptions="Center" Margin="7"/>
-            </Grid>
-        </pv:PancakeView>-->
-
         <RefreshView x:DataType="local:ItemsViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
             <CollectionView Grid.Row="2" Margin="25" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" SelectionMode="None" ItemsSource="{Binding Items}">
                 <CollectionView.ItemsLayout>

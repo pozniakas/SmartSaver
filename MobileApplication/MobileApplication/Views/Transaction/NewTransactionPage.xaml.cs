@@ -24,7 +24,7 @@ namespace MobileApplication.Views
 
         public Transaction _Transaction { get; set; }
 
-        AddFileAndImage add = new AddFileAndImage();
+        MediaUploader add = new MediaUploader();
 
 
         public NewTransactionPage()
@@ -48,12 +48,12 @@ namespace MobileApplication.Views
 
         async void UploadImageButton_Clicked(object sender, EventArgs e)
         {
-            add.UploadImageButton(sender, e);
+            add.UploadReceipt(sender, e);
         }
 
         async void UploadCSVButton_Clicked(object sender, EventArgs e)
         {
-            add.UploadCSVButton(sender, e);
+            add.UploadBankStatement(sender, e);
         }
 
     }

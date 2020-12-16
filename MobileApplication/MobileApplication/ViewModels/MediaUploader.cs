@@ -7,11 +7,11 @@ using Xamarin.Essentials;
 
 namespace MobileApplication.ViewModels
 {
-    public  class AddFileAndImage
+    public  class MediaUploader
     {
         public Lazy<string> _baseUrl = new Lazy<string>(() => AppSettingsManager.Settings["ApiBaseAddress"]);
 
-        async public void UploadImageButton(object sender, EventArgs e)
+        async public void UploadReceipt(object sender, EventArgs e)
         {
             var file = await MediaPicker.PickPhotoAsync();
 
@@ -27,7 +27,7 @@ namespace MobileApplication.ViewModels
 
         }
 
-        async public void UploadCSVButton(object sender, EventArgs e)
+        async public void UploadBankStatement(object sender, EventArgs e)
         {
             var file = await FilePicker.PickAsync();
 
