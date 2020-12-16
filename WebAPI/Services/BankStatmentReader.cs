@@ -23,8 +23,6 @@ namespace WebAPI.Services
             stream = streamReader;
             guessDelimiter();
 
-            //if (string.IsNullOrEmpty(guessedDelimiter)) throw;
-
             csv = new CsvReader(stream, CultureInfo.CurrentCulture);
             csv.Configuration.BadDataFound = null;
             csv.Configuration.MissingFieldFound = null;
@@ -37,7 +35,6 @@ namespace WebAPI.Services
 
             SetHeader();
             RecognizeBank();
-            /// Console.Write($"{string.Join(",", header)} \n\n");
             if (_readRecord == null)
             {
                 return transactions;
@@ -47,7 +44,6 @@ namespace WebAPI.Services
             while (csv.Read())
             {
                 transactions.Add(_readRecord.Invoke());
-                //Console.WriteLine(csv.GetField<DateTime>("Data"));
             }
 
             return transactions;
@@ -125,13 +121,14 @@ namespace WebAPI.Services
             /// Įmokos kodas,Mokėjimo paskirtis,Kitos pusės BIC,Kitos pusės Kredito įstaigos pavadinimas,Kitos pusės Sąskaitos Nr.,
             /// Kitos pusės Pavadinimas,Kitos pusės Asmens kodas/Registracijos Nr.,Kitos pusės Kliento kodas mokėtojo informacinėje sistemoje
 
-            return csv.TryGetField("Orig. suma", out decimal sum) && csv.TryGetField("C/D", out string debitOrCredit)
+
+            return  csv.TryGetField("Orig. suma", out string debitOrCredit) && csv.TryGetField("Ekvivalentas", out string suma) && csv.TryGetField("Laikas", out string data)
                 ? new Transaction
                 {
-                    TrTime = csv.GetField<DateTime>("Data"),
-                    Amount = GetAmout(sum, debitOrCredit),
-                    CounterParty = csv.GetField("Kitos pusės Pavadinimas"),
-                    Details = csv.GetField("Mokėjimo paskirtis")
+                    TrTime = DateTime.ParseExact(data, "yyyyMMdd", CultureInfo.InvariantCulture),
+                    Amount = GetAmout(Convert.ToDecimal(suma, CultureInfo.InvariantCulture), debitOrCredit),
+                    CounterParty = csv.GetField("Kitos pus�s S�skaitos Nr."),
+                    Details = csv.GetField("Kitos pus�s BIC")
                 }
                 : null;
         }
@@ -141,14 +138,18 @@ namespace WebAPI.Services
             ///Transaction type,Date,Time,Amount,Equivalent,C/D,Orig. amount,Orig. currency,Document number,Transaction ID,
             ///Customer‘s code in beneficiary IS,Payment code,Payment details,Counterparty BIC,Counterparty Designation of counterparties credit institution,
             ///Counterparty Account number,	Counterparty Designation,Counterparty Reg No.,Counterparty Customer‘s code in payer IS,Ultimate Payer Account number
-
-            return csv.TryGetField("Orig. amount", out decimal sum) && csv.TryGetField("C/D", out string debitOrCredit)
+            var a = csv.TryGetField("Orig. amount", out string adebitOrCredit);
+            var b = csv.TryGetField("Equivalent", out string asuma);
+            var c = csv.TryGetField("Time", out string adata);
+            var d = csv.GetField("Counterparty Account number");
+            var e = csv.GetField("Counterparty BIC");
+            return csv.TryGetField("Orig. amount", out string debitOrCredit) && csv.TryGetField("Equivalent", out string suma) && csv.TryGetField("Time", out string data) && csv.TryGetField("Amount", out decimal amount)
                 ? new Transaction
                 {
-                    TrTime = csv.GetField<DateTime>("Date"),
-                    Amount = GetAmout(sum, debitOrCredit),
-                    CounterParty = csv.GetField("Counterparty Designation"),
-                    Details = csv.GetField("Payment details")
+                    TrTime = DateTime.ParseExact(data, "yyyyMMdd", CultureInfo.InvariantCulture),
+                    Amount = GetAmout(Convert.ToDecimal(suma, CultureInfo.InvariantCulture), debitOrCredit),
+                    CounterParty = csv.GetField("Counterparty Account number"),
+                    Details = csv.GetField("Counterparty BIC")
                 }
                 : null;
         }

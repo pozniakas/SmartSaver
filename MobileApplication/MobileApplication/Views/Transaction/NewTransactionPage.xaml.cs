@@ -62,6 +62,7 @@ namespace MobileApplication.Views
 
         async void UploadCSVButton_Clicked(object sender, EventArgs e)
         {
+
             var file = await FilePicker.PickAsync();
 
             if (file == null)
@@ -72,6 +73,7 @@ namespace MobileApplication.Views
 
             var httpClient = new HttpClient();
             var url = _baseUrl.Value + "api/Transactions/file";
+
             var response = await httpClient.PostAsync(url, content);
         }
 
