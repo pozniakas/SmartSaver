@@ -18,7 +18,6 @@ namespace MobileApplication.ViewModels
         private DateTime dateTo;
 
         public ObservableCollection<Transaction> Items { get; set; }
-        public ObservableCollection<Transaction> AllItems { get; }
         public Command LoadItemsCommand { get; }
         public Command AddItemCommand { get; }
         public Command<Transaction> ItemTapped { get; }
@@ -26,14 +25,13 @@ namespace MobileApplication.ViewModels
         public Command ResetFilterCommand { get; }
 
         private readonly IRestService<Transaction> RestService;
-    
+
         public ItemsViewModel()
         {
             RestService = new RestService<Transaction>("api/Transactions");
 
             Title = "Transactions";
             Items = new ObservableCollection<Transaction>();
-            AllItems = new ObservableCollection<Transaction>();
 
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             ItemTapped = new Command<Transaction>(OnItemSelected);
@@ -50,17 +48,15 @@ namespace MobileApplication.ViewModels
         async Task ExecuteLoadItemsCommand()
         {
             IsBusy = true;
-            AllItems.Clear();
             Items.Clear();
 
             try
             {
                 var items = await RestService.RefreshDataAsync();
 
-                items.ForEach(transaction => AllItems.Add(transaction));
                 items.ForEach(transaction => Items.Add(transaction));
 
-                DateFrom = AllItems.Min(item => item.TrTime);
+                DateFrom = Items.Min(item => item.TrTime);
             }
             catch (Exception ex)
             {
@@ -114,27 +110,20 @@ namespace MobileApplication.ViewModels
             await Shell.Current.Navigation.PushAsync(new ItemDetailPage(transaction));
         }
 
-        private void OnResetFilter()
+        private async void OnResetFilter()
         {
             Items.Clear();
-            foreach (Transaction item in AllItems)
-            {
-                Items.Add(item);
-            }
+            var items = await RestService.RefreshDataAsync();
+            items.ForEach(transaction => Items.Add(transaction));
             DateFrom = Items.Min(item => item.TrTime);
             DateTo = DateTime.Now;
         }
 
-        private void OnFilter()
+        private async void OnFilter()
         {
             Items.Clear();
-            foreach (Transaction item in AllItems)
-            {
-                if (item.TrTime >= dateFrom && item.TrTime <= dateTo)
-                {
-                    Items.Add(item);
-                }
-            }
+            var items = await RestService.RefreshDataAsync();
+            items.Where(item => item.TrTime >= dateFrom && item.TrTime <= dateTo).ToList().ForEach(transaction => Items.Add(transaction));
         }
         private bool ValidateFilter()
         {
