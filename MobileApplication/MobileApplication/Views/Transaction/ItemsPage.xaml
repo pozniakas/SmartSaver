@@ -16,31 +16,93 @@
       x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
       https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
     -->
-    <Grid>
+    <Grid RowSpacing="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <!--<Grid.RowDefinitions>
+            <RowDefinition Height="180"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid BackgroundColor="#0e9aa7" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <StackLayout Margin="0,-40,0,0" HorizontalOptions="Center" VerticalOptions="Center">
+                <Label TextColor="White" FontSize="40" HorizontalTextAlignment="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <FormattedString.Spans>
+                                <Span Text="TRANSACTIONS" FontSize="40" FontAttributes="Bold"/>
+                            </FormattedString.Spans>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label Text="Track all your transactions" TextColor="White" FontSize="15" HorizontalTextAlignment="Center"/>
+
+            </StackLayout>
+
+        </Grid>
+        <pv:PancakeView Grid.Row="1" HeightRequest="80" Margin="0,-40,0,0" HorizontalOptions="Center">
+            <Grid ColumnSpacing="0" HorizontalOptions="FillAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <BoxView Grid.RowSpan="2" WidthRequest="80" BackgroundColor="#00c6ae"/>
+                <BoxView Grid.Column="1" Grid.RowSpan="2" WidthRequest="80" BackgroundColor="White"/>
+                <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="23" TextColor="White" FontSize="36" HorizontalOptions="Center"/>
+                    <Label Text="MARCH" TextColor="White" FontSize="12" HorizontalOptions="Center" Margin="0,-10,0,0"/>
+                </StackLayout>
+                <StackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="4" TextColor="#455399" FontSize="36" HorizontalOptions="Center"/>
+                    <Label Text="MARCH" TextColor="#455399" FontSize="12" HorizontalOptions="Center" Margin="0,-10,0,0"/>
+                </StackLayout>
+                <BoxView Grid.Row="1" Grid.ColumnSpan="2" WidthRequest="73" HeightRequest="1" BackgroundColor="#F1F3F7" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <pv:PancakeView Grid.Row="1" HeightRequest="7" WidthRequest="7"  CornerRadius="3.5" HorizontalOptions="Center" VerticalOptions="Center" Margin="7"/>
+                <pv:PancakeView Grid.Row="1" Grid.Column="1" HeightRequest="7" WidthRequest="7" CornerRadius="3.5" HorizontalOptions="Center" BackgroundColor="#c9d6ef" VerticalOptions="Center" Margin="7"/>
+            </Grid>
+        </pv:PancakeView>-->
+
         <RefreshView x:DataType="local:ItemsViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-            <CollectionView x:Name="ItemsListView"
-                ItemsSource="{Binding Items}"
-                SelectionMode="None">
+            <CollectionView Grid.Row="2" Margin="25" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" SelectionMode="None" ItemsSource="{Binding Items}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="20"/>
+                </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout Padding="10" x:DataType="model:Transaction">
-                            <Label Text="{Binding Amount}" 
-                            LineBreakMode="NoWrap" 
-                            FontAttributes="Bold"
-                            Style="{DynamicResource ListItemTextStyle}" 
-                            FontSize="16" />
-                            <Label Text="{Binding CounterParty}" 
-                            LineBreakMode="NoWrap"
-                            Style="{DynamicResource ListItemDetailTextStyle}"
-                            FontSize="13" />
-                            <StackLayout.GestureRecognizers>
-                                <TapGestureRecognizer 
-                                NumberOfTapsRequired="1"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=ItemTapped}"		
-                                CommandParameter="{Binding .}">
-                                </TapGestureRecognizer>
-                            </StackLayout.GestureRecognizers>
-                        </StackLayout>
+                        <pv:PancakeView Background="White" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
+                            <Grid VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <BoxView BackgroundColor="#0e9aa7" WidthRequest="3" HorizontalOptions="Start" VerticalOptions="FillAndExpand"/>
+                                <Grid HorizontalOptions="FillAndExpand">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="50"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="3.5*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout HorizontalOptions="Center" VerticalOptions="Center" x:DataType="model:Transaction">
+                                        <Label Text="{Binding TrTime, StringFormat='{0:dd}'}" TextColor="Black" FontSize="27" HorizontalOptions="Center"/>
+                                        <Label Text="{Binding TrTime, StringFormat='{0:MMMM}'}" TextColor="Black" FontSize="10" HorizontalOptions="Center" Margin="0,-10,0,0"/>
+                                    </StackLayout>
+                                    <BoxView Grid.Column="1" BackgroundColor="#f2f4f8" WidthRequest="1" HorizontalOptions="Start" VerticalOptions="FillAndExpand"/>
+                                    <StackLayout Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center" Margin="20" x:DataType="model:Transaction">
+                                        <Label Text="{Binding Amount}" TextColor="Black" FontSize="17" FontAttributes="Bold" />
+                                        <Label Text="{Binding CounterParty}" TextColor="#2f3246" FontSize="15" Margin="0,-10,0,0" />
+                                    </StackLayout>
+                                </Grid>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                          NumberOfTapsRequired="1"
+                                          Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=ItemTapped}"		
+                                          CommandParameter="{Binding .}">
+                                    </TapGestureRecognizer>
+                                </Grid.GestureRecognizers>
+                            </Grid>
+                        </pv:PancakeView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
@@ -61,7 +123,6 @@
                                          Value="True">
                                 <Setter Property="Source" Value="https://cdn.iconscout.com/icon/free/png-256/close-1912235-1617704.png"/>
                             </DataTrigger>
-
                         </Image.Triggers>
                     </Image>
                 </Expander.Header>
@@ -71,5 +132,6 @@
                 </StackLayout>
             </Expander>
         </pv:PancakeView>
+
     </Grid>
 </ContentPage>
