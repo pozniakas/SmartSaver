@@ -19,11 +19,12 @@ namespace MobileApplication.Views
     public partial class ItemsPage : ContentPage
     {
         ItemsViewModel _viewModel;
-        private Lazy<string> _baseUrl = new Lazy<string>(() => AppSettingsManager.Settings["ApiBaseAddress"]);
+        AddFileAndImage add = new AddFileAndImage();
+
         public ItemsPage()
         {
             InitializeComponent();
-
+            
             BindingContext = _viewModel = new ItemsViewModel();
         }
 
@@ -35,33 +36,12 @@ namespace MobileApplication.Views
 
         async void UploadImageButton_Clicked(object sender, EventArgs e)
         {
-            var file = await MediaPicker.PickPhotoAsync();
-
-            if (file == null)
-                return;
-
-            var content = new MultipartFormDataContent();
-            content.Add(new StreamContent(await file.OpenReadAsync()), "file", file.FileName);
-
-            var httpClient = new HttpClient();
-            var url = _baseUrl.Value + "api/Transactions/file";
-            var response = await httpClient.PostAsync(url, content);
-
+             add.UploadImageButton(sender, e);
         }
 
         async void UploadCSVButton_Clicked(object sender, EventArgs e)
         {
-            var file = await FilePicker.PickAsync();
-
-            if (file == null)
-                return;
-
-            var content = new MultipartFormDataContent();
-            content.Add(new StreamContent(await file.OpenReadAsync()), "file", file.FileName);
-
-            var httpClient = new HttpClient();
-            var url = _baseUrl.Value + "api/Transactions/file";
-            var response = await httpClient.PostAsync(url, content);
+            add.UploadCSVButton(sender,e);
         }
     }
 }
