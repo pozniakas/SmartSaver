@@ -19,7 +19,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <StackLayout>
-        <Grid>
+        <!--<Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -35,10 +35,42 @@
                 <StackLayout Orientation="Vertical" Padding="30,24,30,24" Spacing="10">
                 </StackLayout>
             </ScrollView>
-        </Grid>
-        <Label x:Name="budget" FontSize="Title" HorizontalTextAlignment="Center"/>
+        </Grid>-->
+        <StackLayout Orientation="Horizontal">
+            <Frame BackgroundColor="Transparent" BorderColor="DarkGray" Padding="0" Margin="0,15,0,0" HorizontalOptions="FillAndExpand" CornerRadius="30">
+                <StackLayout Orientation="Horizontal">
+                    <Frame BackgroundColor="#4a4e4d" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
+                        <Image Source="https://www.kindpng.com/picc/m/113-1137078_download-arrow-icon-png-down-arrow-flat-design.png" Aspect="AspectFill" Margin="0"/>
+                    </Frame>
+                    <Label  x:Name="incomeLabel" Margin="0,15,50,0"/>
+                </StackLayout>
+            </Frame>
+            <Frame BackgroundColor="Transparent" BorderColor="DarkGray" Padding="0" Margin="0,15,0,0" HorizontalOptions="FillAndExpand" CornerRadius="30">
+                <StackLayout Orientation="Horizontal">
+                    <Frame BackgroundColor="#4a4e4d" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
+                        <Image Source="https://cdn1.iconfinder.com/data/icons/basic-ui-elements-color-round/3/12-512.png" Aspect="AspectFill" Margin="0"/>
+                    </Frame>
+                    <Label  x:Name="expensesLabel" Margin="0,15,50,0"/>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+        <Label Text="Your categories overwiew" HorizontalOptions="Center"  FontSize="Medium" Margin="0,30,0,0"/>
+        <BoxView HeightRequest="1"
+                   BackgroundColor="DarkGray"
+                   VerticalOptions="End"
+                   Margin="0,0"/>
+        
         <microcharts:ChartView x:Name="chartViewDonut" HeightRequest ="150"/>
+        <Label Text="Your income and outcome overwiew" HorizontalOptions="Center" FontSize="Medium" Margin="0,30,0,0"/>
+        <BoxView HeightRequest="1"
+                   BackgroundColor="DarkGray"
+                   VerticalOptions="End"
+                   Margin="0,0"/>
         <microcharts:ChartView x:Name="chartViewLine" HeightRequest ="150"/>
+        <BoxView HeightRequest="1"
+                   BackgroundColor="DarkGray"
+                   VerticalOptions="End"
+                   Margin="10,15"/>
     </StackLayout>
 
 </ContentPage>
