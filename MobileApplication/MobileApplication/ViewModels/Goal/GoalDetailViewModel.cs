@@ -5,12 +5,17 @@ using MobileApplication.Models;
 using Xamarin.Forms;
 using DbEntities.Entities;
 using MobileApplication.Services.Rest;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace MobileApplication.ViewModels
 {
     class GoalDetailViewModel : BaseViewModel
     {
         private readonly IRestService<Goal> RestService;
+        private readonly IRestService<Transaction> TransactionRestService;
+        public ObservableCollection<Transaction> Transactions { get; }
         public GoalDetailViewModel(Goal goal)
         {
             Id = goal.Id.ToString();
@@ -22,6 +27,10 @@ namespace MobileApplication.ViewModels
             CreationDateString = goal.Creationdate.ToString("dd/MM/yyyy");
 
             RestService = new RestService<Goal>("api/Goals/");
+            TransactionRestService = new RestService<Transaction>("api/Transactions/");
+
+            Transactions = new ObservableCollection<Transaction>();
+            _ = ExecuteLoadTransactionItemsCommand();
 
             SaveCommand = new Command(OnSave, ValidateSave);
             DeleteCommand = new Command(OnDelete);
@@ -35,9 +44,12 @@ namespace MobileApplication.ViewModels
         private string amount;
         private string description;
         private string title;
+        private string possibility;
         private DateTime creationDate;
         private string creationDateString;
         private DateTime deadlineDate;
+        public decimal profit;
+
         public string Id { get; set; }
 
         public string Amount
@@ -50,6 +62,12 @@ namespace MobileApplication.ViewModels
         {
             get => title;
             set => SetProperty(ref title, value);
+        }
+
+        public string Possibility
+        {
+            get => possibility;
+            set => SetProperty(ref possibility, value);
         }
 
         public string Description
@@ -117,6 +135,91 @@ namespace MobileApplication.ViewModels
             await Shell.Current.GoToAsync("..");
 
             IsBusy = false;
+        }
+
+        public string GoalPossibility(decimal worth)
+        {
+            decimal profitAWeek = profit / 4;
+            decimal possibilityRate = worth / profitAWeek;
+            Debug.WriteLine(possibilityRate);
+
+            if (possibilityRate < (decimal)0.5)
+            {
+                return "Huge";
+            }
+
+            if (possibilityRate < (decimal)0.8)
+            {
+                return "Real";
+            }
+
+            if (possibilityRate < 1)
+            {
+                return "Small";
+            }
+
+            return "Not real";
+        }
+
+
+        public void CalculatePossibility()
+        {
+            decimal money;
+            profit = 0;
+            if (DeadlineDate.Subtract(DateTime.UtcNow).Days > 7)
+            {
+                money = Decimal.Parse(Amount) / (DeadlineDate.Subtract(DateTime.UtcNow).Days / 7);
+            }
+            else
+            {
+                money = Decimal.Parse(Amount);
+            }
+
+            CalculateProfit();
+            Possibility = GoalPossibility(money);
+        }
+
+        public void CalculateProfit()
+        {
+            try
+            {
+                List<string> months = new List<string>();
+                foreach (Transaction transaction in Transactions)
+                {
+                    string date = transaction.TrTime.ToString("yyyyMM");
+                    if (!months.Contains(date))
+                    {
+                        months.Add(date);
+                    }
+                    profit += transaction.Amount;
+                    profit /= months.Count;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+        }
+
+        async Task ExecuteLoadTransactionItemsCommand()
+        {
+            IsBusy = true;
+            Transactions.Clear();
+
+            try
+            {
+                var items = await TransactionRestService.RefreshDataAsync();
+                items.ForEach(transaction => Transactions.Add(transaction));
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+                CalculatePossibility();
+            }
         }
     }
 }
