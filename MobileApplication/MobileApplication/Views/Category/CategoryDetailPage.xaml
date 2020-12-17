@@ -4,7 +4,51 @@
              x:Class="MobileApplication.Views.CategoryDetailPage"
              Title="Category">
 
-    <ScrollView>
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="#4a4e4d">
+            <Grid>
+                <StackLayout Padding="0" Margin="10,10,10,10" HorizontalOptions="FillAndExpand">
+                    <Frame  BackgroundColor="White" HeightRequest="610" HasShadow="True" Padding="0" Margin="0">
+                        <StackLayout>
+                            <StackLayout Margin="10">
+                                <Label Text="CATEGORY DETAILS" TextColor="#4a4e4d" HorizontalOptions="CenterAndExpand" FontAttributes="Bold"/>
+                            </StackLayout>
+
+                            <StackLayout Padding="0" Margin="15,10">
+
+                                <Frame BackgroundColor="Transparent" BorderColor="DarkGray" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Frame BackgroundColor="#8ccfb9" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
+                                            <Image Source="https://listimg.pinclipart.com/picdir/s/215-2150868_home-menu-icon-png-www-pixshark-com-images.png" Aspect="AspectFill" Margin="0"/>
+                                        </Frame>
+                                        <Entry Placeholder="Category" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding Title, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"/>
+                                    </StackLayout>
+                                </Frame>
+
+                                <Frame BackgroundColor="Transparent" BorderColor="DarkGray" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Frame BackgroundColor="SkyBlue" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
+                                            <Image Source="https://www.kindpng.com/picc/m/471-4710522_money-icon-circle-hd-png-download.png" Aspect="AspectFill" Margin="0"/>
+                                        </Frame>
+
+                                        <Entry Placeholder="Dedicated Amount" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding DedicatedAmount, Mode=TwoWay}" Keyboard="Numeric" ClearButtonVisibility="WhileEditing"/>
+                                    </StackLayout>
+                                </Frame>
+
+                                <StackLayout Orientation="Horizontal">
+                                    <Button Text="DELETE" BackgroundColor="#4a4e4d" TextColor="White" CornerRadius="30" Command="{Binding DeleteCommand}" HorizontalOptions="FillAndExpand" Margin="5"/>
+                                    <Button Text="SAVE" BackgroundColor="#4a4e4d" TextColor="White" CornerRadius="30" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand" x:Name="SaveButton" Margin="5"/>
+                                </StackLayout>
+
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </Grid>
+        </StackLayout>
+
+    </ContentPage.Content>
+    <!--<ScrollView>
         <StackLayout Spacing="20" Padding="15">
             <Label Text="Title:" FontSize="Medium" />
             <Editor Text="{Binding Title, Mode=TwoWay}" FontSize="Small"/>
@@ -15,6 +59,6 @@
                 <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
             </StackLayout>
         </StackLayout>
-    </ScrollView>
+    </ScrollView>-->
 
 </ContentPage>
