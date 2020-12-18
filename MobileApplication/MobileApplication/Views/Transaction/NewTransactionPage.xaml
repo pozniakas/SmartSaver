@@ -24,7 +24,7 @@
                     Date="{Binding TrTime}" />
             
             <Label Text="Amount" FontSize="Medium"/>
-            <Entry Text="{Binding Amount, Mode=TwoWay}" FontSize="Medium" ClearButtonVisibility="WhileEditing" Keyboard="Numeric"/>
+            <Entry Text="{Binding Amount, Mode=TwoWay}" FontSize="Medium" ClearButtonVisibility="WhileEditing" Keyboard="Numeric" Placeholder="Amount"/>
             
             <Label Text="Details" FontSize="Medium"/>
             <Entry Text="{Binding Details, Mode=TwoWay}" FontSize="Medium" ClearButtonVisibility="WhileEditing"/>
