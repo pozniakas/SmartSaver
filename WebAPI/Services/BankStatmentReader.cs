@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using DbEntities.Entities;
+using System.Diagnostics;
 
 namespace WebAPI.Services
 {
@@ -44,7 +45,18 @@ namespace WebAPI.Services
             while (csv.Read())
             {
                 transactions.Add(_readRecord.Invoke());
+                
             }
+            transactions.RemoveAll(item => item == null); // ištrinam null reikšmes, kažkodėl atsiranda kelios SWED banko skaityme ir bent jau viena SEB :D
+            var amount = transactions.First().Amount; // išsiėmam reikšmes lyginimui
+            var details = transactions.First().Details;
+            transactions.RemoveAt(0); 
+            
+            while (transactions.First().Amount != amount && transactions.First().Details != details) // del csv pradejimo skaityt po poros eiluciu vel headeri reikia isnaikinti pirmus elementus transaction'us
+            {
+                transactions.RemoveAt(0);
+            }
+
 
             return transactions;
         }
@@ -55,7 +67,7 @@ namespace WebAPI.Services
             switch (threeColumnString)
             {
                 // Swedbank LT
-                case "Data,Gavejas,Gavejo saskaita":
+                case "Data,Gavėjas,Gavėjo sąskaita":
                     _readRecord = new ReadRecord(SwedbankLtReadRecord);
                     break;
                 // Luminor EN
@@ -79,17 +91,22 @@ namespace WebAPI.Services
 
         private void SetHeader()
         {
+
             csv.Read();
+            csv.Configuration.ShouldSkipRecord = row => row.Length == 1;
             csv.ReadHeader();
 
             header = csv.Context.HeaderRecord;
             header = header.Where(x => !string.IsNullOrEmpty(x));
+            
 
             if (header.Count() <= 2)
-            {
+            {            
                 SetHeader();
             }
-            Console.WriteLine($"{string.Join("|", header)} \n\n");
+
+            Debug.WriteLine($"{string.Join("|", header)} \n\n");
+ //           SetHeader();
         }
 
         private void guessDelimiter()
@@ -121,7 +138,6 @@ namespace WebAPI.Services
             /// Įmokos kodas,Mokėjimo paskirtis,Kitos pusės BIC,Kitos pusės Kredito įstaigos pavadinimas,Kitos pusės Sąskaitos Nr.,
             /// Kitos pusės Pavadinimas,Kitos pusės Asmens kodas/Registracijos Nr.,Kitos pusės Kliento kodas mokėtojo informacinėje sistemoje
 
-
             return  csv.TryGetField("Orig. suma", out string debitOrCredit) && csv.TryGetField("Ekvivalentas", out string suma) && csv.TryGetField("Laikas", out string data)
                 ? new Transaction
                 {
@@ -143,7 +159,10 @@ namespace WebAPI.Services
             var c = csv.TryGetField("Time", out string adata);
             var d = csv.GetField("Counterparty Account number");
             var e = csv.GetField("Counterparty BIC");
-            return csv.TryGetField("Orig. amount", out string debitOrCredit) && csv.TryGetField("Equivalent", out string suma) && csv.TryGetField("Time", out string data) && csv.TryGetField("Amount", out decimal amount)
+            return csv.TryGetField("Orig. amount", out string debitOrCredit) 
+                && csv.TryGetField("Equivalent", out string suma)
+                && csv.TryGetField("Time", out string data)
+                && csv.TryGetField("Amount", out decimal amount)
                 ? new Transaction
                 {
                     TrTime = DateTime.ParseExact(data, "yyyyMMdd", CultureInfo.InvariantCulture),
@@ -158,14 +177,22 @@ namespace WebAPI.Services
         {
             /// Data,Gavejas,Gavejo saskaita,Paaiskinimai,Suma,Valiuta,D/K,Iraso Nr.,Kodas,Imokos kodas,
             /// Dok. Nr.,Kliento kodas moketojo IS,Kliento kodas,Pradinis moketojas,Galutinis gavejas
-            return csv.TryGetField("Suma", out decimal sum) && csv.TryGetField("D/K", out string debitOrCredit)
+            var a = csv.TryGetField("Valiuta", out string suma);
+            var b = csv.TryGetField("Įrašo Nr.", out string debitOrCredita);
+            var w = csv.GetField("Paaiškinimai");
+            if (w == "Likutis pradžiai")
+                return null;
+            var c = csv.GetField<DateTime>("Gavėjas");
+            var d = csv.GetField("Gavėjas");
+            var e = csv.GetField("Suma");
+            return csv.TryGetField("Valiuta", out string sum) && csv.TryGetField("Įrašo Nr.", out string debitOrCredit) && csv.TryGetField("Data", out decimal isasa)
                 ? new Transaction
                 {
-                    TrTime = csv.GetField<DateTime>("Data"),
-                    Amount = GetAmout(sum, debitOrCredit),
-                    CounterParty = csv.GetField("Gavejas"),
-                    Details = csv.GetField("Paaiskinimai")
-                } 
+                    TrTime = csv.GetField<DateTime>("Gavėjas"),
+                    Amount = GetAmout(Convert.ToDecimal(sum, CultureInfo.InvariantCulture), debitOrCredit),
+                    CounterParty = csv.GetField("Gavėjo sąskaita"),
+                    Details = csv.GetField("Suma")
+                }
                 : null;
         }
 
@@ -180,7 +207,7 @@ namespace WebAPI.Services
                 {
                     TrTime = csv.GetField<DateTime>("DATE"),
                     Amount = GetAmout(sum, debitOrCredit),
-                    CounterParty = csv.GetField("COUNTERPARTY"),
+                    CounterParty = csv.GetField("CURRENCY"),
                     Details = csv.GetField("DETAILS OF PAYMENTS")
                 }
                 : null;
@@ -190,7 +217,11 @@ namespace WebAPI.Services
             ///DOK NR.,DATA,VALIUTA,SUMA,MOKĖTOJO ARBA GAVĖJO PAVADINIMAS,MOKĖTOJO ARBA GAVĖJO IDENTIFIKACINIS KODAS,SĄSKAITA,
             ///KREDITO ĮSTAIGOS PAVADINIMAS,KREDITO ĮSTAIGOS SWIFT KODAS,MOKĖJIMO PASKIRTIS,TRANSAKCIJOS KODAS,
             ///DOKUMENTO DATA,TRANSAKCIJOS TIPAS,NUORODA,DEBETAS/KREDITAS,SUMA SĄSKAITOS VALIUTA,SĄSKAITOS NR,SĄSKAITOS VALIUTA
-
+            var a = csv.GetField("DATA");
+            var b = csv.GetField("MOKĖTOJO ARBA GAVĖJO PAVADINIMAS");
+            var c = csv.GetField("MOKĖJIMO PASKIRTIS");
+            var d = csv.GetField("SUMA");
+            var e = csv.GetField("DEBETAS/KREDITAS");
             return csv.TryGetField("SUMA", out decimal sum) && csv.TryGetField("DEBETAS/KREDITAS", out string debitOrCredit)
                 ? new Transaction
                 {
