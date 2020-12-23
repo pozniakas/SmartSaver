@@ -2,11 +2,12 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileApplication.Views.ItemDetailPage"
+             xmlns:local1="clr-namespace:ProjectName.MarkupExtensions"
              Title="Transaction">
 
 
     <ContentPage.Content>
-        <StackLayout BackgroundColor="#4a4e4d">
+        <StackLayout BackgroundColor="White">
             <Grid>
                 <StackLayout Padding="0" Margin="10,10,10,10" HorizontalOptions="FillAndExpand">
                     <Frame  BackgroundColor="White" HeightRequest="610" HasShadow="True" Padding="0" Margin="0">
@@ -15,54 +16,55 @@
                                 <Label Text="TRANSACTION DETAILS" TextColor="#4a4e4d" HorizontalOptions="CenterAndExpand" FontAttributes="Bold"/>
                             </StackLayout>
                             <StackLayout Padding="0" Margin="15,10">
-                                <StackLayout Orientation="Horizontal">
-                                    <Frame BackgroundColor="Transparent" BorderColor="DarkGray" Margin="0,15,0,0" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
-                                        <StackLayout Orientation="Horizontal">
-                                            <Frame BackgroundColor="#4a4e4d" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                                <Image Source="https://cdn.pixabay.com/photo/2019/01/01/14/55/calendar-3906791_1280.jpg" Aspect="AspectFill" Margin="0"/>
-                                            </Frame>
-                                            <DatePicker x:Name="transactionDate" Format="yyyy-MM-dd" Margin="0, 0, 15, 0" Date="{Binding TrTime}" />
-                                        </StackLayout>
-                                    </Frame>
-                                    <Frame BackgroundColor="Transparent" BorderColor="DarkGray" Padding="0" Margin="0,15,0,0" HorizontalOptions="FillAndExpand" CornerRadius="30">
-                                        <StackLayout Orientation="Horizontal">
-                                            <Frame BackgroundColor="#4a4e4d" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                                <Image Source="https://listimg.pinclipart.com/picdir/s/215-2150868_home-menu-icon-png-www-pixshark-com-images.png" Aspect="AspectFill" Margin="0"/>
-                                            </Frame>
-                                            <Label Text="{Binding Category, Mode=OneWay}" Margin="0,15,50,0"/>
-                                        </StackLayout>
-                                    </Frame>
-                                </StackLayout>
-                                <Frame BackgroundColor="Transparent" BorderColor="DarkGray" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
+                                
+                                <Frame BackgroundColor="Transparent" BorderColor="White"  Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                     <StackLayout Orientation="Horizontal">
-                                        <Frame BackgroundColor="SkyBlue" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                            <Image Source="https://www.kindpng.com/picc/m/471-4710522_money-icon-circle-hd-png-download.png" Aspect="AspectFill" Margin="0"/>
+                                        <Frame BackgroundColor="white" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
+                                            <Image Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.time.png}" Aspect="AspectFill" Margin="0"/>
+                                        </Frame>
+                                        <DatePicker x:Name="transactionDate" Format="yyyy-MM-dd" Margin="0, 0, 20, 0" Date="{Binding TrTime}" />
+                                    </StackLayout>
+                                </Frame>
+                                  
+                                
+                                <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Frame BackgroundColor="white" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
+                                            <Image Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.category.png}" Aspect="AspectFill" Margin="0"/>
+                                        </Frame>
+                                        <Label Text="{Binding Category, Mode=OneWay}" Margin="0,15,15,0" TextColor="#4a4e4d"/>
+                                    </StackLayout>
+                                </Frame>
+                                <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
+                                            <Image Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.money.png}" Aspect="AspectFill" Margin="0"/>
                                         </Frame>
 
                                         <Entry Placeholder="Amount" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding Amount, Mode=TwoWay}"  ClearButtonVisibility="WhileEditing" Keyboard="Numeric"/>
                                     </StackLayout>
                                 </Frame>
-                                <Frame BackgroundColor="Transparent" BorderColor="DarkGray" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
+                                <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                     <StackLayout Orientation="Horizontal">
-                                        <Frame BackgroundColor="#4682b4" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                            <Image Source="https://wiki.octave.org/wiki/images/thumb/a/ae/Info_icon.svg/256px-Info_icon.svg.png" Aspect="AspectFill" Margin="0"/>
+                                        <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
+                                            <Image Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.info.png}" Aspect="AspectFill" Margin="0"/>
                                         </Frame>
 
                                         <Entry Placeholder="Details" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding Details, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"/>
                                     </StackLayout>
                                 </Frame>
-                                <Frame BackgroundColor="Transparent" BorderColor="DarkGray" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
+                                <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                     <StackLayout Orientation="Horizontal">
-                                        <Frame BackgroundColor="SkyBlue" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                            <Image Source="https://image.flaticon.com/icons/png/512/401/401176.png" Aspect="AspectFill" Margin="0"/>
+                                        <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
+                                            <Image Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.counterparty.png}" Aspect="AspectFill" Margin="0"/>
                                         </Frame>
 
                                         <Entry Placeholder="Counter Party" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding CounterParty, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"/>
                                     </StackLayout>
                                 </Frame>
                                 <StackLayout Orientation="Horizontal">
-                                    <Button Text="DELETE" BackgroundColor="#4a4e4d" TextColor="White" CornerRadius="30" Command="{Binding DeleteCommand}" HorizontalOptions="FillAndExpand" Margin="5"/>
-                                    <Button Text="SAVE" BackgroundColor="#4a4e4d" TextColor="White" CornerRadius="30" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand" x:Name="SaveButton" Margin="5"/>
+                                    <Button Text="DELETE" BackgroundColor="#0e9aa7" TextColor="White" CornerRadius="30" Command="{Binding DeleteCommand}" HorizontalOptions="FillAndExpand" Margin="5"/>
+                                    <Button Text="SAVE" BackgroundColor="#0e9aa7" TextColor="White" CornerRadius="30" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand" x:Name="SaveButton" Margin="5"/>
                                 </StackLayout>
 
                             </StackLayout>

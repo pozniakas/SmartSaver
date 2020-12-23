@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileApplication.Views.AboutPage"
              xmlns:vm="clr-namespace:MobileApplication.ViewModels" xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+             xmlns:local1="clr-namespace:ProjectName.MarkupExtensions"
              Title="{Binding Title}">
 
     <ContentPage.BindingContext>
@@ -37,18 +38,18 @@
             </ScrollView>
         </Grid>-->
         <StackLayout Orientation="Horizontal">
-            <Frame BackgroundColor="Transparent" BorderColor="DarkGray" Padding="0" Margin="0,15,0,0" HorizontalOptions="FillAndExpand" CornerRadius="30">
+            <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" Margin="0,15,0,0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                 <StackLayout Orientation="Horizontal">
-                    <Frame BackgroundColor="#4a4e4d" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                        <Image Source="https://www.kindpng.com/picc/m/113-1137078_download-arrow-icon-png-down-arrow-flat-design.png" Aspect="AspectFill" Margin="0"/>
+                    <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
+                        <Image Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.income.png}" Aspect="AspectFill" Margin="0"/>
                     </Frame>
                     <Label  x:Name="incomeLabel" Margin="0,15,50,0"/>
                 </StackLayout>
             </Frame>
-            <Frame BackgroundColor="Transparent" BorderColor="DarkGray" Padding="0" Margin="0,15,0,0" HorizontalOptions="FillAndExpand" CornerRadius="30">
+            <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" Margin="0,15,0,0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                 <StackLayout Orientation="Horizontal">
-                    <Frame BackgroundColor="#4a4e4d" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                        <Image Source="https://cdn1.iconfinder.com/data/icons/basic-ui-elements-color-round/3/12-512.png" Aspect="AspectFill" Margin="0"/>
+                    <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
+                        <Image Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.outcome.png}" Aspect="AspectFill" Margin="0"/>
                     </Frame>
                     <Label  x:Name="expensesLabel" Margin="0,15,50,0"/>
                 </StackLayout>

@@ -2,6 +2,7 @@
 <Shell xmlns="http://xamarin.com/schemas/2014/forms" 
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:local="clr-namespace:MobileApplication.Views"
+       xmlns:local1="clr-namespace:ProjectName.MarkupExtensions"
        Title="MobileApplication"
        x:Class="MobileApplication.AppShell">
 
@@ -81,10 +82,10 @@
     -->
 
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
-        <ShellContent Title="Main" Icon="https://image.flaticon.com/icons/png/512/117/117975.png" Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
-        <ShellContent Title="Transactions" Icon ="https://image.flaticon.com/icons/png/512/86/86053.png" ContentTemplate="{DataTemplate local:ItemsPage}" />
-        <ShellContent Title="Goals" Icon="https://image.flaticon.com/icons/png/512/115/115788.png" ContentTemplate="{DataTemplate local:GoalsPage}" />
-        <ShellContent Title="Budget" Icon="https://image.flaticon.com/icons/png/512/124/124439.png" ContentTemplate="{DataTemplate local:CategoryPage}" />
+        <ShellContent Title="Main" Icon="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.main.png}" Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
+        <ShellContent Title="Transactions" Icon ="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.transactions.png}" ContentTemplate="{DataTemplate local:ItemsPage}" />
+        <ShellContent Title="Goals" Icon="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.goal.png}" ContentTemplate="{DataTemplate local:GoalsPage}" />
+        <ShellContent Title="Budget" Icon="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.budget.png}" ContentTemplate="{DataTemplate local:CategoryPage}" />
     </FlyoutItem>
 
     <!-- When the Flyout is visible this will be a menu item you can tie a click behavior to  -->
