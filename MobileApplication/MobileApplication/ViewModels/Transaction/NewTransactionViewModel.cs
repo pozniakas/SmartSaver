@@ -59,7 +59,7 @@ namespace MobileApplication.ViewModels
         private bool ValidateSave()
         {
 
-            return !string.IsNullOrEmpty(counterParty)
+            return !string.IsNullOrEmpty(details)
                 && !string.IsNullOrEmpty(amount)
                 && decimal.TryParse(amount, out decimalAmount);
         }
