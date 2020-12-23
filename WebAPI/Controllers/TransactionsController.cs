@@ -93,15 +93,22 @@ namespace WebAPI.Controllers
 
             try
             {
+                if (transaction.Category != null)
+                {
+                    var category = await _context.Category.FirstOrDefaultAsync(x => x.Id == transaction.Category.Id);
+                    if (category == null)
+                    {
+                        return BadRequest();
+                    }
+
+                    transaction.Category = category;
+                    //category.Transactions.Add(transaction);
+                }
+
                 _context.Transaction.Add(transaction);
                 await _context.SaveChangesAsync();
 
                 return CreatedAtAction("GetTransaction", new { id = transaction.Id }, transaction);
-            }
-            catch (DbUpdateException ex)
-            {
-                Log.Error(ex, "POST: api/Transactions");
-                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
             catch(Exception ex)
             {

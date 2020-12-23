@@ -22,8 +22,8 @@ namespace MobileApplication.ViewModels
 
         private bool ValidateSave()
         {
-            return !String.IsNullOrWhiteSpace(text)
-                && !String.IsNullOrWhiteSpace(description);
+            return !string.IsNullOrWhiteSpace(text)
+                && !string.IsNullOrWhiteSpace(description);
         }
 
         public string Text
@@ -49,14 +49,14 @@ namespace MobileApplication.ViewModels
 
         private async void OnSave()
         {
-            Item newItem = new Item()
+            var newItem = new Item()
             {
                 Id = Guid.NewGuid().ToString(),
                 Text = Text,
                 Description = Description
             };
 
-            await DataStore.AddItemAsync(newItem);
+            //await DataStore.AddItemAsync(newItem);
 
             // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync("..");

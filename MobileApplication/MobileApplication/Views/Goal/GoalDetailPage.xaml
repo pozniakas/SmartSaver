@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileApplication.Views.GoalDetailPage"
+             Title="Goal">
+
+    <ScrollView>
+        <StackLayout Spacing="20" Padding="15">
+            <Label Text="Title:" FontSize="Medium" />
+            <Editor Text="{Binding Title, Mode=TwoWay}" FontSize="Small"/>
+            <Label Text="Amount:" FontSize="Medium" />
+            <Editor Text="{Binding Amount, Mode=TwoWay}" FontSize="Small"/>
+            <Label Text="Description:" FontSize="Medium" />
+            <Editor Text="{Binding Description, Mode=TwoWay}" FontSize="Small"/>
+            <Label Text="Creation date:" FontSize="Medium" />
+            <Label Text="{Binding CreationDateString, Mode=OneWay}" FontSize="Small"/>
+            <Label Text="Possibility:" FontSize="Medium" />
+            <Label Text="{Binding Possibility, Mode=OneWay}" FontSize="Small"/>
+            <Label Text="Deadline date:" FontSize="Medium" />
+            <DatePicker x:Name="deadlineDate"
+                    Date="{Binding DeadlineDate, Mode=TwoWay}"
+                    Format="yyyy-MM-dd"
+                    Margin="30, 0, 0, 30"/>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Delete"  Command="{Binding DeleteCommand}" HorizontalOptions="FillAndExpand"></Button>
+                <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>

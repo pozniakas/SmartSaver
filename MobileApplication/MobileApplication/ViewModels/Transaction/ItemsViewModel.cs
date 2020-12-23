@@ -1,4 +1,4 @@
-﻿using DbEntities.Models;
+﻿using DbEntities.Entities;
 using MobileApplication.Models;
 using MobileApplication.Services.Rest;
 using MobileApplication.Views;
@@ -72,16 +72,16 @@ namespace MobileApplication.ViewModels
 
         private async void OnAddItem(object obj)
         {
-            await Shell.Current.GoToAsync(nameof(NewItemPage));
+            await Shell.Current.GoToAsync(nameof(NewTransactionPage));
         }
 
-        async void OnItemSelected(Transaction item)
+        async void OnItemSelected(Transaction transaction)
         {
-            if (item == null)
+            if (transaction == null)
                 return;
 
             // This will push the ItemDetailPage onto the navigation stack
-            await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.ItemId)}={item.Id}");
+            await Shell.Current.Navigation.PushAsync(new ItemDetailPage(transaction));
         }
     }
 }

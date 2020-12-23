@@ -51,7 +51,7 @@ namespace Recognizer
             return await Recognize(originalImage);
         }
 
-        public async Task<Transaction> Recognize(Image originalImage, FileInfo file = null, string language = "lit")
+        public async Task<Transaction> Recognize(Image originalImage, FileInfo file = null)
         {
             if (file != null)
             {
@@ -63,21 +63,26 @@ namespace Recognizer
                 Statistics.AddRecognizingImage();
 
                 var resizedImage = GetResizedImage(originalImage);
+
+                Console.WriteLine($"{file.Name} Cropping...");
                 var croppedImage = await _objectRecognizer.GetRecognizedImage(resizedImage);
-                var receiptText = await _textRecognizer.GetText(croppedImage, language);
+
+                Console.WriteLine($"{file.Name} Getting text...");
+                var receiptText = await _textRecognizer.GetText(croppedImage, "lit");
                 var transaction = TextToTransaction(receiptText);
 
                 if (file != null)
                 {
                     var fileName = file.Directory.Parent.FullName + @"\Result\" + file.Name + "cropped.jpg";
-                    Console.WriteLine($"{file.Name} Completed successfully. Amount = {transaction.Amount}");
-                    //croppedImage.Save(fileName);
+                    croppedImage.Save(fileName);
                 }
+                Console.WriteLine($"{file.Name} Completed successfully. Amount = {transaction.Amount}");
 
                 return transaction;
             }
             catch (Exception exception)
             {
+                Console.WriteLine($"EXCEPTION: {exception}");
                 throw exception;
             }
         }

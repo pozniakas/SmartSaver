@@ -2,7 +2,6 @@
 <Shell xmlns="http://xamarin.com/schemas/2014/forms" 
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:local="clr-namespace:MobileApplication.Views"
-       xmlns:localTransactions="clr-namespace:MobileApplication.Views.Transactions"
        Title="MobileApplication"
        x:Class="MobileApplication.AppShell">
 
@@ -80,12 +79,12 @@
         FlyoutDisplayOptions="AsMultipleItems" will create a separate flyout item for each child element    
         https://docs.microsoft.com/dotnet/api/xamarin.forms.shellgroupitem.flyoutdisplayoptions?view=xamarin-forms
     -->
+
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
-        <ShellContent Title="Main" Icon="tab_about.png" Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
-        <ShellContent Title="Transactions" Icon="tab_feed.png" ContentTemplate="{DataTemplate local:ItemsPage}" />
-        <ShellContent Title="Goals" Icon="tab_feed.png" ContentTemplate="{DataTemplate local:GoalsPage}" />
-        <ShellContent Title="Budget" Icon ="tab_feed.png" ContentTemplate="{DataTemplate local:CategoryPage}" />
-        <ShellContent Title="Trs" Icon ="tab_feed.png" ContentTemplate="{DataTemplate localTransactions:ListPage}" />
+        <ShellContent Title="Main" Icon="https://image.flaticon.com/icons/png/512/117/117975.png" Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
+        <ShellContent Title="Transactions" Icon ="https://image.flaticon.com/icons/png/512/86/86053.png" ContentTemplate="{DataTemplate local:ItemsPage}" />
+        <ShellContent Title="Goals" Icon="https://image.flaticon.com/icons/png/512/115/115788.png" ContentTemplate="{DataTemplate local:GoalsPage}" />
+        <ShellContent Title="Budget" Icon="https://image.flaticon.com/icons/png/512/124/124439.png" ContentTemplate="{DataTemplate local:CategoryPage}" />
     </FlyoutItem>
 
     <!-- When the Flyout is visible this will be a menu item you can tie a click behavior to  -->
@@ -99,38 +98,5 @@
         await Shell.Current.GoToAsync("//LoginPage");
     -->
     <ShellContent Route="LoginPage" Shell.FlyoutBehavior="Disabled" ContentTemplate="{DataTemplate local:LoginPage}" />
-
-    <!-- Optional Templates 
-    // These may be provided inline as below or as separate classes.
-
-    // This header appears at the top of the Flyout.
-    // https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/flyout#flyout-header
-    <Shell.FlyoutHeaderTemplate>
-        <DataTemplate>
-            <Grid>ContentHere</Grid>
-        </DataTemplate>
-    </Shell.FlyoutHeaderTemplate>
-
-    // ItemTemplate is for ShellItems as displayed in a Flyout
-    // https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/flyout#define-flyoutitem-appearance
-    <Shell.ItemTemplate>
-        <DataTemplate>
-            <ContentView>
-                Bindable Properties: Title, Icon
-            </ContentView>
-        </DataTemplate>
-    </Shell.ItemTemplate>
-
-    // MenuItemTemplate is for MenuItems as displayed in a Flyout
-    // https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/flyout#define-menuitem-appearance
-    <Shell.MenuItemTemplate>
-        <DataTemplate>
-            <ContentView>
-                Bindable Properties: Text, Icon
-            </ContentView>
-        </DataTemplate>
-    </Shell.MenuItemTemplate>
-
-    -->
 
 </Shell>

@@ -13,7 +13,8 @@ namespace MobileApplication
         {
             InitializeComponent();
 
-            DependencyService.Register<MockDataStore>();
+            //DependencyService.Register<MockDataStore>();
+            Device.SetFlags(new[] { "Expander_Experimental" });
             MainPage = new AppShell();
         }
 
