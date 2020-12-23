@@ -64,10 +64,10 @@ namespace Recognizer
 
                 var resizedImage = GetResizedImage(originalImage);
 
-                Console.WriteLine($"{file.Name} Cropping...");
+                // Console.WriteLine($"{file.Name} Cropping...");
                 var croppedImage = await _objectRecognizer.GetRecognizedImage(resizedImage);
 
-                Console.WriteLine($"{file.Name} Getting text...");
+                // Console.WriteLine($"{file.Name} Getting text...");
                 var receiptText = await _textRecognizer.GetText(croppedImage, "lit");
                 var transaction = TextToTransaction(receiptText);
 
@@ -76,7 +76,7 @@ namespace Recognizer
                     var fileName = file.Directory.Parent.FullName + @"\Result\" + file.Name + "cropped.jpg";
                     croppedImage.Save(fileName);
                 }
-                Console.WriteLine($"{file.Name} Completed successfully. Amount = {transaction.Amount}");
+                // Console.WriteLine($"{file.Name} Completed successfully. Amount = {transaction.Amount}");
 
                 return transaction;
             }

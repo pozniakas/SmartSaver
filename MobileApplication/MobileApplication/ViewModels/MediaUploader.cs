@@ -19,10 +19,10 @@ namespace MobileApplication.ViewModels
                 return;
 
             var content = new MultipartFormDataContent();
-            content.Add(new StreamContent(await file.OpenReadAsync()), "file", file.FileName);
+            content.Add(new StreamContent(await file.OpenReadAsync()), "image", file.FileName);
 
             var httpClient = new HttpClient();
-            var url = _baseUrl.Value + "api/Transactions/file";
+            var url = _baseUrl.Value + "api/Transactions/receiptImage";
             var response = await httpClient.PostAsync(url, content);
 
         }
