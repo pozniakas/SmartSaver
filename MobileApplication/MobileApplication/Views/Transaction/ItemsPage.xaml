@@ -25,7 +25,7 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <pv:PancakeView Background="White" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
-                            <Grid VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
+                            <Grid VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" x:DataType="model:Transaction">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
