@@ -14,6 +14,8 @@
             <Editor Text="{Binding Description, Mode=TwoWay}" FontSize="Small"/>
             <Label Text="Creation date:" FontSize="Medium" />
             <Label Text="{Binding CreationDateString, Mode=OneWay}" FontSize="Small"/>
+            <Label Text="Possibility:" FontSize="Medium" />
+            <Label Text="{Binding Possibility, Mode=OneWay}" FontSize="Small"/>
             <Label Text="Deadline date:" FontSize="Medium" />
             <DatePicker x:Name="deadlineDate"
                     Date="{Binding DeadlineDate, Mode=TwoWay}"
