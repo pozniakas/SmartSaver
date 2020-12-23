@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace MobileApplication.ViewModels
 {
@@ -16,6 +17,7 @@ namespace MobileApplication.ViewModels
         private Transaction _selectedItem;
         private DateTime dateFrom;
         private DateTime dateTo;
+        private List<Transaction> _transactions;
 
         public ObservableCollection<Transaction> Items { get; set; }
         public Command LoadItemsCommand { get; }
@@ -52,9 +54,9 @@ namespace MobileApplication.ViewModels
 
             try
             {
-                var items = await RestService.RefreshDataAsync();
+                _transactions = await RestService.RefreshDataAsync();
 
-                items.ForEach(transaction => Items.Add(transaction));
+                _transactions.ForEach(transaction => Items.Add(transaction));
 
                 DateFrom = Items.Min(item => item.TrTime);
             }
@@ -110,20 +112,23 @@ namespace MobileApplication.ViewModels
             await Shell.Current.Navigation.PushAsync(new ItemDetailPage(transaction));
         }
 
-        private async void OnResetFilter()
+        private void OnResetFilter()
         {
             Items.Clear();
-            var items = await RestService.RefreshDataAsync();
-            items.ForEach(transaction => Items.Add(transaction));
+            _transactions.ForEach(transaction => Items.Add(transaction));
+
             DateFrom = Items.Min(item => item.TrTime);
             DateTo = DateTime.Now;
         }
 
-        private async void OnFilter()
+        private void OnFilter()
         {
             Items.Clear();
-            var items = await RestService.RefreshDataAsync();
-            items.Where(item => item.TrTime >= dateFrom && item.TrTime <= dateTo).ToList().ForEach(transaction => Items.Add(transaction));
+
+            _transactions
+                .Where(item => item.TrTime >= dateFrom && item.TrTime <= dateTo)
+                .ToList()
+                .ForEach(transaction => Items.Add(transaction));
         }
         private bool ValidateFilter()
         {
