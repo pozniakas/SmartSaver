@@ -17,6 +17,12 @@
                                 <Label Text="ADD TRANSACTION" TextColor="#4a4e4d" HorizontalOptions="CenterAndExpand" FontAttributes="Bold"/>
                             </StackLayout>
                             <StackLayout Padding="0" Margin="15,10">
+                                <StackLayout x:Name="st1" Orientation="Horizontal" HorizontalOptions="Center">
+                                    <Label Text="Income"></Label>
+                                    <Switch IsToggled="{Binding Toggled}"/>
+                                    <Label Text="Outcome"/>
+
+                                </StackLayout>
                                 <StackLayout Orientation="Horizontal">
                                     <Frame BackgroundColor="Transparent" BorderColor="White" Margin="0,15,0,0" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                         <StackLayout Orientation="Horizontal">
