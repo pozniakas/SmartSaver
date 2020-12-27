@@ -6,81 +6,62 @@
              x:Name="BrowseItemsPage"
              xmlns:local="clr-namespace:MobileApplication.ViewModels"  
              xmlns:model="clr-namespace:DbEntities.Entities;assembly=DbEntities" xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:local1="clr-namespace:ProjectName.MarkupExtensions"
              Title="{Binding Title}"
              >
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Command="{Binding AddItemCommand}" />
     </ContentPage.ToolbarItems>
-    <!--
-      x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
-      https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
-    -->
-    
+
     <Grid RowSpacing="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        
         <RefreshView x:DataType="local:ItemsViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-            <CollectionView Grid.Row="2" Margin="25" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" SelectionMode="None" ItemsSource="{Binding Items}" Header="{Binding .}">
-                <CollectionView.HeaderTemplate>
-                    <DataTemplate>
-                        <StackLayout Orientation="Vertical">
-                            <StackLayout Orientation="Horizontal"  HorizontalOptions="Center">
-                                <DatePicker x:Name="filterFrom"
-                                Date="{Binding DateFrom, Mode=TwoWay}"
-                                Format="yyyy-MM-dd"
-                                Margin="30, 0, 0, 30"/>
-                                <DatePicker x:Name="filterTo"
-                                Date="{Binding DateTo, Mode=TwoWay}"
-                                Format="yyyy-MM-dd"
-                                Margin="30, 0, 0, 30"/>
-                            </StackLayout>
-                            <StackLayout Orientation="Horizontal"  HorizontalOptions="Center">
-                                <Button Text="Filter" Command="{Binding FilterCommand}"></Button>
-                                <Button Text="Reset" Command="{Binding ResetFilterCommand}"></Button>
-                            </StackLayout>
-                        </StackLayout>
-                    </DataTemplate>
-                </CollectionView.HeaderTemplate>
+            <CollectionView Grid.Row="2" Margin="25" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" SelectionMode="None" ItemsSource="{Binding Items}">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical" ItemSpacing="20"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <pv:PancakeView Background="White" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
-                            <Grid VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" x:DataType="model:Transaction">
+                        <Grid VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" x:DataType="model:Transaction">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <BoxView BackgroundColor="#0e9aa7" WidthRequest="3" HorizontalOptions="Start" VerticalOptions="FillAndExpand"/>
+                            <Grid HorizontalOptions="FillAndExpand">
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50"/>
                                     <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="240"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <BoxView BackgroundColor="#0e9aa7" WidthRequest="3" HorizontalOptions="Start" VerticalOptions="FillAndExpand"/>
-                                <Grid HorizontalOptions="FillAndExpand">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="50"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="3.5*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <StackLayout HorizontalOptions="Center" VerticalOptions="Center" x:DataType="model:Transaction">
-                                        <Label Text="{Binding TrTime, StringFormat='{0:dd}'}" TextColor="Black" FontSize="27" HorizontalOptions="Center"/>
-                                        <Label Text="{Binding TrTime, StringFormat='{0:MMMM}'}" TextColor="Black" FontSize="10" HorizontalOptions="Center" Margin="0,-10,0,0"/>
-                                    </StackLayout>
-                                    <BoxView Grid.Column="1" BackgroundColor="#f2f4f8" WidthRequest="1" HorizontalOptions="Start" VerticalOptions="FillAndExpand"/>
-                                    <StackLayout Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center" Margin="20" x:DataType="model:Transaction">
-                                        <Label Text="{Binding Amount}" TextColor="Black" FontSize="17" FontAttributes="Bold" />
-                                        <Label Text="{Binding CounterParty}" TextColor="#2f3246" FontSize="15" Margin="0,-10,0,0" />
-                                    </StackLayout>
-                                </Grid>
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer 
-                                          NumberOfTapsRequired="1"
-                                          Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=ItemTapped}"		
-                                          CommandParameter="{Binding .}">
-                                    </TapGestureRecognizer>
-                                </Grid.GestureRecognizers>
+                                <StackLayout HorizontalOptions="Center" VerticalOptions="Center" x:DataType="model:Transaction">
+                                    <Label Text="{Binding TrTime, StringFormat='{0:dd}'}" TextColor="Black" FontSize="27" HorizontalOptions="Center"/>
+                                    <Label Text="{Binding TrTime, StringFormat='{0:MMMM}'}" TextColor="Black" FontSize="10" HorizontalOptions="Center" Margin="0,-10,0,0"/>
+                                </StackLayout>
+                                <BoxView Grid.Column="1" BackgroundColor="#f2f4f8" WidthRequest="1" HorizontalOptions="Start" VerticalOptions="FillAndExpand"/>
+                                <StackLayout Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center" Margin="20" x:DataType="model:Transaction">
+                                    <Label Text="{Binding Amount}" TextColor="Black" FontSize="17" FontAttributes="Bold" />
+                                    <Label Text="{Binding CounterParty}" TextColor="#2f3246" FontSize="15" Margin="0,-10,0,0" />
+                                </StackLayout>
+                                <BoxView Grid.Column="3" BackgroundColor="#f2f4f8" WidthRequest="1" HorizontalOptions="Start" VerticalOptions="FillAndExpand"/>
                             </Grid>
-                        </pv:PancakeView>
+                            <BoxView HeightRequest="1" BackgroundColor="#f2f4f8" VerticalOptions="Start" HorizontalOptions="FillAndExpand" />
+                            <BoxView HeightRequest="1" BackgroundColor="#f2f4f8" VerticalOptions="End" HorizontalOptions="FillAndExpand"  />
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                        NumberOfTapsRequired="1"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=ItemTapped}"		
+                                        CommandParameter="{Binding .}">
+                                </TapGestureRecognizer>
+                            </Grid.GestureRecognizers>
+                        </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </RefreshView>
+        
         <pv:PancakeView HorizontalOptions="End" VerticalOptions="End" Margin="30" CornerRadius="40" Padding="15">
             <pv:PancakeView.BackgroundGradientStops>
                 <pv:GradientStopCollection>
@@ -90,19 +71,19 @@
             </pv:PancakeView.BackgroundGradientStops>
             <Expander Rotation="180" HorizontalOptions="Start" VerticalOptions="End">
                 <Expander.Header>
-                    <Image Source="https://image.flaticon.com/icons/png/512/32/32339.png" WidthRequest="30" HeightRequest="30" Rotation="180">
+                    <Image Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.plus.png}" WidthRequest="30" HeightRequest="30" Rotation="180">
                         <Image.Triggers>
                             <DataTrigger TargetType="Image" 
                                          Binding="{Binding Source={RelativeSource AncestorType={x:Type Expander}}, Path=IsExpanded}" 
                                          Value="True">
-                                <Setter Property="Source" Value="https://cdn.iconscout.com/icon/free/png-256/close-1912235-1617704.png"/>
+                                <Setter Property="Source" Value="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.x.png}"/>
                             </DataTrigger>
                         </Image.Triggers>
                     </Image>
                 </Expander.Header>
                 <StackLayout Spacing="30" Margin="0,20">
-                    <ImageButton Source="https://cdn.iconscout.com/icon/premium/png-256-thumb/bank-statement-483268.png" WidthRequest="30" HeightRequest="30" Rotation="180" BackgroundColor="Transparent" Clicked="UploadCSVButton_Clicked"/>
-                    <ImageButton Source="https://image.flaticon.com/icons/png/512/869/869698.png" WidthRequest="30" HeightRequest="30" Rotation="180" BackgroundColor="Transparent" Clicked="UploadImageButton_Clicked"/>
+                    <ImageButton Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.file.png}" WidthRequest="30" HeightRequest="30" Rotation="180" BackgroundColor="Transparent" Clicked="UploadCSVButton_Clicked"/>
+                    <ImageButton Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.image.png}" WidthRequest="30" HeightRequest="30" Rotation="180" BackgroundColor="Transparent" Clicked="UploadImageButton_Clicked"/>
                 </StackLayout>
             </Expander>
         </pv:PancakeView>

@@ -7,16 +7,56 @@
 
   <ItemGroup>
     <None Remove="appsettings.json" />
+    <None Remove="Resources\budget.png" />
+    <None Remove="Resources\category.png" />
+    <None Remove="Resources\counterparty.png" />
+    <None Remove="Resources\facebook.png" />
+    <None Remove="Resources\file.png" />
+    <None Remove="Resources\goal.png" />
+    <None Remove="Resources\goal2.png" />
+    <None Remove="Resources\google.jpg" />
+    <None Remove="Resources\image.png" />
+    <None Remove="Resources\income.png" />
+    <None Remove="Resources\info.png" />
     <None Remove="Resources\LOGO2.png" />
+    <None Remove="Resources\main.png" />
+    <None Remove="Resources\money.png" />
+    <None Remove="Resources\outcome.png" />
+    <None Remove="Resources\password.jpg" />
+    <None Remove="Resources\plane.png" />
+    <None Remove="Resources\plus.png" />
     <None Remove="Resources\refresh.png" />
+    <None Remove="Resources\time.png" />
+    <None Remove="Resources\transactions.png" />
+    <None Remove="Resources\username.png" />
+    <None Remove="Resources\x.png" />
   </ItemGroup>  
 
   <ItemGroup>
-    <EmbeddedResource Include="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="appsettings.json" />
+    <EmbeddedResource Include="Resources\budget.png" />
+    <EmbeddedResource Include="Resources\category.png" />
+    <EmbeddedResource Include="Resources\counterparty.png" />
+    <EmbeddedResource Include="Resources\facebook.png" />
+    <EmbeddedResource Include="Resources\file.png" />
+    <EmbeddedResource Include="Resources\goal.png" />
+    <EmbeddedResource Include="Resources\goal2.png" />
+    <EmbeddedResource Include="Resources\google.jpg" />
+    <EmbeddedResource Include="Resources\image.png" />
+    <EmbeddedResource Include="Resources\income.png" />
+    <EmbeddedResource Include="Resources\info.png" />
     <EmbeddedResource Include="Resources\LOGO2.png" />
+    <EmbeddedResource Include="Resources\main.png" />
+    <EmbeddedResource Include="Resources\money.png" />
+    <EmbeddedResource Include="Resources\outcome.png" />
+    <EmbeddedResource Include="Resources\password.jpg" />
+    <EmbeddedResource Include="Resources\plane.png" />
+    <EmbeddedResource Include="Resources\plus.png" />
     <EmbeddedResource Include="Resources\refresh.png" />
+    <EmbeddedResource Include="Resources\time.png" />
+    <EmbeddedResource Include="Resources\transactions.png" />
+    <EmbeddedResource Include="Resources\username.png" />
+    <EmbeddedResource Include="Resources\x.png" />
   </ItemGroup>
 
   <ItemGroup>

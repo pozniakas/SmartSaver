@@ -3,9 +3,51 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileApplication.Views.NewCategoryPage"
              Shell.PresentationMode="ModalAnimated"
+             xmlns:local1="clr-namespace:ProjectName.MarkupExtensions"
              Title="New Category">
     <ContentPage.Content>
-        <StackLayout Spacing="3" Padding="15">
+        <StackLayout BackgroundColor="White">
+            <Grid>
+                <StackLayout Padding="0" Margin="10,40,10,0" HorizontalOptions="FillAndExpand">
+                    <Frame  BackgroundColor="White" HeightRequest="610" HasShadow="True" Padding="0" Margin="0">
+                        <StackLayout>
+                            <StackLayout Margin="10">
+                                <Label Text="ADD GOAL" TextColor="#4a4e4d" HorizontalOptions="CenterAndExpand" FontAttributes="Bold"/>
+                            </StackLayout>
+
+                            <StackLayout Padding="0" Margin="15,10">
+                              
+                                <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
+                                            <Image Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.category.png}" Aspect="AspectFill" Margin="0"/>
+                                        </Frame>
+                                        <Entry Placeholder="Category" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding CategoryTitle, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"/>
+                                    </StackLayout>
+                                </Frame>
+
+                                <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
+                                            <Image Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.money.png}" Aspect="AspectFill" Margin="0"/>
+                                        </Frame>
+
+                                        <Entry Placeholder="Dedicated Amount" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding DedicatedAmount, Mode=TwoWay}"  ClearButtonVisibility="WhileEditing" Keyboard="Numeric"/>
+                                    </StackLayout>
+                                </Frame>
+
+                                <StackLayout Orientation="Horizontal">
+                                    <Button Text="CANCEL" BackgroundColor="#0e9aa7" TextColor="White" CornerRadius="30" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand" Margin="5"/>
+                                    <Button Text="SAVE" BackgroundColor="#0e9aa7" TextColor="White" CornerRadius="30" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand" x:Name="SaveButton" Margin="5"/>
+                                </StackLayout>
+
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </Grid>
+        </StackLayout>
+        <!--<StackLayout Spacing="3" Padding="15">
             <Label Text="Category" FontSize="Medium"/>
             <Entry Text="{Binding CategoryTitle, Mode=TwoWay}" FontSize="Medium" ClearButtonVisibility="WhileEditing"/>
             <Label Text="Dedicated Amount" FontSize="Medium"/>
@@ -14,6 +56,6 @@
                 <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
                 <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand" x:Name="SaveButton"></Button>
             </StackLayout>
-        </StackLayout>
+        </StackLayout>-->
     </ContentPage.Content>
 </ContentPage>
