@@ -113,8 +113,7 @@ namespace MobileApplication.ViewModels
  
         private async void OnSave()
         {
-            if (Toggled) decimalAmount *= (-1);
-
+            decimalAmount *= Toggled ? -1 : 1;
             var newTransaction = new Transaction()
             {
                 TrTime = TrTime,

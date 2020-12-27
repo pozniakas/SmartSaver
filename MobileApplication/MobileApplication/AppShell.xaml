@@ -48,7 +48,7 @@
                             </VisualState>
                             <VisualState x:Name="Selected">
                                 <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                    <Setter Property="BackgroundColor" Value="#4a4e4d" />
                                 </VisualState.Setters>
                             </VisualState>
                         </VisualStateGroup>
