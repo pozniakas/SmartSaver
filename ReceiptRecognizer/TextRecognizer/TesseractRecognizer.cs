@@ -9,7 +9,8 @@ namespace Recognizer.TextRecognizer
 {
     public class TesseractRecognizer : ITextRecognizer
     {
-        private const string TessDataPath = @".\assets\tessdata\best";
+        private const string TessDataPath = @"..\ReceiptRecognizer\assets\tessdata\best";
+        private bool isFirstTry = true;
 
         public async Task<string> GetText(Bitmap image, string language)
         {
@@ -25,9 +26,13 @@ namespace Recognizer.TextRecognizer
 
                 return await extractText;
             } 
-            catch (TesseractException)
+            catch (TesseractException ex)
             {
-                return await GetText(image, "lit");
+                if (isFirstTry)
+                {
+                    return await GetText(image, "lit");
+                }
+                throw ex;
             }
         }
 
