@@ -17,7 +17,27 @@
     <Grid RowSpacing="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
         
         <RefreshView x:DataType="local:ItemsViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-            <CollectionView Grid.Row="2" Margin="25" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" SelectionMode="None" ItemsSource="{Binding Items}">
+            <CollectionView Grid.Row="2" Margin="25" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" SelectionMode="None" ItemsSource="{Binding Items}" Header="{Binding .}">
+                <CollectionView.HeaderTemplate>
+                    <DataTemplate>
+                        <StackLayout Orientation="Vertical">
+                            <StackLayout Orientation="Horizontal"  HorizontalOptions="Center">
+                                <DatePicker x:Name="filterFrom"
+                                Date="{Binding DateFrom, Mode=TwoWay}"
+                                Format="yyyy-MM-dd"
+                                Margin="30, 0, 0, 30"/>
+                                <DatePicker x:Name="filterTo"
+                                Date="{Binding DateTo, Mode=TwoWay}"
+                                Format="yyyy-MM-dd"
+                                Margin="30, 0, 0, 30"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal"  HorizontalOptions="Center">
+                                <Button Text="Filter" Command="{Binding FilterCommand}"></Button>
+                                <Button Text="Reset" Command="{Binding ResetFilterCommand}"></Button>
+                            </StackLayout>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.HeaderTemplate>
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical" ItemSpacing="20"/>
                 </CollectionView.ItemsLayout>
