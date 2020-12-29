@@ -25,8 +25,7 @@ namespace WebAPI.Controllers
         private readonly ILogger _logger;
         private readonly ReceiptRecognizer _receiptRecognizer;
 
-        public TransactionsController(DatabaseContext context, ILogger logger)
-        public TransactionsController(DatabaseContext context, ReceiptRecognizer receiptRecognizer)
+        public TransactionsController(DatabaseContext context, ILogger logger, ReceiptRecognizer receiptRecognizer)
         {
             _context = context;
             _logger = logger;
