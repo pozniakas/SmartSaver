@@ -40,7 +40,6 @@ namespace WebAPI.Services
             {
                 return transactions;
             }
-            //Console.WriteLine($"{string.Join(",", header)} \n\n");
 
             while (csv.Read())
             {
@@ -56,7 +55,6 @@ namespace WebAPI.Services
             {
                 transactions.RemoveAt(0);
             }
-
 
             return transactions;
         }
@@ -105,7 +103,6 @@ namespace WebAPI.Services
                 SetHeader();
             }
 
-            //Debug.WriteLine($"{string.Join("|", header)} \n\n");
         }
 
         private void guessDelimiter()
