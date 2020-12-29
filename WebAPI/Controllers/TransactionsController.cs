@@ -14,12 +14,13 @@ using Recognizer.ObjectRecognizer;
 using Recognizer.TextRecognizer;
 using Recognizer;
 using Microsoft.AspNetCore.Authorization;
-using WebAPI.Filters;
+using WebAPI.Handlers;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = "BasicAuthentication")]
     public class TransactionsController : ControllerBase
     {
         private readonly DatabaseContext _context;
@@ -33,15 +34,13 @@ namespace WebAPI.Controllers
 
         // GET: api/Transactions
         [HttpGet]
-        //[TokenAuthenticationFilter]
         public async Task<ActionResult<IEnumerable<Transaction>>> GetTransactions()
         {
-            //var auth = User.Identity.IsAuthenticated;
-            //var authType = User.Identity.AuthenticationType;
-
-            // Get userId from httpContext
-
-            return await _context.Transaction.Include(x => x.Category).ToListAsync(); //Select(x => x.User == User)
+            return await _context.Transaction
+                // (... || transaction.User == null ) should be removed when user management system is fully functional
+                .Where(transaction => User.GetId() == transaction.User.Id || transaction.User == null)
+                .Include(transaction => transaction.Category).AsNoTracking()
+                .ToListAsync();
         }
 
         // GET: api/Transactions/5

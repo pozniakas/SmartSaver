@@ -1,12 +1,12 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WebAPI.Middleware;
+using WebAPI.Handlers;
 using WebAPI.Services;
-using WebAPI.TokenAuthentication;
 
 namespace WebAPI
 {
@@ -22,12 +22,17 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<ITokenManager, TokenManager>();
-
             services.AddControllers();
             services.AddDbContext<DatabaseContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"))
                 );
+
+            // configure basic authentication 
+            services.AddAuthentication("BasicAuthentication")
+                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
+            // configure DI for application services
+            services.AddScoped<IUserService, UserService>();
 
             // Ignores Reference Looping
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
@@ -46,8 +51,6 @@ namespace WebAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            //app.UseMiddleware<AuthorizationMiddleware>();
 
             app.UseAuthorization();
 
