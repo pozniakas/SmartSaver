@@ -1,38 +1,55 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using Tesseract;
 
 namespace Recognizer.TextRecognizer
 {
-    public class TesseractRecognizer : ITextRecognizer
+    public class TesseractRecognizer : ITextRecognizer, IDisposable
     {
         private const string TessDataPath = @"..\ReceiptRecognizer\assets\tessdata\best";
-        private bool isFirstTry = true;
+        //private const string TessDataPath = @".\assets\tessdata\best";
 
-        public async Task<string> GetText(Bitmap image, string language)
+        private TesseractEngine _tesseractEngine;
+
+        public Page RecognizedPage { get; private set; }
+
+        public TesseractRecognizer()
+        {
+            _tesseractEngine = new TesseractEngine(TessDataPath, "lit", EngineMode.Default);
+        }
+
+        public void Dispose()
+        {
+            _tesseractEngine.Dispose();
+        }
+
+        public async Task<string> GetText(Bitmap image)
         {
             try
             {
-                var dir = new DirectoryInfo(TessDataPath);
-                using var ocrEngineBest = new TesseractEngine(TessDataPath, language, EngineMode.Default);
+                if (_tesseractEngine.IsDisposed)
+                {
+                    _tesseractEngine = new TesseractEngine(TessDataPath, "lit", EngineMode.Default);
+                }
+
                 using var img = Pix.LoadFromMemory(ImageToByte(image));
-                var imgGray = img.ConvertRGBToGray();
+                var imageToRecognize = img
+                    .ConvertRGBToGray()
+                    //.BinarizeSauvola(10, 0.35f, false)
+                    //.BinarizeOtsuAdaptiveThreshold(10, 10, 0, 0, 0)
+                    .Deskew()
+                    ;
 
-                var extractText = new Task<string>(() => ocrEngineBest.Process(imgGray).GetText());
-                extractText.Start();
+                var processTask = new Task<Page>(() => _tesseractEngine.Process(imageToRecognize));
+                processTask.Start();
 
-                return await extractText;
-            } 
+                RecognizedPage = await processTask;
+
+                return RecognizedPage.GetText();
+            }
             catch (TesseractException ex)
             {
-                if (isFirstTry)
-                {
-                    return await GetText(image, "lit");
-                }
                 throw ex;
             }
         }

@@ -6,6 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebAPI.Handlers;
+using Recognizer;
+using Recognizer.ObjectRecognizer;
+using Recognizer.TextRecognizer;
 using WebAPI.Services;
 
 namespace WebAPI
@@ -38,6 +41,9 @@ namespace WebAPI
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
+
+            // Add receipt recognized dependency
+            services.AddSingleton(new ReceiptRecognizer(new EmguLargestAreaRecognizer(), new TesseractRecognizer()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

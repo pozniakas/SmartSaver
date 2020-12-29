@@ -1,19 +1,18 @@
 ﻿using DbEntities.Entities;
 using Recognizer.TextRecognizer;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Tesseract;
 
 namespace Recognizer
 {
-    public class ReceiptRecognizer
+    public class ReceiptRecognizer : IDisposable
     {
         private IObjectRecognizer _objectRecognizer;
         private ITextRecognizer _textRecognizer;
@@ -24,89 +23,64 @@ namespace Recognizer
             _textRecognizer = textRecognizer;
         }
 
-        public async Task RecognizeTestImages()
-        {
-            try
-            {
-                var tasks = new List<Task<Transaction>>();
-
-                var dir = new DirectoryInfo(@"..\..\..\assets\Receipts");
-                foreach (var imgPath in dir.GetFiles("*.jpg"))
-                {
-                    using var originalImage = Image.FromFile(imgPath.FullName);
-                    tasks.Add( Recognize(originalImage, imgPath) );
-                }
-
-                await Task.WhenAll(tasks);
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e);
-            }
-        }
-
         public async Task<Transaction> Recognize(Stream stream)
         {
             using var originalImage = Image.FromStream(stream);
             return await Recognize(originalImage);
         }
 
-        public async Task<Transaction> Recognize(Image originalImage, FileInfo file = null)
+        public async Task<Transaction> Recognize(Image originalImage)
         {
-            if (file != null)
-            {
-                Console.WriteLine(file.Name);
-            }
-
             try
             {
-                Statistics.AddRecognizingImage();
+                var resized = GetResizedImage(originalImage, 1000);
+                var cropped = await GetCroppedImage(resized);
 
-                var resizedImage = GetResizedImage(originalImage);
+                var page = await ReadImage(cropped);
+                var receiptText = new string(page.GetText());
+                page.Dispose();
 
-                //Console.WriteLine($"{file.Name} Cropping...");
-                var croppedImage = await _objectRecognizer.GetRecognizedImage(resizedImage);
-
-                //Console.WriteLine($"{file.Name} Getting text...");
-                var receiptText = await _textRecognizer.GetText(croppedImage, "lit");
                 var transaction = TextToTransaction(receiptText);
-
-                if (file != null)
-                {
-                    var fileName = file.Directory.Parent.FullName + @"\Result\" + file.Name + "cropped.jpg";
-                    croppedImage.Save(fileName);
-                }
-                //Console.WriteLine($"{file.Name} Completed successfully. Amount = {transaction.Amount}");
 
                 return transaction;
             }
             catch (Exception exception)
             {
-                Console.WriteLine($"EXCEPTION: {exception}");
+                Debug.WriteLine($"Exception (on recognition): \n{exception.Message}\n{exception.StackTrace}");
                 throw exception;
             }
         }
 
         public Transaction TextToTransaction(string text)
         {
-            var match = Regex.Match(text, "^.*(moketi|mokėti|suma).*", RegexOptions.Multiline | RegexOptions.IgnoreCase);
-            var amount = Regex.Match(match.Value, @"((0(\.|,)\d\d)|([1-9]\d*((\.|,)\d\d)?))", RegexOptions.IgnoreCase);
+            var interpreter = new ReceiptTextInterpreter(text);
 
             return new Transaction
             {
-                Amount = decimal.TryParse(amount.Value, out decimal parsedAmount) ? parsedAmount : 0,
-                TrTime = DateTime.UtcNow,
-                Details = "",
-                CounterParty = ""
+                TrTime = interpreter.DateTime,
+                Amount = - interpreter.Amount,
+                CounterParty = interpreter.CounterParty,
+                Details = interpreter.Details
             };
         }
 
-        private Bitmap GetResizedImage(Image image)
+        public async Task<Page> ReadImage(Bitmap image)
+        {
+            await _textRecognizer.GetText(image);
+            return _textRecognizer.RecognizedPage;
+        }
+
+        public async Task<Bitmap> GetCroppedImage(Bitmap image)
+        {
+            return await _objectRecognizer.GetRecognizedImage(image);
+        }
+
+        public Bitmap GetResizedImage(Image image, int width = 500)
         {
             FixImageOrientation(image);
 
             double aspectRatio = (double)image.Width / image.Height;
-            return new Bitmap(image, 500, (int)(500 / aspectRatio));
+            return new Bitmap(image, width, (int)(width / aspectRatio));
         }
 
         private void FixImageOrientation(Image src)
@@ -118,17 +92,22 @@ namespace Recognizer
             byte orientation = pi.Value[0];
             switch (orientation)
             {
-                case 2: src.RotateFlip(RotateFlipType.RotateNoneFlipX);   break;
-                case 3: src.RotateFlip(RotateFlipType.RotateNoneFlipXY);  break;
-                case 4: src.RotateFlip(RotateFlipType.RotateNoneFlipY);   break;
-                case 5: src.RotateFlip(RotateFlipType.Rotate90FlipX);     break;
-                case 6: src.RotateFlip(RotateFlipType.Rotate90FlipNone);  break;
-                case 7: src.RotateFlip(RotateFlipType.Rotate90FlipY);     break;
-                case 8: src.RotateFlip(RotateFlipType.Rotate90FlipXY);    break;
+                case 2: src.RotateFlip(RotateFlipType.RotateNoneFlipX); break;
+                case 3: src.RotateFlip(RotateFlipType.RotateNoneFlipXY); break;
+                case 4: src.RotateFlip(RotateFlipType.RotateNoneFlipY); break;
+                case 5: src.RotateFlip(RotateFlipType.Rotate90FlipX); break;
+                case 6: src.RotateFlip(RotateFlipType.Rotate90FlipNone); break;
+                case 7: src.RotateFlip(RotateFlipType.Rotate90FlipY); break;
+                case 8: src.RotateFlip(RotateFlipType.Rotate90FlipXY); break;
                 default: break;
             }
 
             src.RemovePropertyItem(ExifOrientationId);
+        }
+
+        public void Dispose()
+        {
+            _textRecognizer.Dispose();
         }
     }
 }
