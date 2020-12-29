@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Recognizer;
+using Recognizer.ObjectRecognizer;
+using Recognizer.TextRecognizer;
 using WebAPI.Services;
 
 namespace WebAPI
@@ -24,6 +27,8 @@ namespace WebAPI
             services.AddDbContext<DatabaseContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"))
                 );
+
+            services.AddSingleton(new ReceiptRecognizer(new EmguLargestAreaRecognizer(), new TesseractRecognizer()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
