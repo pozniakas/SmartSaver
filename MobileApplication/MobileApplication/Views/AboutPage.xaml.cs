@@ -132,7 +132,9 @@ namespace MobileApplication.Views
             {
                 Entries = entries,
             };
-            budget.Text = "Income: " + income + "\n" + "Expenses: " + expenses;
+
+            incomeLabel.Text = income.ToString();
+            expensesLabel.Text = expenses.ToString();
             net = 0;
             income = 0;
             expenses = 0;

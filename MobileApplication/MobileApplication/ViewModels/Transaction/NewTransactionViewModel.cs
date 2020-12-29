@@ -17,6 +17,7 @@ namespace MobileApplication.ViewModels
         private string amount;
         private DateTime trTime = DateTime.Today;
         private decimal decimalAmount;
+        private bool toggled;
         public Command LoadItemsCommand { get; }
         public ObservableCollection<Category> Items { get; set; }
 
@@ -59,11 +60,17 @@ namespace MobileApplication.ViewModels
         private bool ValidateSave()
         {
 
-            return !string.IsNullOrEmpty(counterParty)
+            return !string.IsNullOrEmpty(details)
                 && !string.IsNullOrEmpty(amount)
                 && decimal.TryParse(amount, out decimalAmount);
         }
 
+        public bool Toggled
+        {
+            get => toggled;
+            set => SetProperty(ref toggled, value, nameof(Toggled));
+            
+        }
         public Category Categor
         {
             get { return category; }
@@ -106,6 +113,7 @@ namespace MobileApplication.ViewModels
  
         private async void OnSave()
         {
+            decimalAmount *= Toggled ? -1 : 1;
             var newTransaction = new Transaction()
             {
                 TrTime = TrTime,
@@ -123,5 +131,7 @@ namespace MobileApplication.ViewModels
 
             IsBusy = false;
         }
+
+
     }
 }
