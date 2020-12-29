@@ -151,8 +151,8 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("receiptImage")]
-        // POST: api/Transactions/file
-        public async Task<IActionResult> TransactionsFromReceipt([FromForm(Name = "image")] IFormFile image)
+        // POST: api/Transactions/receiptImage
+        public async Task<IActionResult> TransactionsFromReceipt([FromForm] IFormFile image)
         {
             try
             {
