@@ -12,6 +12,7 @@
     <None Remove="Resources\counterparty.png" />
     <None Remove="Resources\facebook.png" />
     <None Remove="Resources\file.png" />
+    <None Remove="Resources\Fonts\materialdesignicons-webfont.ttf" />
     <None Remove="Resources\goal.png" />
     <None Remove="Resources\goal2.png" />
     <None Remove="Resources\google.jpg" />
@@ -20,6 +21,11 @@
     <None Remove="Resources\info.png" />
     <None Remove="Resources\LOGO2.png" />
     <None Remove="Resources\main.png" />
+    <None Remove="Resources\Menu\budget.png" />
+    <None Remove="Resources\Menu\goal.png" />
+    <None Remove="Resources\Menu\main.jpg" />
+    <None Remove="Resources\Menu\main.png" />
+    <None Remove="Resources\Menu\transactions.png" />
     <None Remove="Resources\money.png" />
     <None Remove="Resources\outcome.png" />
     <None Remove="Resources\password.jpg" />
@@ -39,6 +45,7 @@
     <EmbeddedResource Include="Resources\counterparty.png" />
     <EmbeddedResource Include="Resources\facebook.png" />
     <EmbeddedResource Include="Resources\file.png" />
+    <EmbeddedResource Include="Resources\Fonts\materialdesignicons-webfont.ttf" />
     <EmbeddedResource Include="Resources\goal.png" />
     <EmbeddedResource Include="Resources\goal2.png" />
     <EmbeddedResource Include="Resources\google.jpg" />
@@ -47,6 +54,10 @@
     <EmbeddedResource Include="Resources\info.png" />
     <EmbeddedResource Include="Resources\LOGO2.png" />
     <EmbeddedResource Include="Resources\main.png" />
+    <EmbeddedResource Include="Resources\Menu\budget.png" />
+    <EmbeddedResource Include="Resources\Menu\goal.png" />
+    <EmbeddedResource Include="Resources\Menu\main.png" />
+    <EmbeddedResource Include="Resources\Menu\transactions.png" />
     <EmbeddedResource Include="Resources\money.png" />
     <EmbeddedResource Include="Resources\outcome.png" />
     <EmbeddedResource Include="Resources\password.jpg" />
