@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using MobileApplication.Models;
 using Xamarin.Forms;
 using DbEntities.Entities;
 using MobileApplication.Services.Rest;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -48,7 +46,6 @@ namespace MobileApplication.ViewModels
         private DateTime creationDate;
         private string creationDateString;
         private DateTime deadlineDate;
-        public decimal profit;
 
         public string Id { get; set; }
 
@@ -137,12 +134,52 @@ namespace MobileApplication.ViewModels
             IsBusy = false;
         }
 
-        public string GoalPossibility(decimal worth)
+        public void CalculatePossibility()
         {
-            decimal profitAWeek = profit / 4;
-            decimal possibilityRate = worth / profitAWeek;
+            decimal savePerMonth;
+            decimal profitPerMonth;
+            decimal months = DeadlineDate.Subtract(CreationDate).Days / 31;
+            if (months>1)
+            {
+                savePerMonth = decimal.Parse(Amount) / months;
+            }
+            else
+            {
+                savePerMonth = decimal.Parse(Amount);
+            }
+
+            profitPerMonth = CalculateProfitPerMonth();
+            Possibility = GoalPossibility(savePerMonth, profitPerMonth);
+        }
+
+        public decimal CalculateProfitPerMonth()
+        {
+            decimal totalProfit = 0;
+            List<string> uniqueMonths = new List<string>();
+            foreach (Transaction transaction in Transactions)
+            {
+                string date = transaction.TrTime.ToString("yyyyMM");
+                if (!uniqueMonths.Contains(date))
+                {
+                    uniqueMonths.Add(date);
+                }
+                totalProfit += transaction.Amount;
+                    
+            }
+            return totalProfit /= uniqueMonths.Count;
+        }
+
+        public string GoalPossibility(decimal savePerMonth, decimal profitPerMonth)
+        {
+            decimal possibilityRate = savePerMonth / profitPerMonth;
+            Debug.WriteLine(savePerMonth);
+            Debug.WriteLine(profitPerMonth);
             Debug.WriteLine(possibilityRate);
 
+            if (possibilityRate < 0)
+            {
+                return "Not real";
+            }
             if (possibilityRate < (decimal)0.5)
             {
                 return "Huge";
@@ -153,52 +190,12 @@ namespace MobileApplication.ViewModels
                 return "Real";
             }
 
-            if (possibilityRate < 1)
+            if (possibilityRate < (decimal)1.2)
             {
                 return "Small";
             }
 
             return "Not real";
-        }
-
-
-        public void CalculatePossibility()
-        {
-            decimal money;
-            profit = 0;
-            if (DeadlineDate.Subtract(DateTime.UtcNow).Days > 7)
-            {
-                money = Decimal.Parse(Amount) / (DeadlineDate.Subtract(DateTime.UtcNow).Days / 7);
-            }
-            else
-            {
-                money = Decimal.Parse(Amount);
-            }
-
-            CalculateProfit();
-            Possibility = GoalPossibility(money);
-        }
-
-        public void CalculateProfit()
-        {
-            try
-            {
-                List<string> months = new List<string>();
-                foreach (Transaction transaction in Transactions)
-                {
-                    string date = transaction.TrTime.ToString("yyyyMM");
-                    if (!months.Contains(date))
-                    {
-                        months.Add(date);
-                    }
-                    profit += transaction.Amount;
-                    profit /= months.Count;
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
         }
 
         async Task ExecuteLoadTransactionItemsCommand()
