@@ -8,7 +8,6 @@
 
     <!--
         The overall app visual hierarchy is defined here, along with navigation.
-    
         https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/
     -->
 
@@ -82,10 +81,10 @@
     -->
 
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
-        <ShellContent Title="Main" Icon="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.main.png}" Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
-        <ShellContent Title="Transactions" Icon ="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.transactions.png}" ContentTemplate="{DataTemplate local:ItemsPage}" />
-        <ShellContent Title="Goals" Icon="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.goal.png}" ContentTemplate="{DataTemplate local:GoalsPage}" />
-        <ShellContent Title="Budget" Icon="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.budget.png}" ContentTemplate="{DataTemplate local:CategoryPage}" />
+        <ShellContent Title="Main" Icon="{local1:EmbeddedImage MobileApplication.Resources.main.png}" Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
+        <ShellContent Title="Transactions" Icon ="{local1:EmbeddedImage MobileApplication.Resources.transactions.png}" ContentTemplate="{DataTemplate local:ItemsPage}" />
+        <ShellContent Title="Goals" Icon="{local1:EmbeddedImage MobileApplication.Resources.goal.png}" ContentTemplate="{DataTemplate local:GoalsPage}" />
+        <ShellContent Title="Budget" Icon="{local1:EmbeddedImage MobileApplication.Resources.budget.png}" ContentTemplate="{DataTemplate local:CategoryPage}" />
     </FlyoutItem>
 
     <!-- When the Flyout is visible this will be a menu item you can tie a click behavior to  -->

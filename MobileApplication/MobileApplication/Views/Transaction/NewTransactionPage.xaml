@@ -27,7 +27,7 @@
                                     <Frame BackgroundColor="Transparent" BorderColor="White" Margin="0,15,0,0" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                         <StackLayout Orientation="Horizontal">
                                             <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                                <Image Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.time.png}" Aspect="AspectFill" Margin="0"/>
+                                                <Image Source="{local1:EmbeddedImage MobileApplication.Resources.time.png}" Aspect="AspectFill" Margin="0"/>
                                             </Frame>
                                             <DatePicker x:Name="transactionDate" Format="yyyy-MM-dd" Margin="0, 0, 15, 0" Date="{Binding TrTime}" />
                                         </StackLayout>
@@ -35,7 +35,7 @@
                                     <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" Margin="0,15,0,0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                         <StackLayout Orientation="Horizontal">
                                             <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                                <Image Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.category.png}" Aspect="AspectFill" Margin="0"/>
+                                                <Image Source="{local1:EmbeddedImage MobileApplication.Resources.category.png}" Aspect="AspectFill" Margin="0"/>
                                             </Frame>
                                             <Picker x:Name="picker" Title="Category" ItemsSource="{Binding Items}" ItemDisplayBinding="{Binding Title}" SelectedItem="{Binding Categor, Mode=TwoWay}" />
                                         </StackLayout>
@@ -44,7 +44,7 @@
                                 <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                     <StackLayout Orientation="Horizontal">
                                         <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                            <Image Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.money.png}" Aspect="AspectFill" Margin="0"/>
+                                            <Image Source="{local1:EmbeddedImage MobileApplication.Resources.money.png}" Aspect="AspectFill" Margin="0"/>
                                         </Frame>
 
                                         <Entry Placeholder="Amount" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding Amount, Mode=TwoWay}"  ClearButtonVisibility="WhileEditing" Keyboard="Numeric"/>
@@ -53,7 +53,7 @@
                                 <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                     <StackLayout Orientation="Horizontal">
                                         <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                            <Image Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.info.png}" Aspect="AspectFill" Margin="0"/>
+                                            <Image Source="{local1:EmbeddedImage MobileApplication.Resources.info.png}" Aspect="AspectFill" Margin="0"/>
                                         </Frame>
 
                                         <Entry Placeholder="Details" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding Details, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"/>
@@ -62,7 +62,7 @@
                                 <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                     <StackLayout Orientation="Horizontal">
                                         <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                            <Image Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.counterparty.png}" Aspect="AspectFill" Margin="0"/>
+                                            <Image Source="{local1:EmbeddedImage MobileApplication.Resources.counterparty.png}" Aspect="AspectFill" Margin="0"/>
                                         </Frame>
 
                                         <Entry Placeholder="Counter Party" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding CounterParty, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"/>
