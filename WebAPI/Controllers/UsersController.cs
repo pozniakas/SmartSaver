@@ -1,24 +1,43 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using DbEntities.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using DbEntities.Entities;
-using System.Collections.Generic;
-using System;
 using Serilog;
-using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using WebAPI.DTOModels;
+using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+
     [ApiController]
+    [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = "BasicAuthentication")]
     public class UsersController : Controller
     {
         private readonly DatabaseContext _context;
+        private IUserService _userService;
 
-        public UsersController(DatabaseContext context)
+        public UsersController(DatabaseContext context, IUserService userService)
         {
             _context = context;
+            _userService = userService;
+        }
+
+        [AllowAnonymous]
+        [HttpPost("authenticate")]
+        public async Task<IActionResult> Authenticate([FromBody] UserDTO model)
+        {
+            var user = await _userService.Authenticate(model.Username, model.Password);
+
+            if (user == null)
+                return BadRequest(new { message = "Username or password is incorrect" });
+
+            return Ok(user);
         }
 
         // GET: api/Users

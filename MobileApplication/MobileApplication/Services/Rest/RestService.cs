@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using MobileApplication.Configuration;
+using System.Net.Http.Headers;
 
 namespace MobileApplication.Services.Rest
 {
@@ -23,6 +24,8 @@ namespace MobileApplication.Services.Rest
             {
                 BaseAddress = new Uri(AppSettingsManager.Settings["ApiBaseAddress"])
             };
+            var byteArray = Encoding.ASCII.GetBytes("default:password");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
         }
 
         public async Task<List<T>> RefreshDataAsync()
