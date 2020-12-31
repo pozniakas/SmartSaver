@@ -23,7 +23,10 @@ namespace MobileApplication.ViewModels
 
             var httpClient = new HttpClient();
             var url = _baseUrl.Value + "api/Transactions/receiptImage";
+
+            await App.Current.MainPage.DisplayAlert("Loading", "Image recognition started...", "Ok");
             var response = await httpClient.PostAsync(url, content);
+            await App.Current.MainPage.DisplayAlert("Finished", "Image recognition finished.", "Ok");
 
         }
 
