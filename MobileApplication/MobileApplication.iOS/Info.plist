@@ -34,5 +34,8 @@
     <string>MobileApplication</string>
     <key>XSAppIconAssets</key>
     <string>Assets.xcassets/AppIcon.appiconset</string>
+	
+	<key>FontsProvidedByApplication</key>
+	<string>materialdesignicons-webfont.ttf</string>
 </dict>
 </plist>

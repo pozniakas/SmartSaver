@@ -1,19 +1,19 @@
 ﻿using System;
+using System.Reflection;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 namespace ProjectName.MarkupExtensions
 {
+    [ContentProperty(nameof(Source))]
     public class EmbeddedImage : IMarkupExtension
     {
-        public string ResourceId
-        {
-            get;
-            set;
-        }
+        public string Source { get; set; }
+
         public object ProvideValue(IServiceProvider serviceProvider)
         {
-            if (String.IsNullOrWhiteSpace(ResourceId)) return null;
-            return ImageSource.FromResource(ResourceId);
+            return string.IsNullOrWhiteSpace(Source)
+                ? null 
+                : ImageSource.FromResource(Source, typeof(EmbeddedImage).GetTypeInfo().Assembly);
         }
     }
 }

@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebAPI.Handlers;
 using Recognizer;
 using Recognizer.ObjectRecognizer;
 using Recognizer.TextRecognizer;
@@ -28,6 +30,19 @@ namespace WebAPI
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"))
                 );
 
+            // configure basic authentication 
+            services.AddAuthentication("BasicAuthentication")
+                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
+            // configure DI for application services
+            services.AddScoped<IUserService, UserService>();
+
+            // Ignores Reference Looping
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
+            // Add receipt recognized dependency
             services.AddSingleton(new ReceiptRecognizer(new EmguLargestAreaRecognizer(), new TesseractRecognizer()));
         }
 

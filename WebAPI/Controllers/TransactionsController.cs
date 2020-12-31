@@ -11,19 +11,24 @@ using DbEntities.Entities;
 using WebAPI.Services;
 using System.Linq.Expressions;
 using Recognizer;
+using Microsoft.AspNetCore.Authorization;
+using WebAPI.Handlers;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = "BasicAuthentication")]
     public class TransactionsController : ControllerBase
     {
         private readonly DatabaseContext _context;
+        private readonly ILogger _logger;
         private readonly ReceiptRecognizer _receiptRecognizer;
 
-        public TransactionsController(DatabaseContext context, ReceiptRecognizer receiptRecognizer)
+        public TransactionsController(DatabaseContext context, ILogger logger, ReceiptRecognizer receiptRecognizer)
         {
             _context = context;
+            _logger = logger;
             _receiptRecognizer = receiptRecognizer;
         }
 
@@ -31,14 +36,21 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Transaction>>> GetTransactions()
         {
-            return await _context.Transaction.ToListAsync();
+            return await _context.Transaction
+                // (... || transaction.User == null ) should be removed when user management system is fully functional
+                .Where(transaction => User.GetId() == transaction.User.Id || transaction.User == null)
+                .Include(transaction => transaction.Category).AsNoTracking()
+                .ToListAsync();
         }
 
         // GET: api/Transactions/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Transaction>> GetTransaction(long id)
         {
-            var transaction = await _context.Transaction.FindAsync(id);
+            var transaction = await _context.Transaction//.FindAsync(id);
+                .Where(transaction => transaction.Id == id)
+                .Include(transaction => transaction.Category).AsNoTracking()
+                .SingleOrDefaultAsync();
 
             if (transaction == null)
             {
@@ -112,7 +124,7 @@ namespace WebAPI.Controllers
             }
             catch(Exception ex)
             {
-                Log.Error(ex, $"POST: api/Transactions {transaction}");
+                _logger.Error(ex, $"POST: api/Transactions {transaction}");
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }
@@ -136,7 +148,7 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                Log.Error(ex, $"POST: api/Transactions");
+                _logger.Error(ex, $"POST: api/Transactions");
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }
@@ -159,7 +171,7 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                Log.Error(ex, $"POST: api/Transactions");
+                _logger.Error(ex, $"POST: api/Transactions");
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }

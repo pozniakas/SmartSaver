@@ -91,19 +91,19 @@
             </pv:PancakeView.BackgroundGradientStops>
             <Expander Rotation="180" HorizontalOptions="Start" VerticalOptions="End">
                 <Expander.Header>
-                    <Image Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.plus.png}" WidthRequest="30" HeightRequest="30" Rotation="180">
+                    <Image Source="{local1:EmbeddedImage MobileApplication.Resources.plus.png}" WidthRequest="30" HeightRequest="30" Rotation="180">
                         <Image.Triggers>
                             <DataTrigger TargetType="Image" 
                                          Binding="{Binding Source={RelativeSource AncestorType={x:Type Expander}}, Path=IsExpanded}" 
                                          Value="True">
-                                <Setter Property="Source" Value="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.x.png}"/>
+                                <Setter Property="Source" Value="{local1:EmbeddedImage MobileApplication.Resources.x.png}"/>
                             </DataTrigger>
                         </Image.Triggers>
                     </Image>
                 </Expander.Header>
                 <StackLayout Spacing="30" Margin="0,20">
-                    <ImageButton Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.file.png}" WidthRequest="30" HeightRequest="30" Rotation="180" BackgroundColor="Transparent" Clicked="UploadCSVButton_Clicked"/>
-                    <ImageButton Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.image.png}" WidthRequest="30" HeightRequest="30" Rotation="180" BackgroundColor="Transparent" Clicked="UploadImageButton_Clicked"/>
+                    <ImageButton Source="{local1:EmbeddedImage MobileApplication.Resources.file.png}" WidthRequest="30" HeightRequest="30" Rotation="180" BackgroundColor="Transparent" Clicked="UploadCSVButton_Clicked"/>
+                    <ImageButton Source="{local1:EmbeddedImage MobileApplication.Resources.image.png}" WidthRequest="30" HeightRequest="30" Rotation="180" BackgroundColor="Transparent" Clicked="UploadImageButton_Clicked"/>
                 </StackLayout>
             </Expander>
         </pv:PancakeView>
