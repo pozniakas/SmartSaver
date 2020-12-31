@@ -9,6 +9,7 @@ using MobileApplication.Models;
 using MobileApplication.Views;
 using MobileApplication.Services.Rest;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MobileApplication.ViewModels
 {
@@ -57,7 +58,7 @@ namespace MobileApplication.ViewModels
                     decimal months = DeadlineDate.Subtract(goal.Creationdate).Days / 31;
                     if (months > 1)
                     {
-                        savePerMonth = goal.Amount / months;
+                        savePerMonth = decimal.Divide(goal.Amount, months);
                     }
                     else
                     {
@@ -116,38 +117,31 @@ namespace MobileApplication.ViewModels
         {
             decimal totalProfit = 0;
             List<string> uniqueMonths = new List<string>();
-            foreach (Transaction transaction in _transactions)
-            {
-                string date = transaction.TrTime.ToString("yyyyMM");
-                if (!uniqueMonths.Contains(date))
-                {
-                    uniqueMonths.Add(date);
-                }
-                totalProfit += transaction.Amount;
-
-            }
+            List<string> months = new List<string>();
+            _transactions.ForEach(transaction => months.Add(transaction.TrTime.ToString("yyyyMM")));
+            uniqueMonths = months.GroupBy(date => date).Select(grp => grp.First()).ToList();
+            totalProfit = _transactions.Sum(transaction => transaction.Amount);
             return totalProfit /= uniqueMonths.Count;
         }
 
         public string GoalPossibility(decimal savePerMonth, decimal profitPerMonth)
         {
-            decimal possibilityRate = savePerMonth / profitPerMonth;
+            decimal possibilityRate = profitPerMonth / savePerMonth;
+            Debug.WriteLine(profitPerMonth);
+            Debug.WriteLine(savePerMonth);
+            Debug.WriteLine(possibilityRate);
 
-            if (possibilityRate < 0)
-            {
-                return "Not real";
-            }
-            if (possibilityRate < (decimal)0.5)
+            if (possibilityRate >= 2)
             {
                 return "Huge";
             }
 
-            if (possibilityRate < (decimal)0.8)
+            if (possibilityRate >= 01.25m)
             {
                 return "Real";
             }
 
-            if (possibilityRate < (decimal)1.2)
+            if (possibilityRate >= 0.8m)
             {
                 return "Small";
             }
