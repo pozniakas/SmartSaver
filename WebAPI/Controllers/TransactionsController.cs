@@ -47,7 +47,10 @@ namespace WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Transaction>> GetTransaction(long id)
         {
-            var transaction = await _context.Transaction.FindAsync(id);
+            var transaction = await _context.Transaction//.FindAsync(id);
+                .Where(transaction => transaction.Id == id)
+                .Include(transaction => transaction.Category).AsNoTracking()
+                .SingleOrDefaultAsync();
 
             if (transaction == null)
             {
