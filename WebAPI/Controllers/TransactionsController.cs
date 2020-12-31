@@ -10,8 +10,6 @@ using Serilog;
 using DbEntities.Entities;
 using WebAPI.Services;
 using System.Linq.Expressions;
-using Recognizer.ObjectRecognizer;
-using Recognizer.TextRecognizer;
 using Recognizer;
 
 namespace WebAPI.Controllers
@@ -21,10 +19,12 @@ namespace WebAPI.Controllers
     public class TransactionsController : ControllerBase
     {
         private readonly DatabaseContext _context;
+        private readonly ReceiptRecognizer _receiptRecognizer;
 
-        public TransactionsController(DatabaseContext context)
+        public TransactionsController(DatabaseContext context, ReceiptRecognizer receiptRecognizer)
         {
             _context = context;
+            _receiptRecognizer = receiptRecognizer;
         }
 
         // GET: api/Transactions
@@ -147,11 +147,10 @@ namespace WebAPI.Controllers
         {
             try
             {
-                var recognizer = new ReceiptRecognizer(new EmguLargestAreaRecognizer(), new TesseractRecognizer());
                 using var memoryStream = new MemoryStream();
                 await image.CopyToAsync(memoryStream);
 
-                var transaction = await recognizer.Recognize(memoryStream);
+                var transaction = await _receiptRecognizer.Recognize(memoryStream);
 
                 _context.Transaction.Add(transaction);
                 await _context.SaveChangesAsync();

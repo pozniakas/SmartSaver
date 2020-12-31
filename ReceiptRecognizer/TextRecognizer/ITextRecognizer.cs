@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
 using System.Threading.Tasks;
+using Tesseract;
 
 namespace Recognizer.TextRecognizer
 {
-    public interface ITextRecognizer
+    public interface ITextRecognizer : IDisposable
     {
-        public Task<string> GetText(Bitmap image, string language);
+        public Page RecognizedPage { get; }
+        public Task<string> GetText(Bitmap image);
     }
 }
