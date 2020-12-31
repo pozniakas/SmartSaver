@@ -12,8 +12,6 @@ namespace MobileApplication.ViewModels
     class GoalDetailViewModel : BaseViewModel
     {
         private readonly IRestService<Goal> RestService;
-        private readonly IRestService<Transaction> TransactionRestService;
-        public ObservableCollection<Transaction> Transactions { get; }
         public GoalDetailViewModel(Goal goal)
         {
             Id = goal.Id.ToString();
@@ -25,10 +23,6 @@ namespace MobileApplication.ViewModels
             CreationDateString = goal.Creationdate.ToString("dd/MM/yyyy");
 
             RestService = new RestService<Goal>("api/Goals/");
-            TransactionRestService = new RestService<Transaction>("api/Transactions/");
-
-            Transactions = new ObservableCollection<Transaction>();
-            _ = ExecuteLoadTransactionItemsCommand();
 
             SaveCommand = new Command(OnSave, ValidateSave);
             DeleteCommand = new Command(OnDelete);
@@ -132,91 +126,6 @@ namespace MobileApplication.ViewModels
             await Shell.Current.GoToAsync("..");
 
             IsBusy = false;
-        }
-
-        public void CalculatePossibility()
-        {
-            decimal savePerMonth;
-            decimal profitPerMonth;
-            decimal months = DeadlineDate.Subtract(CreationDate).Days / 31;
-            if (months>1)
-            {
-                savePerMonth = decimal.Parse(Amount) / months;
-            }
-            else
-            {
-                savePerMonth = decimal.Parse(Amount);
-            }
-
-            profitPerMonth = CalculateProfitPerMonth();
-            Possibility = GoalPossibility(savePerMonth, profitPerMonth);
-        }
-
-        public decimal CalculateProfitPerMonth()
-        {
-            decimal totalProfit = 0;
-            List<string> uniqueMonths = new List<string>();
-            foreach (Transaction transaction in Transactions)
-            {
-                string date = transaction.TrTime.ToString("yyyyMM");
-                if (!uniqueMonths.Contains(date))
-                {
-                    uniqueMonths.Add(date);
-                }
-                totalProfit += transaction.Amount;
-                    
-            }
-            return totalProfit /= uniqueMonths.Count;
-        }
-
-        public string GoalPossibility(decimal savePerMonth, decimal profitPerMonth)
-        {
-            decimal possibilityRate = savePerMonth / profitPerMonth;
-            Debug.WriteLine(savePerMonth);
-            Debug.WriteLine(profitPerMonth);
-            Debug.WriteLine(possibilityRate);
-
-            if (possibilityRate < 0)
-            {
-                return "Not real";
-            }
-            if (possibilityRate < (decimal)0.5)
-            {
-                return "Huge";
-            }
-
-            if (possibilityRate < (decimal)0.8)
-            {
-                return "Real";
-            }
-
-            if (possibilityRate < (decimal)1.2)
-            {
-                return "Small";
-            }
-
-            return "Not real";
-        }
-
-        async Task ExecuteLoadTransactionItemsCommand()
-        {
-            IsBusy = true;
-            Transactions.Clear();
-
-            try
-            {
-                var items = await TransactionRestService.RefreshDataAsync();
-                items.ForEach(transaction => Transactions.Add(transaction));
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-            finally
-            {
-                IsBusy = false;
-                CalculatePossibility();
-            }
         }
     }
 }
