@@ -45,7 +45,6 @@
     <EmbeddedResource Include="Resources\counterparty.png" />
     <EmbeddedResource Include="Resources\facebook.png" />
     <EmbeddedResource Include="Resources\file.png" />
-    <EmbeddedResource Include="Resources\Fonts\materialdesignicons-webfont.ttf" />
     <EmbeddedResource Include="Resources\goal.png" />
     <EmbeddedResource Include="Resources\goal2.png" />
     <EmbeddedResource Include="Resources\google.jpg" />
@@ -99,6 +98,10 @@
     <EmbeddedResource Update="Views\Transaction\NewTransactionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\Fonts\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

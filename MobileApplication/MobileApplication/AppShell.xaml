@@ -2,7 +2,6 @@
 <Shell xmlns="http://xamarin.com/schemas/2014/forms" 
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:local="clr-namespace:MobileApplication.Views"
-       xmlns:local1="clr-namespace:ProjectName.MarkupExtensions"
        xmlns:helpers="clr-namespace:MobileApplication.Helpers"
        Title="MobileApplication"
        x:Class="MobileApplication.AppShell">
@@ -73,10 +72,12 @@
                 </Setter>
             </Style>
 
-            <OnPlatform x:Key="MaterialFontFamily" x:TypeArguments="x:String">
-                <On Platform="iOS" Value="Material Design Icons" />
-                <On Platform="Andrioid" Value="materialdesignicons-webfont.ttf#Material Design Icons" />
-            </OnPlatform>
+            <OnPlatform
+                x:Key="MaterialFontIcons"
+                x:TypeArguments="x:String"
+                Android="materialdesignicons-webfont.ttf#MaterialDesignIcons"
+                iOS="MaterialDesignIcons" />
+            
         </ResourceDictionary>
     </Shell.Resources>
 
@@ -85,28 +86,22 @@
         FlyoutDisplayOptions="AsMultipleItems" will create a separate flyout item for each child element    
         https://docs.microsoft.com/dotnet/api/xamarin.forms.shellgroupitem.flyoutdisplayoptions?view=xamarin-forms
     -->
-
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent Title="Main"
                       Route="AboutPage"
-                      Icon="{FontImage
-                                FontFamily={StaticResource MaterialFontFamily},
-                                Glyph={x:Static helpers:IconFont.Airport },
-                                Color=White,
-                                Size=Small
-                                }"
+                      Icon="{FontImage FontFamily={StaticResource MaterialFontIcons}, Color=White, Size=Small, Glyph={x:Static helpers:IconFont.ChartBar }}"
                       ContentTemplate="{DataTemplate local:AboutPage}" />
         <ShellContent Title="Transactions"
                       Route="TransactionsPage"
-                      Icon="{local1:EmbeddedImage MobileApplication.Resources.Menu.transactions.png}"
+                      Icon="{FontImage FontFamily={StaticResource MaterialFontIcons}, Color=White, Size=Small, Glyph={x:Static helpers:IconFont.SwapVertical }}"
                       ContentTemplate="{DataTemplate local:ItemsPage}" />
         <ShellContent Title="Goals"
                       Route="GoalsPage"
-                      Icon="{local1:EmbeddedImage MobileApplication.Resources.Menu.goal.png}"
+                      Icon="{FontImage FontFamily={StaticResource MaterialFontIcons}, Color=White, Size=Small, Glyph={x:Static helpers:IconFont.Flag }}"
                       ContentTemplate="{DataTemplate local:GoalsPage}" />
         <ShellContent Title="Budget"
                       Route="BudgetPage"
-                      Icon="{local1:EmbeddedImage MobileApplication.Resources.Menu.budget.png}"
+                      Icon="{FontImage FontFamily={StaticResource MaterialFontIcons}, Color=White, Size=Small, Glyph={x:Static helpers:IconFont.ChartPie }}"
                       ContentTemplate="{DataTemplate local:CategoryPage}" />
     </FlyoutItem>
 
