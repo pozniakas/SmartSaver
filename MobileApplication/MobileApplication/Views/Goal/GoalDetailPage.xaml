@@ -42,7 +42,7 @@
                                             <Image Source="{local1:EmbeddedImage MobileApplication.Resources.goal2.png}" Aspect="AspectFill" Margin="0"/>
                                         </Frame>
 
-                                        <Entry Placeholder="Goal" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding Title, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"/>
+                                        <Entry Placeholder="Goal" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding GoalTitle, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"/>
                                     </StackLayout>
                                 </Frame>
 
@@ -81,7 +81,7 @@
     <!--<ScrollView>
         <StackLayout Spacing="20" Padding="15">
             <Label Text="Title:" FontSize="Medium" />
-            <Editor Text="{Binding Title, Mode=TwoWay}" FontSize="Small"/>
+            <Editor Text="{Binding GoalTitle, Mode=TwoWay}" FontSize="Small"/>
             <Label Text="Amount:" FontSize="Medium" />
             <Editor Text="{Binding Amount, Mode=TwoWay}" FontSize="Small"/>
             <Label Text="Description:" FontSize="Medium" />

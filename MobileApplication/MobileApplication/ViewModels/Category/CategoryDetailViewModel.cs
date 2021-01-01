@@ -15,7 +15,7 @@ namespace MobileApplication.ViewModels
         {
             Id = category.Id.ToString();
             DedicatedAmount = category.DedicatedAmount.ToString();
-            Title = category.Title;
+            CategoryTitle = category.Title;
 
             RestService = new RestService<Category>("api/Categories/");
 
@@ -38,7 +38,7 @@ namespace MobileApplication.ViewModels
             set => SetProperty(ref dedicatedAmount, value);
         }
 
-        public string Title
+        public string CategoryTitle
         {
             get => title;
             set => SetProperty(ref title, value);
@@ -59,7 +59,7 @@ namespace MobileApplication.ViewModels
             {
                 Id = longId,
                 DedicatedAmount = amountInDecimal,
-                Title = Title
+                Title = CategoryTitle
             };
 
             IsBusy = true;

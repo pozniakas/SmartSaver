@@ -17,7 +17,7 @@ namespace MobileApplication.ViewModels
             Id = goal.Id.ToString();
             Amount = goal.Amount.ToString();
             Description = goal.Description;
-            Title = goal.Title;
+            GoalTitle = goal.Title;
             DeadlineDate = (DateTime)goal.Deadlinedate;
             CreationDate = goal.Creationdate;
             CreationDateString = goal.Creationdate.ToString("dd/MM/yyyy");
@@ -36,7 +36,6 @@ namespace MobileApplication.ViewModels
         private string amount;
         private string description;
         private string title;
-        private string possibility;
         private DateTime creationDate;
         private string creationDateString;
         private DateTime deadlineDate;
@@ -49,16 +48,10 @@ namespace MobileApplication.ViewModels
             set => SetProperty(ref amount, value);
         }
 
-        public string Title
+        public string GoalTitle
         {
             get => title;
             set => SetProperty(ref title, value);
-        }
-
-        public string Possibility
-        {
-            get => possibility;
-            set => SetProperty(ref possibility, value);
         }
 
         public string Description
@@ -105,7 +98,7 @@ namespace MobileApplication.ViewModels
                 Deadlinedate = DeadlineDate,
                 Amount = amountInDecimal,
                 Description = Description,
-                Title = Title
+                Title = GoalTitle
             };
 
             IsBusy = true;

@@ -127,9 +127,6 @@ namespace MobileApplication.ViewModels
         public string GoalPossibility(decimal savePerMonth, decimal profitPerMonth)
         {
             decimal possibilityRate = profitPerMonth / savePerMonth;
-            Debug.WriteLine(profitPerMonth);
-            Debug.WriteLine(savePerMonth);
-            Debug.WriteLine(possibilityRate);
 
             if (possibilityRate >= 2)
             {
