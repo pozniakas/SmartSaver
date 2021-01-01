@@ -42,7 +42,7 @@
                                             <Image Source="{local1:EmbeddedImage MobileApplication.Resources.goal2.png}" Aspect="AspectFill" Margin="0"/>
                                         </Frame>
 
-                                        <Entry Placeholder="Goal" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding Title, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"/>
+                                        <Entry Placeholder="Goal" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding GoalTitle, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"/>
                                     </StackLayout>
                                 </Frame>
 
@@ -66,17 +66,6 @@
                                     </StackLayout>
                                 </Frame>
 
-                                <Label Text="Possibility"/>
-                                <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
-                                    <StackLayout Orientation="Horizontal">
-                                        <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                            <Image Source="{local1:EmbeddedImage MobileApplication.Resources.plane.png}" Aspect="AspectFill" Margin="0"/>
-                                        </Frame>
-
-                                        <Label TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,15,50,0" Text="{Binding Possibility, Mode=OneWay}"/>
-                                    </StackLayout>
-                                </Frame>
-
                                 <StackLayout Orientation="Horizontal">
                                     <Button Text="DELETE" BackgroundColor="#0e9aa7" TextColor="White" CornerRadius="30" Command="{Binding DeleteCommand}" HorizontalOptions="FillAndExpand" Margin="5"/>
                                     <Button Text="SAVE" BackgroundColor="#0e9aa7" TextColor="White" CornerRadius="30" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand" x:Name="SaveButton" Margin="5"/>
@@ -92,7 +81,7 @@
     <!--<ScrollView>
         <StackLayout Spacing="20" Padding="15">
             <Label Text="Title:" FontSize="Medium" />
-            <Editor Text="{Binding Title, Mode=TwoWay}" FontSize="Small"/>
+            <Editor Text="{Binding GoalTitle, Mode=TwoWay}" FontSize="Small"/>
             <Label Text="Amount:" FontSize="Medium" />
             <Editor Text="{Binding Amount, Mode=TwoWay}" FontSize="Small"/>
             <Label Text="Description:" FontSize="Medium" />
