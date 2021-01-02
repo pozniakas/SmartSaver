@@ -21,7 +21,7 @@
                                 <Frame BackgroundColor="Transparent" BorderColor="White" Margin="0,5,0,0" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                     <StackLayout Orientation="Horizontal">
                                         <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                            <Image Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.time.png}" Aspect="AspectFill" Margin="0"/>
+                                            <Image Source="{local1:EmbeddedImage MobileApplication.Resources.time.png}" Aspect="AspectFill" Margin="0"/>
                                         </Frame>
                                         <Label Margin="0, 15, 50, 0" Text="{Binding CreationDateString}"/>
                                     </StackLayout>
@@ -30,7 +30,7 @@
                                 <Frame BackgroundColor="Transparent" BorderColor="White" Margin="0,5,0,0" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                     <StackLayout Orientation="Horizontal">
                                         <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                            <Image Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.time.png}" Aspect="AspectFill" Margin="0"/>
+                                            <Image Source="{local1:EmbeddedImage MobileApplication.Resources.time.png}" Aspect="AspectFill" Margin="0"/>
                                         </Frame>
                                         <DatePicker x:Name="deadlineDate" Format="yyyy-MM-dd" Margin="0, 0, 15, 0" Date="{Binding DeadlineDate}" />
                                     </StackLayout>
@@ -39,17 +39,17 @@
                                 <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                     <StackLayout Orientation="Horizontal">
                                         <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                            <Image Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.goal2.png}" Aspect="AspectFill" Margin="0"/>
+                                            <Image Source="{local1:EmbeddedImage MobileApplication.Resources.goal2.png}" Aspect="AspectFill" Margin="0"/>
                                         </Frame>
 
-                                        <Entry Placeholder="Goal" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding Title, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"/>
+                                        <Entry Placeholder="Goal" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding GoalTitle, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"/>
                                     </StackLayout>
                                 </Frame>
 
                                 <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                     <StackLayout Orientation="Horizontal">
                                         <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                            <Image Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.info.png}" Aspect="AspectFill" Margin="0"/>
+                                            <Image Source="{local1:EmbeddedImage MobileApplication.Resources.info.png}" Aspect="AspectFill" Margin="0"/>
                                         </Frame>
 
                                         <Entry Placeholder="Description" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding Description, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"/>
@@ -59,21 +59,10 @@
                                 <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                     <StackLayout Orientation="Horizontal">
                                         <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                            <Image Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.money.png}" Aspect="AspectFill" Margin="0"/>
+                                            <Image Source="{local1:EmbeddedImage MobileApplication.Resources.money.png}" Aspect="AspectFill" Margin="0"/>
                                         </Frame>
 
                                         <Entry Placeholder="Amount" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding Amount, Mode=TwoWay}"  ClearButtonVisibility="WhileEditing" Keyboard="Numeric"/>
-                                    </StackLayout>
-                                </Frame>
-
-                                <Label Text="Possibility"/>
-                                <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
-                                    <StackLayout Orientation="Horizontal">
-                                        <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                            <Image Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.plane.png}" Aspect="AspectFill" Margin="0"/>
-                                        </Frame>
-
-                                        <Label TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,15,50,0" Text="{Binding Possibility, Mode=OneWay}"/>
                                     </StackLayout>
                                 </Frame>
 
@@ -92,7 +81,7 @@
     <!--<ScrollView>
         <StackLayout Spacing="20" Padding="15">
             <Label Text="Title:" FontSize="Medium" />
-            <Editor Text="{Binding Title, Mode=TwoWay}" FontSize="Small"/>
+            <Editor Text="{Binding GoalTitle, Mode=TwoWay}" FontSize="Small"/>
             <Label Text="Amount:" FontSize="Medium" />
             <Editor Text="{Binding Amount, Mode=TwoWay}" FontSize="Small"/>
             <Label Text="Description:" FontSize="Medium" />

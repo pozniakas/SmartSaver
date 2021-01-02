@@ -2,13 +2,12 @@
 <Shell xmlns="http://xamarin.com/schemas/2014/forms" 
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:local="clr-namespace:MobileApplication.Views"
-       xmlns:local1="clr-namespace:ProjectName.MarkupExtensions"
+       xmlns:helpers="clr-namespace:MobileApplication.Helpers"
        Title="MobileApplication"
        x:Class="MobileApplication.AppShell">
 
     <!--
         The overall app visual hierarchy is defined here, along with navigation.
-    
         https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/
     -->
 
@@ -72,6 +71,13 @@
                     </VisualStateGroupList>
                 </Setter>
             </Style>
+
+            <OnPlatform
+                x:Key="MaterialFontIcons"
+                x:TypeArguments="x:String"
+                Android="materialdesignicons-webfont.ttf#MaterialDesignIcons"
+                iOS="MaterialDesignIcons" />
+            
         </ResourceDictionary>
     </Shell.Resources>
 
@@ -80,12 +86,23 @@
         FlyoutDisplayOptions="AsMultipleItems" will create a separate flyout item for each child element    
         https://docs.microsoft.com/dotnet/api/xamarin.forms.shellgroupitem.flyoutdisplayoptions?view=xamarin-forms
     -->
-
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
-        <ShellContent Title="Main" Icon="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.main.png}" Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
-        <ShellContent Title="Transactions" Icon ="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.transactions.png}" ContentTemplate="{DataTemplate local:ItemsPage}" />
-        <ShellContent Title="Goals" Icon="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.goal.png}" ContentTemplate="{DataTemplate local:GoalsPage}" />
-        <ShellContent Title="Budget" Icon="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.budget.png}" ContentTemplate="{DataTemplate local:CategoryPage}" />
+        <ShellContent Title="Main"
+                      Route="AboutPage"
+                      Icon="{FontImage FontFamily={StaticResource MaterialFontIcons}, Color=White, Size=Small, Glyph={x:Static helpers:IconFont.ChartBar }}"
+                      ContentTemplate="{DataTemplate local:AboutPage}" />
+        <ShellContent Title="Transactions"
+                      Route="TransactionsPage"
+                      Icon="{FontImage FontFamily={StaticResource MaterialFontIcons}, Color=White, Size=Small, Glyph={x:Static helpers:IconFont.SwapVertical }}"
+                      ContentTemplate="{DataTemplate local:ItemsPage}" />
+        <ShellContent Title="Goals"
+                      Route="GoalsPage"
+                      Icon="{FontImage FontFamily={StaticResource MaterialFontIcons}, Color=White, Size=Small, Glyph={x:Static helpers:IconFont.Flag }}"
+                      ContentTemplate="{DataTemplate local:GoalsPage}" />
+        <ShellContent Title="Budget"
+                      Route="BudgetPage"
+                      Icon="{FontImage FontFamily={StaticResource MaterialFontIcons}, Color=White, Size=Small, Glyph={x:Static helpers:IconFont.ChartPie }}"
+                      ContentTemplate="{DataTemplate local:CategoryPage}" />
     </FlyoutItem>
 
     <!-- When the Flyout is visible this will be a menu item you can tie a click behavior to  -->

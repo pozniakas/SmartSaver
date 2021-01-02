@@ -41,7 +41,7 @@
             <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" Margin="0,15,0,0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                 <StackLayout Orientation="Horizontal">
                     <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                        <Image Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.income.png}" Aspect="AspectFill" Margin="0"/>
+                        <Image Source="{local1:EmbeddedImage MobileApplication.Resources.income.png}" Aspect="AspectFill" Margin="0"/>
                     </Frame>
                     <Label  x:Name="incomeLabel" Margin="0,15,50,0"/>
                 </StackLayout>
@@ -49,7 +49,7 @@
             <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" Margin="0,15,0,0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                 <StackLayout Orientation="Horizontal">
                     <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                        <Image Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.outcome.png}" Aspect="AspectFill" Margin="0"/>
+                        <Image Source="{local1:EmbeddedImage MobileApplication.Resources.outcome.png}" Aspect="AspectFill" Margin="0"/>
                     </Frame>
                     <Label  x:Name="expensesLabel" Margin="0,15,50,0"/>
                 </StackLayout>

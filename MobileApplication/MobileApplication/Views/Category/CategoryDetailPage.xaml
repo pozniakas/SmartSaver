@@ -20,16 +20,16 @@
                                 <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                     <StackLayout Orientation="Horizontal">
                                         <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                            <Image Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.category.png}" Aspect="AspectFill" Margin="0"/>
+                                            <Image Source="{local1:EmbeddedImage MobileApplication.Resources.category.png}" Aspect="AspectFill" Margin="0"/>
                                         </Frame>
-                                        <Entry Placeholder="Category" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding Title, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"/>
+                                        <Entry Placeholder="Category" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding CategoryTitle, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"/>
                                     </StackLayout>
                                 </Frame>
 
                                 <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                     <StackLayout Orientation="Horizontal">
                                         <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                            <Image Source="{local1:EmbeddedImage ResourceId=MobileApplication.Resources.money.png}" Aspect="AspectFill" Margin="0"/>
+                                            <Image Source="{local1:EmbeddedImage MobileApplication.Resources.money.png}" Aspect="AspectFill" Margin="0"/>
                                         </Frame>
 
                                         <Entry Placeholder="Dedicated Amount" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding DedicatedAmount, Mode=TwoWay}" Keyboard="Numeric" ClearButtonVisibility="WhileEditing"/>
@@ -52,7 +52,7 @@
     <!--<ScrollView>
         <StackLayout Spacing="20" Padding="15">
             <Label Text="Title:" FontSize="Medium" />
-            <Editor Text="{Binding Title, Mode=TwoWay}" FontSize="Small"/>
+            <Editor Text="{Binding CategoryTitle, Mode=TwoWay}" FontSize="Small"/>
             <Label Text="Amount:" FontSize="Medium" />
             <Editor Text="{Binding DedicatedAmount, Mode=TwoWay}" FontSize="Small"/>
             <StackLayout Orientation="Horizontal">
