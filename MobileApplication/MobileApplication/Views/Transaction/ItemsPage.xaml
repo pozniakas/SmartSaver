@@ -102,6 +102,7 @@
                 <StackLayout Spacing="30" Margin="0,20">
                     <ImageButton Source="{local1:EmbeddedImage MobileApplication.Resources.file.png}" WidthRequest="30" HeightRequest="30" Rotation="180" BackgroundColor="Transparent" Clicked="UploadCSVButton_Clicked"/>
                     <ImageButton Source="{local1:EmbeddedImage MobileApplication.Resources.image.png}" WidthRequest="30" HeightRequest="30" Rotation="180" BackgroundColor="Transparent" Clicked="UploadImageButton_Clicked"/>
+                    <ImageButton Source="{local1:EmbeddedImage MobileApplication.Resources.pen.png}" WidthRequest="30" HeightRequest="30" Rotation="180" BackgroundColor="Transparent" Command="{Binding AddItemCommand}"/>
                 </StackLayout>
             </Expander>
         </pv:PancakeView>
