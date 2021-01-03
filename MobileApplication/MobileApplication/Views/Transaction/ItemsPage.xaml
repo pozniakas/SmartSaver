@@ -24,16 +24,14 @@
                             <StackLayout Orientation="Horizontal"  HorizontalOptions="Center">
                                 <DatePicker x:Name="filterFrom"
                                 Date="{Binding DateFrom, Mode=TwoWay}"
-                                Format="yyyy-MM-dd"
-                                Margin="30, 0, 0, 30"/>
+                                Format="yyyy-MM-dd"/>
                                 <DatePicker x:Name="filterTo"
                                 Date="{Binding DateTo, Mode=TwoWay}"
-                                Format="yyyy-MM-dd"
-                                Margin="30, 0, 0, 30"/>
+                                Format="yyyy-MM-dd"/>
                             </StackLayout>
                             <StackLayout Orientation="Horizontal"  HorizontalOptions="Center">
-                                <Button Text="Filter" Command="{Binding FilterCommand}"></Button>
-                                <Button Text="Reset" Command="{Binding ResetFilterCommand}"></Button>
+                                <Button Text="Filter" Command="{Binding FilterCommand}" TextColor="White" CornerRadius="30" HorizontalOptions="FillAndExpand"></Button>
+                                <Button Text="Reset" Command="{Binding ResetFilterCommand}" TextColor="White" CornerRadius="30" HorizontalOptions="FillAndExpand"></Button>
                             </StackLayout>
                         </StackLayout>
                     </DataTemplate>
