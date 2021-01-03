@@ -18,9 +18,9 @@
                             </StackLayout>
                             <StackLayout Padding="0" Margin="15,10">
                                 <StackLayout x:Name="st1" Orientation="Horizontal" HorizontalOptions="Center">
-                                    <Label Text="Income"></Label>
+                                    <Label Text="Outcome"></Label>
                                     <Switch IsToggled="{Binding Toggled}"/>
-                                    <Label Text="Outcome"/>
+                                    <Label Text="Income"/>
 
                                 </StackLayout>
                                 <StackLayout Orientation="Horizontal">
