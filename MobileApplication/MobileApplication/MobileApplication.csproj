@@ -29,6 +29,7 @@
     <None Remove="Resources\money.png" />
     <None Remove="Resources\outcome.png" />
     <None Remove="Resources\password.jpg" />
+    <None Remove="Resources\pen.png" />
     <None Remove="Resources\plane.png" />
     <None Remove="Resources\plus.png" />
     <None Remove="Resources\refresh.png" />
@@ -60,6 +61,7 @@
     <EmbeddedResource Include="Resources\money.png" />
     <EmbeddedResource Include="Resources\outcome.png" />
     <EmbeddedResource Include="Resources\password.jpg" />
+    <EmbeddedResource Include="Resources\pen.png" />
     <EmbeddedResource Include="Resources\plane.png" />
     <EmbeddedResource Include="Resources\plus.png" />
     <EmbeddedResource Include="Resources\refresh.png" />
