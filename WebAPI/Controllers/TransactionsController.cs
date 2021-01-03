@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using DbEntities.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Serilog;
-using DbEntities.Entities;
-using WebAPI.Services;
-using System.Linq.Expressions;
 using Recognizer;
-using Microsoft.AspNetCore.Authorization;
+using Serilog;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using WebAPI.DTOModels;
 using WebAPI.Handlers;
+using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
@@ -69,22 +70,17 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(transaction).State = EntityState.Modified;
-
             try
             {
+                var trackedTransaction = _context.Transaction.Find(id);
+                trackedTransaction.Update(transaction);
+                _context.Entry(trackedTransaction).State = EntityState.Modified;
+
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!TransactionExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                _logger.Error(ex, ex.Message);
             }
 
             return NoContent();
@@ -122,7 +118,7 @@ namespace WebAPI.Controllers
 
                 return CreatedAtAction("GetTransaction", new { id = transaction.Id }, transaction);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.Error(ex, $"POST: api/Transactions {transaction}");
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);

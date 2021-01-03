@@ -8,6 +8,17 @@ namespace WebAPI.DTOModels
 {
     public static class ModelExtensions
     {
+        public static Transaction Update(this Transaction trackedTransaction, Transaction newTransaction)
+        {
+            trackedTransaction.TrTime = newTransaction.TrTime;
+            trackedTransaction.Amount = newTransaction.Amount;
+            trackedTransaction.Details = newTransaction.Details;
+            trackedTransaction.CounterParty = newTransaction.CounterParty;
+            trackedTransaction.Category = newTransaction.Category;
+
+            return trackedTransaction;
+        }
+
         public static Goal Update(this Goal goal, GoalDTO updatedGoal)
         {
             goal.Id = updatedGoal.Id;

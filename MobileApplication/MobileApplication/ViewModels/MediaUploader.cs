@@ -29,7 +29,11 @@ namespace MobileApplication.ViewModels
             var file = await MediaPicker.PickPhotoAsync();
 
             if (file == null)
+            {
+                await App.Current.MainPage.DisplayAlert("Canceled", "No image selected.", "Close");
                 return;
+            }
+
 
             var content = new MultipartFormDataContent();
             content.Add(new StreamContent(await file.OpenReadAsync()), "image", file.FileName);

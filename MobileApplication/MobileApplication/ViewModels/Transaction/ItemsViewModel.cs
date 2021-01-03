@@ -56,7 +56,7 @@ namespace MobileApplication.ViewModels
             {
                 _transactions = await RestService.RefreshDataAsync();
 
-                _transactions.ForEach(transaction => Items.Add(transaction));
+                _transactions.OrderByDescending(x => x.TrTime).ToList().ForEach(transaction => Items.Add(transaction));
 
                 DateFrom = Items.Min(item => item.TrTime);
             }
