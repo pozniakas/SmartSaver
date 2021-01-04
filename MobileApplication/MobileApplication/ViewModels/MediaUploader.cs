@@ -34,11 +34,10 @@ namespace MobileApplication.ViewModels
                 return;
             }
 
-
             var content = new MultipartFormDataContent();
             content.Add(new StreamContent(await file.OpenReadAsync()), "image", file.FileName);
-
             await App.Current.MainPage.DisplayAlert("Loading", "Image recognition started...", "Ok");
+
             await _httpClient.PostAsync("api/Transactions/receiptImage", content);
             await App.Current.MainPage.DisplayAlert("Finished", "Image recognition finished.", "Ok");
             
@@ -53,7 +52,7 @@ namespace MobileApplication.ViewModels
 
             var content = new MultipartFormDataContent();
             content.Add(new StreamContent(await file.OpenReadAsync()), "file", file.FileName);
-            await _httpClient.PostAsync("api/Transactions/file", content);
+            var response = await _httpClient.PostAsync("api/Transactions/file", content);
         }
     }
 }

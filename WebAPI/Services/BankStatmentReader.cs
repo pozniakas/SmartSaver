@@ -208,7 +208,13 @@ namespace WebAPI.Services
             ///DOK NR.,DATA,VALIUTA,SUMA,MOKĖTOJO ARBA GAVĖJO PAVADINIMAS,MOKĖTOJO ARBA GAVĖJO IDENTIFIKACINIS KODAS,SĄSKAITA,
             ///KREDITO ĮSTAIGOS PAVADINIMAS,KREDITO ĮSTAIGOS SWIFT KODAS,MOKĖJIMO PASKIRTIS,TRANSAKCIJOS KODAS,
             ///DOKUMENTO DATA,TRANSAKCIJOS TIPAS,NUORODA,DEBETAS/KREDITAS,SUMA SĄSKAITOS VALIUTA,SĄSKAITOS NR,SĄSKAITOS VALIUTA
-            return csv.TryGetField("SUMA", out decimal sum) 
+            
+            if (!csv.TryGetField("SUMA", out string sumStr))
+            {
+                return null;
+            }
+
+            return decimal.TryParse(sumStr.Replace(',', '.'), out decimal sum)
                 && csv.TryGetField("DEBETAS/KREDITAS", out string debitOrCredit)
                 ? new Transaction
                 {
