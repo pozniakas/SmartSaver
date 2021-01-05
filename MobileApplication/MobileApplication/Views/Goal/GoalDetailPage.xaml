@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileApplication.Views.GoalDetailPage"
+             xmlns:local1="clr-namespace:ProjectName.MarkupExtensions"
+             Title="Goal">
+
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="White">
+            <Grid>
+                <StackLayout Padding="0" Margin="10,10,10,10" HorizontalOptions="FillAndExpand">
+                    <Frame  BackgroundColor="White" HeightRequest="610" HasShadow="True" Padding="0" Margin="0">
+                        <StackLayout>
+                            <StackLayout Margin="10">
+                                <Label Text="GOAL DETAILS" TextColor="#4a4e4d" HorizontalOptions="CenterAndExpand" FontAttributes="Bold"/>
+                            </StackLayout>
+
+                            <StackLayout Padding="0" Margin="15,10">
+                                
+                                <Label Text="Creation Date"  HorizontalOptions="FillAndExpand"/>
+                                <Frame BackgroundColor="Transparent" BorderColor="White" Margin="0,5,0,0" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
+                                            <Image Source="{local1:EmbeddedImage MobileApplication.Resources.time.png}" Aspect="AspectFill" Margin="0"/>
+                                        </Frame>
+                                        <Label Margin="0, 15, 50, 0" Text="{Binding CreationDateString}"/>
+                                    </StackLayout>
+                                </Frame>
+                                <Label Text="Deadline Date"  HorizontalOptions="FillAndExpand"/>
+                                <Frame BackgroundColor="Transparent" BorderColor="White" Margin="0,5,0,0" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
+                                            <Image Source="{local1:EmbeddedImage MobileApplication.Resources.time.png}" Aspect="AspectFill" Margin="0"/>
+                                        </Frame>
+                                        <DatePicker x:Name="deadlineDate" Format="yyyy-MM-dd" Margin="0, 0, 15, 0" Date="{Binding DeadlineDate}" />
+                                    </StackLayout>
+                                </Frame>
+                                
+                                <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
+                                            <Image Source="{local1:EmbeddedImage MobileApplication.Resources.goal2.png}" Aspect="AspectFill" Margin="0"/>
+                                        </Frame>
+
+                                        <Entry Placeholder="Goal" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding GoalTitle, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"/>
+                                    </StackLayout>
+                                </Frame>
+
+                                <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
+                                            <Image Source="{local1:EmbeddedImage MobileApplication.Resources.info.png}" Aspect="AspectFill" Margin="0"/>
+                                        </Frame>
+
+                                        <Entry Placeholder="Description" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding Description, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"/>
+                                    </StackLayout>
+                                </Frame>
+
+                                <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
+                                            <Image Source="{local1:EmbeddedImage MobileApplication.Resources.money.png}" Aspect="AspectFill" Margin="0"/>
+                                        </Frame>
+
+                                        <Entry Placeholder="Amount" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding Amount, Mode=TwoWay}"  ClearButtonVisibility="WhileEditing" Keyboard="Numeric"/>
+                                    </StackLayout>
+                                </Frame>
+
+                                <StackLayout Orientation="Horizontal">
+                                    <Button Text="DELETE" BackgroundColor="#0e9aa7" TextColor="White" CornerRadius="30" Command="{Binding DeleteCommand}" HorizontalOptions="FillAndExpand" Margin="5"/>
+                                    <Button Text="SAVE" BackgroundColor="#0e9aa7" TextColor="White" CornerRadius="30" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand" x:Name="SaveButton" Margin="5"/>
+                                </StackLayout>
+
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+    <!--<ScrollView>
+        <StackLayout Spacing="20" Padding="15">
+            <Label Text="Title:" FontSize="Medium" />
+            <Editor Text="{Binding GoalTitle, Mode=TwoWay}" FontSize="Small"/>
+            <Label Text="Amount:" FontSize="Medium" />
+            <Editor Text="{Binding Amount, Mode=TwoWay}" FontSize="Small"/>
+            <Label Text="Description:" FontSize="Medium" />
+            <Editor Text="{Binding Description, Mode=TwoWay}" FontSize="Small"/>
+            <Label Text="Creation date:" FontSize="Medium" />
+            <Label Text="{Binding CreationDateString, Mode=OneWay}" FontSize="Small"/>
+            <Label Text="Possibility:" FontSize="Medium" />
+            <Label Text="{Binding Possibility, Mode=OneWay}" FontSize="Small"/>
+            <Label Text="Deadline date:" FontSize="Medium" />
+            <DatePicker x:Name="deadlineDate"
+                    Date="{Binding DeadlineDate, Mode=TwoWay}"
+                    Format="yyyy-MM-dd"
+                    Margin="30, 0, 0, 30"/>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Delete"  Command="{Binding DeleteCommand}" HorizontalOptions="FillAndExpand"></Button>
+                <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>-->
+
+</ContentPage>

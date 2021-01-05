@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileApplication.Views.GoalsPage"
+             Title="{Binding Title}"
+             xmlns:local="clr-namespace:MobileApplication.ViewModels"  
+             xmlns:model="clr-namespace:DbEntities.Entities;assembly=DbEntities"
+             x:Name="BrowseItemsPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Command="{Binding AddItemCommand}" />
+    </ContentPage.ToolbarItems>
+    <!--
+      x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
+      https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
+    -->
+
+    <ContentPage.Content x:DataType="local:GoalsViewModel">
+        <RefreshView x:DataType="local:GoalsViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+            <StackLayout>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Grid.Row="0" Text="GOAL" VerticalTextAlignment="Center"/>
+                    <Label Grid.Column="1" Grid.Row="0" Text="POSSIBILITY" VerticalTextAlignment="Center"/>
+                    <Label Grid.Column="2" Grid.Row="0" Text="MONTHLY CONTRIBUTION" VerticalTextAlignment="Center"/>
+                </Grid>
+
+                <ListView x:Name="GoalsListView" ItemsSource="{Binding GoalViews}" SelectionMode="None" >
+                    <ListView.ItemTemplate x:DataType="local:GoalsViewModel">
+                        <DataTemplate>
+                            <ViewCell x:DataType="local:GoalView">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label  Grid.Column="0" Text="{Binding Title}"/>
+                                    <Label  Grid.Column="1" Text="{Binding Possibility}"/>
+                                    <Label Grid.Column="2" Text="{Binding MonthlyGoalAmount}"/>
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer 
+                                             NumberOfTapsRequired="1"
+                                             Command="{Binding Source={RelativeSource AncestorType={x:Type local:GoalsViewModel}}, Path=ItemTapped}"		
+                                             CommandParameter="{Binding .}">
+                                        </TapGestureRecognizer>
+                                    </Grid.GestureRecognizers>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </RefreshView>
+
+    </ContentPage.Content>
+</ContentPage>

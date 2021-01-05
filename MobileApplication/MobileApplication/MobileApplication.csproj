@@ -1,0 +1,110 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <UserSecretsId>c1f9bd86-6e9b-416c-9870-52ca4d05ca0f</UserSecretsId>
+  </PropertyGroup>  
+
+  <ItemGroup>
+    <None Remove="appsettings.json" />
+    <None Remove="Resources\budget.png" />
+    <None Remove="Resources\category.png" />
+    <None Remove="Resources\counterparty.png" />
+    <None Remove="Resources\facebook.png" />
+    <None Remove="Resources\file.png" />
+    <None Remove="Resources\Fonts\materialdesignicons-webfont.ttf" />
+    <None Remove="Resources\goal.png" />
+    <None Remove="Resources\goal2.png" />
+    <None Remove="Resources\google.jpg" />
+    <None Remove="Resources\image.png" />
+    <None Remove="Resources\income.png" />
+    <None Remove="Resources\info.png" />
+    <None Remove="Resources\LOGO2.png" />
+    <None Remove="Resources\main.png" />
+    <None Remove="Resources\Menu\budget.png" />
+    <None Remove="Resources\Menu\goal.png" />
+    <None Remove="Resources\Menu\main.jpg" />
+    <None Remove="Resources\Menu\main.png" />
+    <None Remove="Resources\Menu\transactions.png" />
+    <None Remove="Resources\money.png" />
+    <None Remove="Resources\outcome.png" />
+    <None Remove="Resources\password.jpg" />
+    <None Remove="Resources\pen.png" />
+    <None Remove="Resources\plane.png" />
+    <None Remove="Resources\plus.png" />
+    <None Remove="Resources\refresh.png" />
+    <None Remove="Resources\time.png" />
+    <None Remove="Resources\transactions.png" />
+    <None Remove="Resources\username.png" />
+    <None Remove="Resources\x.png" />
+  </ItemGroup>  
+
+  <ItemGroup>
+    <EmbeddedResource Include="appsettings.json" />
+    <EmbeddedResource Include="Resources\budget.png" />
+    <EmbeddedResource Include="Resources\category.png" />
+    <EmbeddedResource Include="Resources\counterparty.png" />
+    <EmbeddedResource Include="Resources\facebook.png" />
+    <EmbeddedResource Include="Resources\file.png" />
+    <EmbeddedResource Include="Resources\goal.png" />
+    <EmbeddedResource Include="Resources\goal2.png" />
+    <EmbeddedResource Include="Resources\google.jpg" />
+    <EmbeddedResource Include="Resources\image.png" />
+    <EmbeddedResource Include="Resources\income.png" />
+    <EmbeddedResource Include="Resources\info.png" />
+    <EmbeddedResource Include="Resources\LOGO2.png" />
+    <EmbeddedResource Include="Resources\main.png" />
+    <EmbeddedResource Include="Resources\Menu\budget.png" />
+    <EmbeddedResource Include="Resources\Menu\goal.png" />
+    <EmbeddedResource Include="Resources\Menu\main.png" />
+    <EmbeddedResource Include="Resources\Menu\transactions.png" />
+    <EmbeddedResource Include="Resources\money.png" />
+    <EmbeddedResource Include="Resources\outcome.png" />
+    <EmbeddedResource Include="Resources\password.jpg" />
+    <EmbeddedResource Include="Resources\pen.png" />
+    <EmbeddedResource Include="Resources\plane.png" />
+    <EmbeddedResource Include="Resources\plus.png" />
+    <EmbeddedResource Include="Resources\refresh.png" />
+    <EmbeddedResource Include="Resources\time.png" />
+    <EmbeddedResource Include="Resources\transactions.png" />
+    <EmbeddedResource Include="Resources\username.png" />
+    <EmbeddedResource Include="Resources\x.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microcharts.Forms" Version="0.9.5.9" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1687" />  
+    <PackageReference Include="Xamarin.Essentials" Version="1.6.0-pre4" />  
+    <PackageReference Include="Xamarin.Forms.PancakeView" Version="2.3.0.763-beta" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\DbEntities\DbEntities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\LOGO2.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Views\Category\CategoryPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Category\NewCategoryPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Goal\NewGoalPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Transaction\NewTransactionPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\Fonts\" />
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+</Project>
