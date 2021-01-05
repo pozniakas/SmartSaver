@@ -22,7 +22,11 @@
                                         <Frame BackgroundColor="white" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
                                             <Image Source="{local1:EmbeddedImage MobileApplication.Resources.time.png}" Aspect="AspectFill" Margin="0"/>
                                         </Frame>
-                                        <DatePicker x:Name="transactionDate" Format="yyyy-MM-dd" Margin="0, 0, 20, 0" Date="{Binding TrTime}" />
+                                        <DatePicker x:Name="transactionDate" 
+                                                    Format="yyyy-MM-dd" 
+                                                    Margin="0, 0, 20, 0" 
+                                                    WidthRequest="120"
+                                                    Date="{Binding TrTime}" />
                                     </StackLayout>
                                 </Frame>
                                   
@@ -32,7 +36,12 @@
                                         <Frame BackgroundColor="white" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
                                             <Image Source="{local1:EmbeddedImage MobileApplication.Resources.category.png}" Aspect="AspectFill" Margin="0"/>
                                         </Frame>
-                                        <Picker x:Name="picker" Title="{Binding CategoryName}" ItemsSource="{Binding Categories}" ItemDisplayBinding="{Binding Title}" SelectedItem="{Binding Categor, Mode=TwoWay}" />
+                                        <Picker x:Name="picker" 
+                                                Title="{Binding CategoryName}" 
+                                                ItemsSource="{Binding Categories}" 
+                                                ItemDisplayBinding="{Binding Title}" 
+                                                SelectedItem="{Binding Categor, Mode=TwoWay}"
+                                                WidthRequest="120" />
                                     </StackLayout>
                                 </Frame>
                                 <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
@@ -44,24 +53,42 @@
                                         <Entry Placeholder="Amount" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding Amount, Mode=TwoWay}"  ClearButtonVisibility="WhileEditing" Keyboard="Numeric"/>
                                     </StackLayout>
                                 </Frame>
+
+                                <Frame BackgroundColor="Transparent" HorizontalOptions="Fill" Padding="0">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
+                                            <Image Source="{local1:EmbeddedImage MobileApplication.Resources.counterparty.png}" Aspect="AspectFill" Margin="0"/>
+
+                                            <!--{FontImage FontFamily={StaticResource MaterialFontIcons}, Color=White, Size=Small, Glyph={x:Static helpers:IconFont.Flag }}-->
+                                            <!--<Image Aspect="AspectFit" Margin="0">
+                                                <Image.Source>
+                                                    <FontImageSource
+                                                        StyleId="1 "
+                                                        FontFamily="{StaticResource MaterialFontIcons}"
+                                                        Glyph="{x:Static helpers:IconFont.Information }"
+                                                        Size="Small"
+                                                        Color="Black" />
+                                                </Image.Source>
+                                            </Image>-->
+                                        </Frame>
+                                        <Frame BackgroundColor="Transparent" HeightRequest="40" WidthRequest="100" HorizontalOptions="FillAndExpand" Padding="0">
+                                            <Entry Placeholder="Counter Party" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="Fill" Margin="0,0,20,0" Text="{Binding CounterParty, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"/>
+                                        </Frame>
+                                    </StackLayout>
+                                </Frame>
+                                
                                 <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                     <StackLayout Orientation="Horizontal">
                                         <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
                                             <Image Source="{local1:EmbeddedImage MobileApplication.Resources.info.png}" Aspect="AspectFill" Margin="0"/>
                                         </Frame>
 
-                                        <Entry Placeholder="Details" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding Details, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"/>
-                                    </StackLayout>
-                                </Frame>
-                                <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
-                                    <StackLayout Orientation="Horizontal">
-                                        <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                            <Image Source="{local1:EmbeddedImage MobileApplication.Resources.counterparty.png}" Aspect="AspectFill" Margin="0"/>
+                                        <Frame BackgroundColor="Transparent" HeightRequest="40" WidthRequest="100" HorizontalOptions="FillAndExpand" Padding="0">
+                                            <Entry Placeholder="Details" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding Details, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"/>
                                         </Frame>
-
-                                        <Entry Placeholder="Counter Party" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding CounterParty, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"/>
                                     </StackLayout>
                                 </Frame>
+                                
                                 <StackLayout Orientation="Horizontal">
                                     <Button Text="DELETE" BackgroundColor="#0e9aa7" TextColor="White" CornerRadius="30" Command="{Binding DeleteCommand}" HorizontalOptions="FillAndExpand" Margin="5"/>
                                     <Button Text="SAVE" BackgroundColor="#0e9aa7" TextColor="White" CornerRadius="30" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand" x:Name="SaveButton" Margin="5"/>
