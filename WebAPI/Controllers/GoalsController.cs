@@ -4,10 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAPI.DTOModels;
+using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
@@ -16,17 +16,29 @@ namespace WebAPI.Controllers
     public class GoalsController : ControllerBase
     {
         private readonly DatabaseContext _context;
+        private readonly AdoNetContext _adoContext;
 
-        public GoalsController(DatabaseContext context)
+        public GoalsController(DatabaseContext context, AdoNetContext adoContext)
         {
             _context = context;
+            _adoContext = adoContext;
         }
 
         // GET: api/Goals
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Goal>>> GetGoal()
         {
-            return await _context.Goal.ToListAsync();
+            try
+            {
+                // var adoContext = new AdoNetContext();
+                return _adoContext.SelectGoals().ToList();
+
+                //return await _context.Goal.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return await _context.Goal.ToListAsync();
+            }
         }
 
         // GET: api/Goals/5
@@ -54,6 +66,9 @@ namespace WebAPI.Controllers
 
             var goal = await _context.Goal.FindAsync(id);
             goal.Update(dtoGoal);
+            // Ado
+            _adoContext.Update(goal);
+            //End ado
 
             _context.Entry(goal).State = EntityState.Modified;
 
@@ -61,16 +76,9 @@ namespace WebAPI.Controllers
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception)
             {
-                if (!GoalExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return NoContent();
@@ -85,7 +93,7 @@ namespace WebAPI.Controllers
             try
             {
                 var deadline = new DateTime(goal.Deadlinedate.Value.Ticks);
-                
+
                 if (goal.IsValid())
                 {
                     return BadRequest();

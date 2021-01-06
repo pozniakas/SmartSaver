@@ -33,6 +33,9 @@ namespace WebAPI
             // configure basic authentication 
             services.AddAuthentication("BasicAuthentication")
                 .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+            
+            // Add ado.net
+            services.AddScoped<AdoNetContext>();
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
