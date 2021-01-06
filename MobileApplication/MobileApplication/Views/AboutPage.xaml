@@ -26,8 +26,14 @@
                 iOS="MaterialDesignIcons" />
         </ResourceDictionary>
     </ContentPage.Resources>
+    <!--<StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+            <ContentView Padding="0,0,0,0" VerticalOptions="FillAndExpand">
+                <Image Source="{Binding Image}" HorizontalOptions="Start" WidthRequest ="180" HeightRequest="80"/>
+            </ContentView>
+        </StackLayout>-->
     <StackLayout>
-        <StackLayout Orientation="Horizontal">
+        <Image Source="{Binding Image}" HorizontalOptions="Center" WidthRequest ="180" HeightRequest="80"/>
+            <StackLayout Orientation="Horizontal">
             <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" Margin="0,15,0,0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                 <StackLayout Orientation="Horizontal">
                     <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
