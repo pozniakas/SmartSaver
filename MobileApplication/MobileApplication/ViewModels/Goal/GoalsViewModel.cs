@@ -120,7 +120,7 @@ namespace MobileApplication.ViewModels
             List<string> months = new List<string>();
             _transactions.ForEach(transaction => months.Add(transaction.TrTime.ToString("yyyyMM")));
             uniqueMonths = months.GroupBy(date => date).Select(grp => grp.First()).ToList();
-            totalProfit = _transactions.Sum(transaction => transaction.Amount);
+            totalProfit = _transactions.Aggregate(0m, (total, next) => total + next.Amount);
             return totalProfit /= uniqueMonths.Count;
         }
 
