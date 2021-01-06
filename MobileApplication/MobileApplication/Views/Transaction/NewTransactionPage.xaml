@@ -3,10 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileApplication.Views.NewTransactionPage"
              Shell.PresentationMode="ModalAnimated"
-             xmlns:local1="clr-namespace:ProjectName.MarkupExtensions"
-             xmlns:local="clr-namespace:MobileApplication.ViewModels"  
-             xmlns:model="clr-namespace:DbEntities.Entities;assembly=DbEntities"
+             xmlns:helpers="clr-namespace:MobileApplication.Helpers"
              Title="New Transation">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <OnPlatform
+                x:Key="MaterialFontIcons"
+                x:TypeArguments="x:String"
+                Android="materialdesignicons-webfont.ttf#MaterialDesignIcons"
+                iOS="MaterialDesignIcons" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout BackgroundColor="White">
             <Grid>
@@ -27,7 +34,7 @@
                                     <Frame BackgroundColor="Transparent" BorderColor="White" Margin="0,15,0,0" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                         <StackLayout Orientation="Horizontal">
                                             <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                                <Image Source="{local1:EmbeddedImage MobileApplication.Resources.time.png}" Aspect="AspectFill" Margin="0"/>
+                                                <Image Source="{FontImage FontFamily={StaticResource MaterialFontIcons}, Color=Black, Size=Small, Glyph={x:Static helpers:IconFont.Calendar}}"  Margin="0"/>
                                             </Frame>
                                             <DatePicker x:Name="transactionDate" Format="yyyy-MM-dd" Margin="0, 0, 15, 0" Date="{Binding TrTime}" />
                                         </StackLayout>
@@ -35,7 +42,7 @@
                                     <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" Margin="0,15,0,0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                         <StackLayout Orientation="Horizontal">
                                             <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                                <Image Source="{local1:EmbeddedImage MobileApplication.Resources.category.png}" Aspect="AspectFill" Margin="0"/>
+                                                <Image Source="{FontImage FontFamily={StaticResource MaterialFontIcons}, Color=Black, Size=Small, Glyph={x:Static helpers:IconFont.Menu}}"  Margin="0"/>
                                             </Frame>
                                             <Picker x:Name="picker" Title="Category" ItemsSource="{Binding Items}" ItemDisplayBinding="{Binding Title}" SelectedItem="{Binding Categor, Mode=TwoWay}" />
                                         </StackLayout>
@@ -44,7 +51,7 @@
                                 <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                     <StackLayout Orientation="Horizontal">
                                         <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                            <Image Source="{local1:EmbeddedImage MobileApplication.Resources.money.png}" Aspect="AspectFill" Margin="0"/>
+                                            <Image Source="{FontImage FontFamily={StaticResource MaterialFontIcons}, Color=Black, Size=Small, Glyph={x:Static helpers:IconFont.Cash}}"  Margin="0"/>
                                         </Frame>
 
                                         <Entry Placeholder="Amount" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding Amount, Mode=TwoWay}"  ClearButtonVisibility="WhileEditing" Keyboard="Numeric"/>
@@ -53,7 +60,7 @@
                                 <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                     <StackLayout Orientation="Horizontal">
                                         <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                            <Image Source="{local1:EmbeddedImage MobileApplication.Resources.info.png}" Aspect="AspectFill" Margin="0"/>
+                                            <Image Source="{FontImage FontFamily={StaticResource MaterialFontIcons}, Color=Black, Size=Small, Glyph={x:Static helpers:IconFont.InformationOutline}}"  Margin="0"/>
                                         </Frame>
 
                                         <Entry Placeholder="Details" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding Details, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"/>
@@ -62,7 +69,7 @@
                                 <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                     <StackLayout Orientation="Horizontal">
                                         <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                            <Image Source="{local1:EmbeddedImage MobileApplication.Resources.counterparty.png}" Aspect="AspectFill" Margin="0"/>
+                                            <Image Source="{FontImage FontFamily={StaticResource MaterialFontIcons}, Color=Black, Size=Small, Glyph={x:Static helpers:IconFont.SwapVertical}}"  Margin="0"/>
                                         </Frame>
 
                                         <Entry Placeholder="Counter Party" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding CounterParty, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"/>
@@ -89,44 +96,5 @@
             </Grid>
         </StackLayout>
     </ContentPage.Content>
-    <!--<ContentPage.Content>
-        
-        <StackLayout Spacing="3" Padding="15">
-            <StackLayout Orientation="Horizontal">
-                <Button Text="Upload CSV" Clicked="UploadCSVButton_Clicked" HorizontalOptions="FillAndExpand"></Button>
-                <Button Text="Upload Photo" Clicked="UploadImageButton_Clicked" HorizontalOptions="FillAndExpand"></Button>
-            </StackLayout>
-            
-            <Label Text="Transaction date" FontSize="Medium" />
 
-            <DatePicker
-                    x:Name="transactionDate"
-                    Format="yyyy-MM-dd"
-                    Margin="30, 0, 0, 30"    
-                    Date="{Binding TrTime}" />
-            
-            <Label Text="Amount" FontSize="Medium"/>
-            <Entry Text="{Binding Amount, Mode=TwoWay}" FontSize="Medium" ClearButtonVisibility="WhileEditing" Keyboard="Numeric" Placeholder="Amount"/>
-            
-            <Label Text="Details" FontSize="Medium"/>
-            <Entry Text="{Binding Details, Mode=TwoWay}" FontSize="Medium" ClearButtonVisibility="WhileEditing"/>
-            
-            <Label Text="Counter Party" FontSize="Medium"/>
-            <Entry Text="{Binding CounterParty, Mode=TwoWay}" FontSize="Medium" Margin="0" ClearButtonVisibility="WhileEditing"/>
-
-            <Picker x:Name="picker"
-                    Title="Select Category"
-                    ItemsSource="{Binding Items}"
-                    ItemDisplayBinding="{Binding Title}"
-                    SelectedItem="{Binding Categor, Mode=TwoWay}" >
-            </Picker>
-            
-            <StackLayout Orientation="Horizontal">
-                <Button Text="Cancel"  Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
-                <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand" x:Name="SaveButton"></Button>
-            </StackLayout>
-
-            
-        </StackLayout>
-    </ContentPage.Content>-->
 </ContentPage>

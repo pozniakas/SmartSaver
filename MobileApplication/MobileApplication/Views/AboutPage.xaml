@@ -4,8 +4,10 @@
              x:Class="MobileApplication.Views.AboutPage"
              xmlns:vm="clr-namespace:MobileApplication.ViewModels" xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              xmlns:local1="clr-namespace:ProjectName.MarkupExtensions"
+             xmlns:helpers="clr-namespace:MobileApplication.Helpers"
              Title="{Binding Title}">
 
+    
     <ContentPage.BindingContext>
         <vm:AboutViewModel />
     </ContentPage.BindingContext>
@@ -17,31 +19,19 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <Color x:Key="Accent">#0000</Color>
+            <OnPlatform
+                x:Key="MaterialFontIcons"
+                x:TypeArguments="x:String"
+                Android="materialdesignicons-webfont.ttf#MaterialDesignIcons"
+                iOS="MaterialDesignIcons" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <StackLayout>
-        <!--<Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <StackLayout BackgroundColor="{StaticResource Accent}" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
-                    <ContentView Padding="0,0,0,0" VerticalOptions="FillAndExpand">
-                        <Image Source="{Binding Image}" HorizontalOptions="Start" WidthRequest ="360" HeightRequest="160"/>
-                    </ContentView>
-                </StackLayout>
-            </StackLayout>
-            <ScrollView Grid.Row="1">
-                <StackLayout Orientation="Vertical" Padding="30,24,30,24" Spacing="10">
-                </StackLayout>
-            </ScrollView>
-        </Grid>-->
         <StackLayout Orientation="Horizontal">
             <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" Margin="0,15,0,0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                 <StackLayout Orientation="Horizontal">
                     <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                        <Image Source="{local1:EmbeddedImage MobileApplication.Resources.income.png}" Aspect="AspectFill" Margin="0"/>
+                        <Image Source="{FontImage FontFamily={StaticResource MaterialFontIcons}, Color=Green, Size=Small, Glyph={x:Static helpers:IconFont.ArrowDown}}" Aspect="AspectFill" Margin="0"/>
                     </Frame>
                     <Label  x:Name="incomeLabel" Margin="0,15,50,0"/>
                 </StackLayout>
@@ -49,7 +39,7 @@
             <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" Margin="0,15,0,0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                 <StackLayout Orientation="Horizontal">
                     <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                        <Image Source="{local1:EmbeddedImage MobileApplication.Resources.outcome.png}" Aspect="AspectFill" Margin="0"/>
+                        <Image Source="{FontImage FontFamily={StaticResource MaterialFontIcons}, Color=Red, Size=Small, Glyph={x:Static helpers:IconFont.ArrowUp}}" Aspect="AspectFill" Margin="0"/>
                     </Frame>
                     <Label  x:Name="expensesLabel" Margin="0,15,50,0"/>
                 </StackLayout>

@@ -3,7 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileApplication.Views.CategoryDetailPage"
              xmlns:local1="clr-namespace:ProjectName.MarkupExtensions"
+             xmlns:helpers="clr-namespace:MobileApplication.Helpers"
              Title="Category">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <OnPlatform
+                x:Key="MaterialFontIcons"
+                x:TypeArguments="x:String"
+                Android="materialdesignicons-webfont.ttf#MaterialDesignIcons"
+                iOS="MaterialDesignIcons" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <ContentPage.Content>
         <StackLayout BackgroundColor="White">
@@ -20,7 +31,7 @@
                                 <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                     <StackLayout Orientation="Horizontal">
                                         <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                            <Image Source="{local1:EmbeddedImage MobileApplication.Resources.category.png}" Aspect="AspectFill" Margin="0"/>
+                                            <Image Source="{FontImage FontFamily={StaticResource MaterialFontIcons}, Color=Black, Size=Small, Glyph={x:Static helpers:IconFont.Menu}}"  Margin="0"/>
                                         </Frame>
                                         <Entry Placeholder="Category" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding CategoryTitle, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"/>
                                     </StackLayout>
@@ -29,7 +40,7 @@
                                 <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                     <StackLayout Orientation="Horizontal">
                                         <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                            <Image Source="{local1:EmbeddedImage MobileApplication.Resources.money.png}" Aspect="AspectFill" Margin="0"/>
+                                            <Image Source="{FontImage FontFamily={StaticResource MaterialFontIcons}, Color=Black, Size=Small, Glyph={x:Static helpers:IconFont.Cash}}"  Margin="0"/>
                                         </Frame>
 
                                         <Entry Placeholder="Dedicated Amount" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding DedicatedAmount, Mode=TwoWay}" Keyboard="Numeric" ClearButtonVisibility="WhileEditing"/>
@@ -49,17 +60,4 @@
         </StackLayout>
 
     </ContentPage.Content>
-    <!--<ScrollView>
-        <StackLayout Spacing="20" Padding="15">
-            <Label Text="Title:" FontSize="Medium" />
-            <Editor Text="{Binding CategoryTitle, Mode=TwoWay}" FontSize="Small"/>
-            <Label Text="Amount:" FontSize="Medium" />
-            <Editor Text="{Binding DedicatedAmount, Mode=TwoWay}" FontSize="Small"/>
-            <StackLayout Orientation="Horizontal">
-                <Button Text="Delete"  Command="{Binding DeleteCommand}" HorizontalOptions="FillAndExpand"></Button>
-                <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
-            </StackLayout>
-        </StackLayout>
-    </ScrollView>-->
-
 </ContentPage>
