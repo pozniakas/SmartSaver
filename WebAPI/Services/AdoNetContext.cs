@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using Npgsql;
-using System.Diagnostics;
-using System.Configuration;
 using DbEntities.Entities;
 
 namespace WebAPI.Services
@@ -38,8 +31,6 @@ namespace WebAPI.Services
                     Deadlinedate = rdr.GetDateTime(4),
                     Creationdate = rdr.GetDateTime(5)
                 };
-                //Debug.WriteLine("{0} {1} {2}", rdr.GetInt32(0), rdr.GetString(1),
-                //        rdr.GetString(2));
             }
 
             connection.Close();
@@ -73,20 +64,5 @@ namespace WebAPI.Services
             dataAdapter.UpdateCommand = commandBuilder.GetUpdateCommand();
             dataAdapter.Update(dataTable);
         }
-
-        //public void GetVersion()
-        //{
-        //    var cs = "Host=localhost;Username=postgres;Password=postgres;Database=postgres";
-
-        //    using var con = new NpgsqlConnection(cs);
-        //    con.Open();
-
-        //    var sql = "SELECT version();";
-
-        //    using var cmd = new NpgsqlCommand(sql, con);
-
-        //    var version = cmd.ExecuteScalar().ToString();
-        //    Debug.WriteLine($"PostgreSQL version: {version}");
-        //}
     }
 }
