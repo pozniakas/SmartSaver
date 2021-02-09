@@ -7,6 +7,7 @@
              xmlns:local="clr-namespace:MobileApplication.ViewModels"  
              xmlns:model="clr-namespace:DbEntities.Entities;assembly=DbEntities" xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              xmlns:local1="clr-namespace:ProjectName.MarkupExtensions"
+             xmlns:helpers="clr-namespace:MobileApplication.Helpers"
              Title="{Binding Title}"
              >
 
@@ -14,6 +15,16 @@
         <ToolbarItem Text="Add" Command="{Binding AddItemCommand}" />
     </ContentPage.ToolbarItems>
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <OnPlatform
+                x:Key="MaterialFontIcons"
+                x:TypeArguments="x:String"
+                Android="materialdesignicons-webfont.ttf#MaterialDesignIcons"
+                iOS="MaterialDesignIcons" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <Grid RowSpacing="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
         
         <RefreshView x:DataType="local:ItemsViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
@@ -89,20 +100,35 @@
             </pv:PancakeView.BackgroundGradientStops>
             <Expander Rotation="180" HorizontalOptions="Start" VerticalOptions="End">
                 <Expander.Header>
-                    <Image Source="{local1:EmbeddedImage MobileApplication.Resources.plus.png}" WidthRequest="30" HeightRequest="30" Rotation="180">
+                    <Image Source="{FontImage FontFamily={StaticResource MaterialFontIcons}, Color=White, Size=Small, Glyph={x:Static helpers:IconFont.Plus}}" WidthRequest="30" HeightRequest="30" Rotation="180">
                         <Image.Triggers>
                             <DataTrigger TargetType="Image" 
                                          Binding="{Binding Source={RelativeSource AncestorType={x:Type Expander}}, Path=IsExpanded}" 
                                          Value="True">
-                                <Setter Property="Source" Value="{local1:EmbeddedImage MobileApplication.Resources.x.png}"/>
+                                <Setter Property="Source" Value="{FontImage FontFamily={StaticResource MaterialFontIcons}, Color=White, Size=Small, Glyph={x:Static helpers:IconFont.Close}}"/>
                             </DataTrigger>
                         </Image.Triggers>
                     </Image>
                 </Expander.Header>
                 <StackLayout Spacing="30" Margin="0,20">
-                    <ImageButton Source="{local1:EmbeddedImage MobileApplication.Resources.file.png}" WidthRequest="30" HeightRequest="30" Rotation="180" BackgroundColor="Transparent" Clicked="UploadCSVButton_Clicked"/>
-                    <ImageButton Source="{local1:EmbeddedImage MobileApplication.Resources.image.png}" WidthRequest="30" HeightRequest="30" Rotation="180" BackgroundColor="Transparent" Clicked="UploadImageButton_Clicked"/>
-                    <ImageButton Source="{local1:EmbeddedImage MobileApplication.Resources.pen.png}" WidthRequest="30" HeightRequest="30" Rotation="180" BackgroundColor="Transparent" Command="{Binding AddItemCommand}"/>
+                    <ImageButton Source="{FontImage FontFamily={StaticResource MaterialFontIcons}, Color=White, Size=Small, Glyph={x:Static helpers:IconFont.File}}"
+                                 WidthRequest="30" 
+                                 HeightRequest="30" 
+                                 Rotation="180" 
+                                 BackgroundColor="Transparent" 
+                                 Clicked="UploadCSVButton_Clicked"/>
+                    <ImageButton Source="{FontImage FontFamily={StaticResource MaterialFontIcons}, Color=White, Size=Small, Glyph={x:Static helpers:IconFont.Image}}" 
+                                 WidthRequest="30" 
+                                 HeightRequest="30" 
+                                 Rotation="180" 
+                                 BackgroundColor="Transparent" 
+                                 Clicked="UploadImageButton_Clicked"/>
+                    <ImageButton Source="{FontImage FontFamily={StaticResource MaterialFontIcons}, Color=White, Size=Small, Glyph={x:Static helpers:IconFont.Pencil}}" 
+                                 WidthRequest="30" 
+                                 HeightRequest="30"
+                                 Rotation="180" 
+                                 BackgroundColor="Transparent" 
+                                 Command="{Binding AddItemCommand}"/>
                 </StackLayout>
             </Expander>
         </pv:PancakeView>

@@ -2,8 +2,18 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileApplication.Views.GoalDetailPage"
-             xmlns:local1="clr-namespace:ProjectName.MarkupExtensions"
+             xmlns:helpers="clr-namespace:MobileApplication.Helpers"
              Title="Goal">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <OnPlatform
+                x:Key="MaterialFontIcons"
+                x:TypeArguments="x:String"
+                Android="materialdesignicons-webfont.ttf#MaterialDesignIcons"
+                iOS="MaterialDesignIcons" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <ContentPage.Content>
         <StackLayout BackgroundColor="White">
@@ -16,12 +26,12 @@
                             </StackLayout>
 
                             <StackLayout Padding="0" Margin="15,10">
-                                
+
                                 <Label Text="Creation Date"  HorizontalOptions="FillAndExpand"/>
                                 <Frame BackgroundColor="Transparent" BorderColor="White" Margin="0,5,0,0" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                     <StackLayout Orientation="Horizontal">
                                         <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                            <Image Source="{local1:EmbeddedImage MobileApplication.Resources.time.png}" Aspect="AspectFill" Margin="0"/>
+                                            <Image Source="{FontImage FontFamily={StaticResource MaterialFontIcons}, Color=Black, Size=Small, Glyph={x:Static helpers:IconFont.Calendar}}"  Margin="0"/>
                                         </Frame>
                                         <Label Margin="0, 15, 50, 0" Text="{Binding CreationDateString}"/>
                                     </StackLayout>
@@ -30,16 +40,16 @@
                                 <Frame BackgroundColor="Transparent" BorderColor="White" Margin="0,5,0,0" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                     <StackLayout Orientation="Horizontal">
                                         <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                            <Image Source="{local1:EmbeddedImage MobileApplication.Resources.time.png}" Aspect="AspectFill" Margin="0"/>
+                                            <Image Source="{FontImage FontFamily={StaticResource MaterialFontIcons}, Color=Black, Size=Small, Glyph={x:Static helpers:IconFont.Calendar}}"  Margin="0"/>
                                         </Frame>
                                         <DatePicker x:Name="deadlineDate" Format="yyyy-MM-dd" Margin="0, 0, 15, 0" Date="{Binding DeadlineDate}" />
                                     </StackLayout>
                                 </Frame>
-                                
+
                                 <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                     <StackLayout Orientation="Horizontal">
                                         <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                            <Image Source="{local1:EmbeddedImage MobileApplication.Resources.goal2.png}" Aspect="AspectFill" Margin="0"/>
+                                            <Image Source="{FontImage FontFamily={StaticResource MaterialFontIcons}, Color=Black, Size=Small, Glyph={x:Static helpers:IconFont.FlagOutline}}"  Margin="0"/>
                                         </Frame>
 
                                         <Entry Placeholder="Goal" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding GoalTitle, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"/>
@@ -49,7 +59,7 @@
                                 <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                     <StackLayout Orientation="Horizontal">
                                         <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                            <Image Source="{local1:EmbeddedImage MobileApplication.Resources.info.png}" Aspect="AspectFill" Margin="0"/>
+                                            <Image Source="{FontImage FontFamily={StaticResource MaterialFontIcons}, Color=Black, Size=Small, Glyph={x:Static helpers:IconFont.InformationOutline}}"  Margin="0"/>
                                         </Frame>
 
                                         <Entry Placeholder="Description" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding Description, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"/>
@@ -59,7 +69,7 @@
                                 <Frame BackgroundColor="Transparent" BorderColor="White" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                                     <StackLayout Orientation="Horizontal">
                                         <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
-                                            <Image Source="{local1:EmbeddedImage MobileApplication.Resources.money.png}" Aspect="AspectFill" Margin="0"/>
+                                            <Image Source="{FontImage FontFamily={StaticResource MaterialFontIcons}, Color=Black, Size=Small, Glyph={x:Static helpers:IconFont.Cash}}"  Margin="0"/>
                                         </Frame>
 
                                         <Entry Placeholder="Amount" TextColor="#4a4e4d" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0" Text="{Binding Amount, Mode=TwoWay}"  ClearButtonVisibility="WhileEditing" Keyboard="Numeric"/>
@@ -78,28 +88,5 @@
             </Grid>
         </StackLayout>
     </ContentPage.Content>
-    <!--<ScrollView>
-        <StackLayout Spacing="20" Padding="15">
-            <Label Text="Title:" FontSize="Medium" />
-            <Editor Text="{Binding GoalTitle, Mode=TwoWay}" FontSize="Small"/>
-            <Label Text="Amount:" FontSize="Medium" />
-            <Editor Text="{Binding Amount, Mode=TwoWay}" FontSize="Small"/>
-            <Label Text="Description:" FontSize="Medium" />
-            <Editor Text="{Binding Description, Mode=TwoWay}" FontSize="Small"/>
-            <Label Text="Creation date:" FontSize="Medium" />
-            <Label Text="{Binding CreationDateString, Mode=OneWay}" FontSize="Small"/>
-            <Label Text="Possibility:" FontSize="Medium" />
-            <Label Text="{Binding Possibility, Mode=OneWay}" FontSize="Small"/>
-            <Label Text="Deadline date:" FontSize="Medium" />
-            <DatePicker x:Name="deadlineDate"
-                    Date="{Binding DeadlineDate, Mode=TwoWay}"
-                    Format="yyyy-MM-dd"
-                    Margin="30, 0, 0, 30"/>
-            <StackLayout Orientation="Horizontal">
-                <Button Text="Delete"  Command="{Binding DeleteCommand}" HorizontalOptions="FillAndExpand"></Button>
-                <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
-            </StackLayout>
-        </StackLayout>
-    </ScrollView>-->
 
 </ContentPage>
