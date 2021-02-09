@@ -5,11 +5,10 @@ using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 using static MobileApplication.Views.NewCategoryPage;
 using static MobileApplication.Views.NewTransactionPage;
 
@@ -49,11 +48,11 @@ namespace MobileApplication.Views
             OnUpdateStatusCategory += new StatusUpdateHandlerCategory(UpdateStatus);
             OnUpdateStatusTransaction += new StatusUpdateHandler(UpdateStatus);
         }
-// Updating charts
+
         public async void UpdateStatus(object sender, ProgressEventArgs e)
-        { 
+        {
             await Task.Delay(1000);
-            if(e.Status == "category")
+            if (e.Status == "category")
                 await ExecuteLoadCategoryItemsCommand();
             if (e.Status == "transaction")
                 await ExecuteLoadTransactionItemsCommand();
@@ -112,10 +111,14 @@ namespace MobileApplication.Views
                 foreach (var iteam in transactions)
                 {
                     net += iteam.Amount;
-                    if ((float)iteam.Amount > 0) { 
-                        income += (decimal)iteam.Amount;}
-                    else { 
-                        expenses += (decimal)iteam.Amount;}
+                    if ((float)iteam.Amount > 0)
+                    {
+                        income += iteam.Amount;
+                    }
+                    else
+                    {
+                        expenses += iteam.Amount;
+                    }
                     entries.Add(new ChartEntry((float)net)
                     {
                     }
@@ -147,7 +150,7 @@ namespace MobileApplication.Views
             try
             {
                 var items = await RestServiceCategory.RefreshDataAsync();
-                items.ForEach(Category => ItemsCategory.Add(Category));
+                items.ForEach(category => ItemsCategory.Add(category));
             }
             catch (Exception ex)
             {
@@ -167,7 +170,7 @@ namespace MobileApplication.Views
             try
             {
                 var items = await RestServiceTransaction.RefreshDataAsync();
-                items.ForEach(Category => ItemsTrancations.Add(Category));
+                items.OrderBy(x => x.TrTime).ToList().ForEach(transaction => ItemsTrancations.Add(transaction));
             }
             catch (Exception ex)
             {
