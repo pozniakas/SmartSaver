@@ -20,7 +20,7 @@ namespace WebAPI.Controllers
         [HttpPost]
         public Transaction GenerateDigitalReceiptTransaction(DigitalReceiptDTO digitalReceiptDTO)
         {
-            return new Transaction() { Id = 12345, Amount = 15, CounterParty = "Maxima", Details = "Very nice shopping", TrTime = DateTime.Now };
+            return new Transaction() { Amount = 15, CounterParty = "Maxima", Details = "Very nice shopping", TrTime = DateTime.Now };
         }
     }
 }
