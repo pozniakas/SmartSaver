@@ -17,10 +17,18 @@ namespace MobileApplication.Droid
             var scanner = new MobileBarcodeScanner()
             {
                 TopText = "Scan the QR Code",
+                BottomText = "Click mobile cancel button to cancel scanning.",
+                CancelButtonText = "Cancel"
             };
 
             var scanResult = await scanner.Scan(optionsCustom);
-            return scanResult.Text;
+
+            if(scanResult.Text != null)
+            {
+                return scanResult.Text;
+            }
+
+            return "";
         }
     }
 }
