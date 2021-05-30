@@ -1,6 +1,8 @@
 ﻿using DbEntities.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
+using WebAPI.Clients;
 using WebAPI.DTOModels;
 
 namespace WebAPI.Controllers
@@ -10,17 +12,19 @@ namespace WebAPI.Controllers
     public class DigitalReceiptController: ControllerBase
     {
         private readonly DatabaseContext _context;
-
+        private readonly DigitalReceiptClient digitalReceiptClient;
         public DigitalReceiptController(DatabaseContext context)
         {
             _context = context;
+            digitalReceiptClient = new DigitalReceiptClient();
         }
 
         // POST: api/digital-receipt
         [HttpPost]
-        public Transaction GenerateDigitalReceiptTransaction(DigitalReceiptDTO digitalReceiptDTO)
+        public async Task<Transaction> GenerateDigitalReceiptTransaction(DigitalReceiptDTO digitalReceiptDTO)
         {
-            return new Transaction() { Amount = 15, CounterParty = "Maxima", Details = "Very nice shopping", TrTime = DateTime.Now };
+            var id = await digitalReceiptClient.ValidateData(digitalReceiptDTO.Data);
+            return await digitalReceiptClient.GetDigitalReceiptTransaction(id);
         }
     }
 }
