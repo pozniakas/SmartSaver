@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace MobileApplication.ViewModels
 {
+    [QueryProperty(nameof(Amount), nameof(Amount))]
+    [QueryProperty(nameof(CounterParty), nameof(CounterParty))]
+    [QueryProperty(nameof(TrTimeString), nameof(TrTimeString))]
     public class NewTransactionViewModel : BaseViewModel
     {
         private string details;
@@ -39,7 +42,6 @@ namespace MobileApplication.ViewModels
         }
         async Task ExecuteLoadCategoryItemsCommand()
         {
-            IsBusy = true;
             Items.Clear();
 
             try
@@ -55,6 +57,7 @@ namespace MobileApplication.ViewModels
             {
                 IsBusy = false;
             }
+
         }
 
         private bool ValidateSave()
@@ -101,6 +104,16 @@ namespace MobileApplication.ViewModels
         {
             get => trTime;
             set => SetProperty(ref trTime, value);
+        }
+
+        public String TrTimeString
+        {
+            set => setTrTime(DateTime.Parse(value));
+        }
+
+        public void setTrTime(DateTime date)
+        {
+            TrTime = date;
         }
 
         public Command SaveCommand { get; }

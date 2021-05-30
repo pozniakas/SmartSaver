@@ -12,6 +12,7 @@ namespace MobileApplication.Services.Rest
     class QRCodeAPI
     {
         private readonly HttpClient client;
+        private readonly string baseUrl = "http://192.168.1.161:45457/";
         public QRCodeAPI()
         {
             var clientHandler = new HttpClientHandler
@@ -22,14 +23,11 @@ namespace MobileApplication.Services.Rest
         }
 
 
-        public async Task<Transaction> PostQRCodeTransaction(string id)
+        public async Task<Transaction> GetQRCodeTransaction(string id)
         {
-
             using (var cts = new CancellationTokenSource())
             {
-                var baseUrl = "http://192.168.1.208:45455/";
-
-                var body = new { Id = id};
+                var body = new { Data = id};
                 var json = JsonConvert.SerializeObject(body);
                 var input = new StringContent(json.ToString(), Encoding.UTF8, "application/json");
 
@@ -38,11 +36,11 @@ namespace MobileApplication.Services.Rest
                 var data = await content.ReadAsStringAsync();
                 try
                 {
-                    var response = JsonConvert.DeserializeObject<Dictionary<string, object>>(data);
+                    var response = JsonConvert.DeserializeObject<Dictionary<string, string>>(data);
+                    DateTime dateTime = DateTime.Parse(response["trTime"].ToString());
 
-                    var transaction = response["response"];
-                    var createdTransaction = new Transaction();
-                    return createdTransaction;
+                    var transaction = new Transaction() { TrTime = dateTime, Amount = decimal.Parse(response["amount"].ToString()), CounterParty = response["counterParty"].ToString() };
+                    return transaction;
                 }
                 catch
                 {

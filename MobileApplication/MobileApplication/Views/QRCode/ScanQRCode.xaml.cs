@@ -17,7 +17,6 @@ namespace MobileApplication.Views
 
             BindingContext = _viewModel = new ScanQRCodeViewModel();
             qrCodeApi = new QRCodeAPI();
-            newTransactionViewModel = new NewTransactionViewModel();
         }
 
         protected override void OnAppearing()
@@ -33,12 +32,12 @@ namespace MobileApplication.Views
                 var result = await scanner.ScanAsync();
                 if (result != null)
                 {
-                var transaction = await qrCodeApi.PostQRCodeTransaction(result);
-                newTransactionViewModel.Amount = transaction.Amount.ToString();
-                newTransactionViewModel.CounterParty = transaction.CounterParty;
-                newTransactionViewModel.Details = transaction.Details;
-                newTransactionViewModel.TrTime = transaction.TrTime;
-                await Shell.Current.GoToAsync($"{nameof(NewTransactionViewModel)}");
+                var transaction = await qrCodeApi.GetQRCodeTransaction(result);
+                var amountParamString = $"{nameof(NewTransactionViewModel.Amount)}={ transaction.Amount}";
+                var counterPartyParamString = $"{nameof(NewTransactionViewModel.CounterParty)}={ transaction.CounterParty}";
+
+                var trTimeParamString = $"{nameof(NewTransactionViewModel.TrTimeString)}={transaction.TrTime.ToShortDateString()}";
+                await Shell.Current.GoToAsync($"{nameof(NewTransactionPage)}?{amountParamString}&{counterPartyParamString}&{trTimeParamString}");
                 }       
         }
     }
