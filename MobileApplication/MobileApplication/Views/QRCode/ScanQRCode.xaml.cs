@@ -2,18 +2,22 @@
 using MobileApplication.ViewModels;
 using MobileApplication.Services;
 using System;
+using MobileApplication.Services.Rest;
 
 namespace MobileApplication.Views
 {
     public partial class ScanQRCode : ContentPage
     {
         ScanQRCodeViewModel _viewModel;
-
+        private readonly QRCodeAPI qrCodeApi;
+        NewTransactionViewModel newTransactionViewModel;
         public ScanQRCode()
         {
             InitializeComponent();
 
             BindingContext = _viewModel = new ScanQRCodeViewModel();
+            qrCodeApi = new QRCodeAPI();
+            newTransactionViewModel = new NewTransactionViewModel();
         }
 
         protected override void OnAppearing()
@@ -29,14 +33,13 @@ namespace MobileApplication.Views
                 var result = await scanner.ScanAsync();
                 if (result != null)
                 {
-                    txtBarcode.Text = result;
-                }
-                else
-                {
-                    await Shell.Current.Navigation.PopAsync();
-                    txtBarcode.Text = "";
-                }
-       
+                var transaction = await qrCodeApi.PostQRCodeTransaction(result);
+                newTransactionViewModel.Amount = transaction.Amount.ToString();
+                newTransactionViewModel.CounterParty = transaction.CounterParty;
+                newTransactionViewModel.Details = transaction.Details;
+                newTransactionViewModel.TrTime = transaction.TrTime;
+                await Shell.Current.GoToAsync($"{nameof(NewTransactionViewModel)}");
+                }       
         }
     }
 }

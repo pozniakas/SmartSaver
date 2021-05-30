@@ -14,8 +14,6 @@
             <Button Text="Click to scan QR code"  
                 x:Name="btnScan"  
                 Clicked="btnScan_Clicked"/>
-            <Entry x:Name="txtBarcode"  
-               Placeholder="Text Do scan"/>
         </StackLayout>
     </ContentPage.Content>
 

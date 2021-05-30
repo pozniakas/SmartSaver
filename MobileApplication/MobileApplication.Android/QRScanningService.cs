@@ -31,7 +31,7 @@ namespace MobileApplication.Droid
                     return scanResult.Text;
                 }
             }
-            return "";
+            return null;
         }
     }
 }
