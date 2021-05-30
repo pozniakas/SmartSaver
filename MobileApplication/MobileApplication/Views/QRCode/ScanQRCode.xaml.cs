@@ -33,6 +33,7 @@ namespace MobileApplication.Views
                 }
                 else
                 {
+                    await Shell.Current.Navigation.PopAsync();
                     txtBarcode.Text = "";
                 }
        

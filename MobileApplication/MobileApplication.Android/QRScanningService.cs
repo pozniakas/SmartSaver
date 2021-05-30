@@ -23,11 +23,14 @@ namespace MobileApplication.Droid
 
             var scanResult = await scanner.Scan(optionsCustom);
 
-            if(scanResult.Text != null)
+            if (scanResult != null)
             {
-                return scanResult.Text;
-            }
 
+                if (scanResult.Text != null)
+                {
+                    return scanResult.Text;
+                }
+            }
             return "";
         }
     }
